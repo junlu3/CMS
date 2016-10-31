@@ -1,0 +1,15 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+}
+<h1 class="text-danger">Error</h1>
+<div class="note note-danger">
+    <p>
+        <h4 class="text-danger">From: @Model.ControllerName/@Model.ActionName</h4>
+        <h4 class="text-danger">Content: @Model.Exception.Message</h4>
+    </p>
+</div>
+
+
+

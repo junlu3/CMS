@@ -1,0 +1,75 @@
+﻿<div class="row" id="divAttachement">
+    <div class="col-md-12">
+        <h3 class="form-section">表单下载</h3>
+        <div class="row margin-bottom-10">
+            <form action="/Employee/_OrderAttachement?Length=8" data-ajax="true" data-ajax-method="Post" data-ajax-mode="replace" data-ajax-update="#divAttachement" id="attachement_form" method="post">
+                <input id="IDCard" name="IDCard" type="hidden" value="513030198512077923">                <div class="col-md-12 col-lg-10">
+
+                    <div class="form-body   ">
+                        <div class="row">
+                            <div class="col-md-6  col-lg-4">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button class="btn grey" type="button">体检日期：</button>
+                                    </span>
+                                    <div class="input-group input-large date-picker input-daterange" data-date-format="yyyy-MM-dd">
+                                        <input class="form-control" data-val="true" data-val-date="The field MinSearchTime must be a date." id="MinSearchTime" name="MinSearchTime" type="text" value="">
+
+                                        <span class="input-group-addon">
+                                            ~
+                                        </span>
+                                        <input class="form-control" data-val="true" data-val-date="The field MaxSearchTime must be a date." id="MaxSearchTime" name="MaxSearchTime" type="text" value="">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="form-actions  ">
+                                    <button type="submit" class="btn blue"><i class="fa fa-search"></i>查询</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row margin-bottom-10">
+            <form action="/Employee/ExportAttachement" id="order_attachement_form" method="post">
+                <input data-val="true" data-val-required="The ExportTarget field is required." id="ExportTarget" name="ExportTarget" type="hidden" value="NotifyReport"><input id="ExportOrderId" name="ExportOrderId" type="hidden" value="">                <div class="col-md-4 col-lg-3">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <td>职业病危害因素告知书</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="submit" value="职业病危害因素告知书2016-01-30.xlsx" class="btn green" onclick="SubmitExport(0,&quot;42d1490c-99fd-4dc8-9de9-63702806bf48&quot;)">
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <td>上海市职业健康检查应检者登记表</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="submit" value="上海市职业健康检查应检者登记表2016-01-30.xlsx" class="btn green" onclick="SubmitExport(1,&quot;42d1490c-99fd-4dc8-9de9-63702806bf48&quot;)">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

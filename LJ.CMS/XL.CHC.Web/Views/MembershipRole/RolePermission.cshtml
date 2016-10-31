@@ -1,0 +1,71 @@
+﻿@model XL.CHC.Web.Models.RolePermissionViewModel
+@{
+    ViewBag.Title = "权限管理";
+    ViewBag.CurrentPage = "SystemManage_PermissionManage";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE TABLE PORTLET-->
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-cogs"></i>权限管理</div>
+            </div>
+            <div class="portlet-body form">
+                @using (Html.BeginForm("RolePermission", "MembershipRole", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    <input type="hidden" value="@Model.MembershipRole.Id" />
+                    <div class="table-scrollable">
+
+                        <script type="text/javascript">
+                            $(document).ready(function ()
+                            {
+                                @{
+                                    <text>
+                                $('#selectall-@(Model.MembershipRole.Id)').click(function ()
+                                {
+                                    $('.allow_@(Model.MembershipRole.Id)').attr('checked', $(this).is(':checked')).change();
+                                });
+                                </text>
+                            }
+                            });
+                        </script>
+
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">权限\角色</th>
+                                    <th scope="col">
+                                        @Model.MembershipRole.Name
+                                        @*<input type="checkbox" id="selectall-@(role.Id)" />*@
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var menuItem in Model.MenuItems)
+                                {
+                                    <tr>
+                                        <td>@menuItem.MenuText</td>
+                                        @{ 
+                                            var allowed = Model.MembershipRole.MenuItems != null && Model.MembershipRole.MenuItems.Any(x => x.Id == menuItem.Id);
+                                        }
+                                        <td>
+                                            <input class="allow_@(Model.MembershipRole.Id)" type="checkbox" value="@(menuItem.Id)" name="CheckedMenus" @(allowed ? " checked=checked" : null) />
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                        <div class="form-actions fluid">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn blue">提交</button>
+                                <a href="@Url.Action("RoleManage", "MembershipRole")" class="btn default">返回角色列表</a>
+                            </div>
+                        </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

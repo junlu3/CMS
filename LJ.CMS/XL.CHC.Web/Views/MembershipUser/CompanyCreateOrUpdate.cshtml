@@ -1,0 +1,185 @@
+﻿@model XL.CHC.Web.Models.CompanyViewModel
+
+@{
+    ViewBag.Title = "编辑公司";
+    ViewBag.CurrentPage = "SystemManage_UserManage";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> 编辑公司
+                </div>
+                <div class="actions">
+                    <a href="/MembershipUser/PersonalInfo/@Model.MembershipUserId" class="btn blue btn-sm">
+                        <i class="fa fa-mail-reply"></i> 返回
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                @using (Html.BeginForm("CompanyCreateOrUpdate", "MembershipUser", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+                {
+                    <div class="form-body">
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(x => x.Id)
+                        @Html.HiddenFor(x => x.MembershipUserId)
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">名称:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.CompanyName)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">地址:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.CompanyAddress, new { @class = "form-control" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.CompanyAddress)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">电话:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Telephone, new { @class = "form-control" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Telephone)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">邮编:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.ZipCode, new { @class = "form-control" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.ZipCode)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">传真:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Fax, new { @class = "form-control" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Fax)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">邮编:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.ZipCode, new { @class = "form-control" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.ZipCode)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">公司性质:</label>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => Model.CompanyTypeId, Model.AvailableCompanyTypes, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">法人:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.LegalPerson, new { @class = "form-control" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.LegalPerson)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">联系人:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.ContactPerson, new { @class = "form-control" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.ContactPerson)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">联系电话:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.ContactPhone, new { @class = "form-control" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.ContactPhone)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">休息日:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.RestDay, new { @class = "form-control" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.RestDay)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">公司注册时间:</label>
+                            <div class="col-md-4">
+                                <div class="date-picker input-daterange" data-date-format="yyyy-MM-dd">
+                                    <input id="RegisterDate" name="RegisterDate" type="text" class="form-control" style="text-align:left" value="@(Model.RegisterDate.HasValue?Model.RegisterDate.Value.ToString("yyyy-MM-dd"):"")" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">公司注册类型:</label>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => Model.CompanyRegisterTypeId, Model.AvailableCompanyRegisterTypes, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">签章:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.CompanyStamp, new { @class = "form-control", @name = "upfile", @id = "upfile", placeholder = "请上传签章", @readonly = "readonly" })
+                            </div>
+                            <div class="col-md-1">
+                                <input type="button" value="浏览..." onclick="ImportFile.click(); $('#imgPreview').attr('src', '');" class="btn green">
+                            </div>
+                            <input type="file" id="ImportFile" name="ImportFile" style="display:none" onchange="upfile.value=this.value" accept=".png">
+                            <div class="col-md-1">
+                                <input type="button" value="删除" onclick="ClearUploadFile()" class="btn red">
+                            </div>
+                            
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.CompanyStamp))
+                        {
+                            <div class="form-group">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-1">
+                                    <img id="imgPreview" src="@Model.CompanyStamp" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="submit" class="btn blue">提交</button>
+                            <a href="@Url.Action("Index", "CompanyEmployeeManage" )" class="btn default">返回员工列表</a>
+                        </div>
+                    </div>
+                }
+                <!-- END FORM-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function ClearUploadFile()
+    {
+        $('#upfile').val('');
+        $('#imgPreview').attr('src', '');
+        var file = $("#ImportFile")
+        file.after(file.clone().val(""));
+        file.remove();
+    }
+</script>

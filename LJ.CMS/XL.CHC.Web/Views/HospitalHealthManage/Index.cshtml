@@ -1,0 +1,428 @@
+﻿@model XL.CHC.Web.Models.HealthResultSearchViewModel
+@{
+    ViewBag.Title = "体检管理";
+    ViewBag.CurrentPage = "HealthManage_HospitalResultView";
+}
+<link href="~/Content/multiselect/ui/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/multiselect/jquery.multiselect.css" rel="stylesheet" />
+<script src="~/Content/multiselect/jquery.multiselect.js"></script>
+
+
+<div class="row">
+    <div class="col-md-12 ">
+        <div class="portlet  light">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-2x fa-group font-blue"></i><span class="caption-subject font-blue bold uppercase">体检信息管理</span></div>
+                <div class="actions">
+                    <a href="/HospitalHealthManage/CreateOrUpdate" class="btn blue">
+                        <i class="fa fa-plus"></i> 新建体检信息
+                    </a>
+                    <a href="/HospitalHealthManage/Import" class="btn blue">
+                        <i class="fa fa-file-excel-o"></i> 导入体检结果
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="full-height-content-body">
+                    @using (Html.BeginForm("Index", "HospitalHealthManage", FormMethod.Post, new { id = "search_submit_form" }))
+                    {
+                        @Html.HiddenFor(x => x.ActionType)
+                        @Html.HiddenFor(x => x.PageIndex)
+                        <div class="form-body   ">
+                            <div class="row margin-bottom-10">
+                                <div class="col-md-6 col-lg-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">公司：</label>
+                                        <div class="col-md-8">
+                                            @Html.DropDownListFor(x => Model.SelectedCompany, Model.CompanyList, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">工种：</label>
+                                        <div class="col-md-8">
+                                            <select id="selWorkType" multiple="multiple" name="selWorkType" size="8" class="form-control">
+                                                @foreach (var item in Model.WorkTypeList)
+                                                {
+                                                    <option value="@item">@item</option>
+                                                }
+                                            </select>
+                                            @Html.HiddenFor(x => x.SelectedWorkType)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row margin-bottom-10">
+                                <div class="col-md-6 col-lg-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label ">检查结论：</label>
+                                        <div class="col-md-8  ">
+                                            <select id="selFinalResult" multiple="multiple" name="selAdverseFactor" size="8" class="form-control">
+                                                @foreach (var item in Model.FinalResultList)
+                                                {
+                                                    <option value="@item">@item</option>
+                                                }
+                                            </select>
+                                        </div>
+
+                                        @Html.HiddenFor(x => x.SelectedFinalResults)
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label ">检查结果关键字：</label>
+                                        <div class="col-md-8  ">
+                                            @Html.TextBoxFor(x => x.HealthResultKeyWord, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row margin-bottom-10">
+                                <div class="col-md-6 col-lg-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label ">员工关键字：</label>
+                                        <div class="col-md-8  ">
+                                            @Html.TextBoxFor(x => x.EmployeeKeyWord, new { @class = "form-control" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label ">接害工龄(年)：</label>
+                                        <div class="col-md-8  ">
+                                            <div class="input-group input-large input-daterange">
+                                                @Html.TextBoxFor(x => x.MinAdverseYears, new { @class = "form-control", @name = "from" })
+                                                <span class="input-group-addon">
+                                                    ~
+                                                </span>
+                                                @Html.TextBoxFor(x => x.MaxAdverseYears, new { @class = "form-control", @name = "to" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row margin-bottom-10">
+                                <div class="col-md-6 col-lg-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label ">有害因素：</label>
+                                        <div class="col-md-8  ">
+                                            @Html.TextBoxFor(x => x.AdverseFactor, new { @class = "form-control" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label ">体检日期范围：</label>
+                                        <div class="col-md-8  ">
+                                            <div class="input-group input-large date-picker input-daterange" data-date-format="yyyy-MM-dd">
+                                                @Html.TextBoxFor(x => x.MinHealthDate, new { @class = "form-control", @name = "from" })
+                                                @*<input type="text" class="form-control" name="from">*@
+                                                <span class="input-group-addon">
+                                                    ~
+                                                </span>
+                                                @Html.TextBoxFor(x => x.MaxHealthDate, new { @class = "form-control", @name = "to" })
+                                                @*<input type="text" class="form-control" name="to">*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="margin-top-10 " style="margin-left:20px;">
+                            @*<button type="button" class="btn blue"> <i class="fa  fa-refresh"></i>重置</button>*@
+                            <button type="submit" class="btn blue" onclick="Search()"><i class="fa fa-search"></i> 查询</button>
+                            <button class="btn grey" onclick="Reset()"><i class="fa fa-refresh"></i> 重置</button>
+                        </div>
+                    }
+                    <div class="portlet box blue   margin-top-20 ">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-2x fa-cube"></i>查询结果
+                            </div>
+                            <div class="actions">
+                                <button class="btn grey" onclick="Download()"><i class="glyphicon glyphicon-save-file"></i> 下载查询结果</button>
+
+                            </div>
+                        </div>
+                        <div class="portlet-body light-grey">
+                            <div class="table-scrollable">
+                                <table id="tableProject" class="table table-striped table-bordered table-hover" data-height="200">
+                                    <thead>
+                                        <tr>
+                                            <th style="min-width:240px">
+                                                操作
+                                            </th>
+                                            <th style="min-width:80px;">
+                                                员工姓名
+                                            </th>
+
+                                            <th>
+                                                性别
+                                            </th>
+
+                                            <th>
+                                                出身年月
+                                            </th>
+                                            <th>
+                                                工种
+                                            </th>
+                                            <th>
+                                                接害工龄
+                                            </th>
+                                            <th>
+                                                危害因素
+                                            </th>
+                                            <th>
+                                                检查主要阳性结果
+                                            </th>
+                                            <th>
+                                                检查结论
+                                            </th>
+
+                                            <th>
+                                                体检编号
+                                            </th>
+
+                                            <th>
+                                                影像号
+                                            </th>
+                                            <th>
+                                                报告号
+                                            </th>
+                                            <th>
+                                                主检医师
+                                            </th>
+                                            <th>
+                                                报告日期
+                                            </th>
+                                            <th>
+                                                体检日期
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.HealthResults)
+                                        {
+
+                                            string startDateStr = Convert.ToDateTime(item.HealthDate).ToString("yyyy-MM-dd");
+                                            string endDateStr = Convert.ToDateTime(item.HealthDate).AddDays(1).ToString("yyyy-MM-dd");
+
+
+                                        <tr>
+                                            <td>
+                                                <a class="btn default btn-xs blue" href="/HospitalHealthManage/CreateOrUpdate/@item.Id"><i class="fa fa-edit"></i> 修改</a>
+                                                <a class="btn default btn-xs grey" href="javascript:if(confirm('确实要删除吗?'))location='/HospitalHealthManage/Delete/@item.Id'"><i class="fa fa-trash-o"></i> 删除</a>
+                                            </td>
+                                            <td>
+                                                <a href="/Employee/MainPage/@item.CompanyEmployee.EmployeeBaseInfo.Id?startDate=@startDateStr&endDate=@endDateStr" class="font-yellow-casablanca">@item.CompanyEmployee.EmployeeBaseInfo.UserName</a>
+                                            </td>
+                                            <td>
+                                                @item.CompanyEmployee.EmployeeBaseInfo.Sex
+                                            </td>
+                                            <td>
+                                                BirthDay
+                                            </td>
+                                            <td>
+                                                @item.CompanyEmployee.WorkType
+                                            </td>
+                                            <td>
+                                                @item.CompanyEmployee.AdverseMonthes
+                                            </td>
+                                            <td>
+                                                @item.CompanyEmployee.AdverseFactor
+                                            </td>
+                                            <td>
+                                                @item.MainPositiveResult
+                                            </td>
+                                            <td>
+                                                @item.Result
+                                            </td>
+                                            <td>
+                                                @item.HealthCode
+                                            </td>
+                                            <td>
+                                                @item.ImageCode
+                                            </td>
+                                            <td>
+                                                @item.ReportCode
+                                            </td>
+                                            <td>
+                                                @item.HealthPerson
+                                            </td>
+                                            <td>
+                                                @(item.ReportDate == null ? string.Empty : Convert.ToDateTime(item.ReportDate).ToString("yyyy-MM-dd"))
+                                            </td>
+                                            <td>@(item.HealthDate == null ? string.Empty : Convert.ToDateTime(item.HealthDate).ToString("yyyy-MM-dd"))</td>
+                                        </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @if (Model.HealthResults.TotalPages > 1)
+                                    {
+                                    <ul class="pagination">
+                                        @if (Model.HealthResults.PageIndex > 1)
+                                            {
+                                            <li>
+                                                <a href="javascript:;" onclick="GoPage(1)">
+                                                    <i class="fa fa-angle-left"></i>
+                                                </a>
+                                            </li>
+                                            }
+                                        @if (Model.HealthResults.PageIndex > 8)
+                                            {
+                                            <li>
+                                                <a href="javascript:;">...</a>
+                                            </li>
+                                            }
+                                        @for (var i = 1; i <= Model.HealthResults.TotalPages; i++)
+                                            {
+                                                if (i == Model.HealthResults.PageIndex)
+                                                {
+                                            <li>
+                                                <a href="javascript:;" class="font-red">
+                                                    @i
+                                                </a>
+                                            </li>
+                                                }
+                                                else if (i >= Model.HealthResults.PageIndex - 7 && i <= Model.HealthResults.PageIndex + 7)
+                                                {
+                                            <li>
+                                                <a href="javascript:;" onclick="GoPage(@i)">
+                                                    @i
+                                                </a>
+                                            </li>
+                                                }
+                                            }
+                                        @if (Model.HealthResults.PageIndex < Model.HealthResults.TotalPages - 8)
+                                            {
+                                            <li>
+                                                <a href="javascript:;">...</a>
+                                            </li>
+                                            }
+                                        @if (Model.HealthResults.PageIndex != Model.HealthResults.TotalPages)
+                                            {
+                                            <li>
+                                                <a href="javascript:;" onclick="GoPage(@Model.HealthResults.TotalPages)">
+                                                    >
+                                                    <i class="fa fa-angle-right"></i>
+                                                </a>
+                                            </li>
+                                            }
+
+                                    </ul>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ()
+    {
+        $("#selWorkType").multiselect({
+            noneSelectedText: "==请选择==",
+            checkAllText: "全选",
+            uncheckAllText: '全不选',
+            selectedList: 10
+        });
+        var workTypes = $("#SelectedWorkType").val();
+
+        $("#selWorkType").val(workTypes.split("&"));
+        $("#selWorkType").multiselect("refresh");
+
+
+        $("#selFinalResult").multiselect({
+            noneSelectedText: "==请选择==",
+            checkAllText: "全选",
+            uncheckAllText: '全不选',
+            selectedList: 10
+        });
+        var finalResults = $("#SelectedFinalResults").val();
+        $("#selFinalResult").val(finalResults.split("&"));
+        $("#selFinalResult").multiselect("refresh");
+
+    });
+
+    function Search()
+    {
+        $("#ActionType").val("Search");
+
+
+        var finalResults = $("#selFinalResult").val();
+        if(finalResults)
+        {
+            $("#SelectedFinalResults").val(finalResults.join("&"));
+        }
+        else 
+        {
+            $("#SelectedFinalResults").val("");
+        }
+
+        var workTypes = $("#selWorkType").val();
+        if(workTypes)
+        {
+            $("#SelectedWorkType").val(workTypes.join("&"));
+        }
+        else 
+        {
+            $("#SelectedWorkType").val("");
+        }
+
+        $("#search_submit_form").submit();
+    }
+
+    function Download()
+    {
+        $("#ActionType").val("Download");
+
+        var finalResults = $("#selFinalResult").val();
+        if (finalResults)
+        {
+            $("#SelectedFinalResults").val(finalResults.join("&"));
+        }
+        else
+        {
+            $("#SelectedFinalResults").val("");
+        }
+
+
+        var workTypes = $("#selWorkType").val();
+        if (workTypes)
+        {
+            $("#SelectedWorkType").val(workTypes.join("&"));
+        }
+        else
+        {
+            $("#SelectedWorkType").val("");
+        }
+
+        $("#search_submit_form").submit();
+    }
+
+    function Reset()
+    {
+        $("#ActionType").val("Reset");
+
+        window.location.href = "/HospitalHealthManage/Index";
+    }
+    function GoPage(pageIndex)
+    {
+        $("#PageIndex").val(pageIndex);
+        Search();
+    }
+</script>

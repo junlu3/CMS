@@ -1,0 +1,341 @@
+﻿
+@{
+    ViewBag.Title = "新建预约";
+    ViewBag.CurrentPage = "HealthManage_CompanyBook";
+    var nowDate = DateTime.Now.ToString("yyyy-MM");
+
+}
+<input type="hidden" id="hiddenCompanyId" />
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue calendar">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-2x fa-plus"></i>新建预约</div>
+            </div>
+            <div class="portlet-body light-grey">
+                <div class="row">
+                    <div class="col-md-4 col-sm-12 col-lg-3">
+                        <div id="divMonthInfo">
+                            <h3 class="event-form-title">选择年月:</h3>
+                            <div class="form-group">
+                                <div id="divDate" class="input-group input-medium date datepicker-months" data-date-format="yyyy-mm"
+                                     data-date-viewmode="months" data-date-minviewmode="months">
+                                    <input type="text" id="txtDate" value="@nowDate" class="form-control" readonly />
+                                    <span class="input-group-btn">
+                                        <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="width:50px;">
+                                            颜色
+                                        </th>
+                                        <th>
+                                            说明
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="background-color:silver"></td>
+                                        <td>
+                                            灰色，当天不可被企业预定
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color:#3598DC"></td>
+                                        <td>
+                                            蓝色，可以被预定。默认颜色
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color:#F4D03F"></td>
+                                        <td>橙色，已被预定但医生还未确认</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color:#E08283"></td>
+                                        <td>红色，已被预定且得到医生的确认</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color:white"></td>
+                                        <td>白色，医生未开发预约</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div style="float:left; background-color:#F4D03F; width:50%">&nbsp;</div>
+                                            <div style="float:left; background-color:#E08283;width:50%">&nbsp;</div>
+                                        </td>
+                                        <td>蓝色字体，当前公司预定的日期。</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-group">
+                            <h3 class="event-form-title">您选择的时间为:</h3>
+                            <div class="form-group">
+                                <input type="text" id="txtSelectedDate" class="form-control font-red" readonly />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h3 class="event-form-title">备注：</h3>
+                            <div class="form-group">
+                                <textarea id="txtComment" class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="inline-form">
+                            <button id="btnSave" class="btn blue" onclick="SaveSubOrder()">保存预约</button>
+                            <a class="btn default" href="/CompanyBookManage/Index">返回</a>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-sm-12 col-lg-9">
+                        <div id="calendar" class="has-toolbar">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Content/Scripts/HospitalCalendar.js"></script>
+<script type="text/javascript">
+    var calendarData;
+    var oldDate; //old current Date
+    var oldElement;
+
+    jQuery(document).ready(function ()
+    {
+        loadDatePicker();
+        HospitalCalendar.init();
+        InitCalendarData();
+    });
+
+   
+    function InitCalendarData()
+    {
+        InitCalendarStyle();
+        GetCalendarData();
+    }
+
+    function InitCalendarStyle()
+    {
+        HospitalCalendar.InitStyle();
+
+        $(".fc-day").click(function ()
+        {
+            var element = $(this);
+            var dateData = element.data("date");
+            var date = new Date(dateData);
+            var day = date.getDate();
+            if (element.text() == "可预定")
+            {
+                element.css("background-color", "#F4D03F");
+                element.text("您选中的日期");
+                element.css("font-weight", "bold");
+                element.css("color", "red");
+                $("#txtSelectedDate").val(date.format("yyyy-MM-dd"));
+                if (oldElement)
+                {
+                    oldElement.css("background-color", "#3598DC");
+                    oldElement.text("可预定");
+                    oldElement.css("font-weight", "normal");
+                    oldElement.css("color", "white");
+                }
+
+                oldElement = element;
+            }
+        });
+        $(".fc-day-number").click(function ()
+        {
+            var index = $(this).index();
+            var fcDay = $(this).parents(".fc-row").find(".fc-day")[index];
+            var element = $(fcDay);
+            var dateData = element.data("date");
+            var date = new Date(dateData);
+            var day = date.getDate();
+            if (element.text() == "可预定")
+            {
+                element.css("background-color", "#F4D03F");
+                element.text("您选中的日期");
+                element.css("font-weight", "bold");
+                element.css("color", "red");
+                $("#txtSelectedDate").val(date.format("yyyy-MM-dd"));
+                if (oldElement)
+                {
+                    oldElement.css("background-color", "#3598DC");
+                    oldElement.text("可预定");
+                    oldElement.css("font-weight", "normal");
+                    oldElement.css("color", "white");
+                }
+
+                oldElement = element;
+            }
+        });
+        $("td[class*='fc-other-month'][class*='fc-day fc-widget-content']").text("");
+        $(".fc-other-month").unbind();
+
+    }
+
+    function SaveSubOrder()
+    {
+        var date = $("#txtSelectedDate").val();
+        if (date.length < 1)
+        {
+            alert("保存失败，请选择预约日期。");
+            return;
+        }
+        var comment = $("#txtComment").val();
+        $.ajax({
+            type: "post",
+            url: "/CompanyBookManage/CreateNewSubOrder",
+            data: { "date": date, "comment": comment },
+            dataType: "json",
+            success: function (data)
+            {
+                if (data.Status == 0)
+                {
+                    alert("保存成功！");
+                    $("#txtSelectedDate").val("");
+                    $("#txtComment").val("");
+                    var element = $("td[class*='fc-day fc-widget-content'][data-date='" + date + "']");
+                    var fcNumber = $(element).parents(".fc-row").find(".fc-day-number")[element.index()];
+
+                    element.css("background-color", "#F4D03F");
+                    element.text("已被预定未确认");
+                    element.css("cursor", "not-allowed");
+                    element.unbind();
+                    $(fcNumber).css("cursor", "not-allowed");
+                    $(fcNumber).unbind();
+                    element.css("color", "blue");
+                    element.css("font-weight", "normal");
+                    oldElement = null;
+                }
+                else
+                {
+                    alert("保存失败：" + data.Message);
+                }
+            },
+            error: function (ex)
+            {
+                alert("保存错误：" + ex.error, function () { return false; })
+            }
+        });
+    }
+
+    function GetCalendarData()
+    {
+        var date = $("#txtDate").val();
+        var year = date.substr(0, 4);
+        var month = date.substr(5, 2);
+        $.ajax({
+            type: "post",
+            url: "/CompanyBookManage/GetMonthData",
+            data: { "year": year, "month": month },
+            dataType: "json",
+            success: function (data)
+            {
+                calendarData = data;
+                if (data.length > 0)
+                {
+                    for (var i = 0; i < data.length; i++)
+                    {
+                        var element = $("td[class*='fc-day fc-widget-content'][data-date='" + data[i].StartDateString + "']");
+                        element.css("cursor", "pointer");
+                        element.css("color", "white");
+                        var fcNumber = $(element).parents(".fc-row").find(".fc-day-number")[element.index()];
+                        $(fcNumber).css("cursor", "pointer");
+                        if (data[i].Enabled == false)
+                        {
+                            element.css("background-color", "Silver");
+                            element.text("不可预定");
+                            element.css("cursor", "not-allowed");
+                            element.unbind();
+                            $(fcNumber).css("cursor", "not-allowed");
+                            $(fcNumber).unbind();
+                        }
+                        else
+                        {
+                            element.css("background-color", "#3598DC");
+                            element.text("可预定");
+                        }
+                        if (data[i].OrderStatus == 1)
+                        {
+                            element.css("background-color", "#F4D03F");
+                            element.text("已被预定未确认");
+                            element.css("cursor", "not-allowed");
+                            element.unbind();
+                            $(fcNumber).css("cursor", "not-allowed");
+                            $(fcNumber).unbind();
+                            if (data[i].BelongToCompany)
+                            {
+                                element.css("color", "blue");
+
+                            }
+                        }
+                        else if (data[i].OrderStatus == 2)
+                        {
+                            element.css("background-color", "#E08283");
+                            element.text("已确认预约");
+                            element.css("cursor", "not-allowed");
+                            element.unbind();
+                            $(fcNumber).css("cursor", "not-allowed");
+                            $(fcNumber).unbind();
+                            if (data[i].BelongToCompany)
+                            {
+                                element.css("color", "blue");
+
+                            }
+                        }
+                    }
+                }
+
+            },
+            error: function (ex)
+            {
+                alert("获取数据失败！" + ex.error);
+            }
+        });
+    }
+
+    function loadDatePicker()
+    {
+        oldDate = $("txtDate").val();
+        if (jQuery().datepicker)
+        {
+            $('#divDate').datepicker({
+                startView: 1,
+                maxViewMode: 1,
+                minViewMode: 1,
+                forceParse: false,
+                language: 'zh-CN',
+                autoclose: true,
+
+
+            }).on('changeDate', function (arg)
+            {
+                if (arg.date.format("yyyy-MM") != oldDate)
+                {
+                    oldDate = arg.date.format("yyyy-MM");
+                    HospitalCalendar.init();
+                    InitCalendarData();
+
+                }
+            });
+            $('body').removeClass("modal-open");
+        }
+
+    }
+
+
+</script>
+
+
+
+
+

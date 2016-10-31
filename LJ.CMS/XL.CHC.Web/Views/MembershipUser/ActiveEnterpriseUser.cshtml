@@ -1,0 +1,169 @@
+﻿@model XL.CHC.Web.Models.ActiveEnterpriseUserViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <title>企业用户激活 - MSDS</title>
+    @*@Styles.Render("~/Content/commonCss")
+        @Scripts.Render("~/bundles/commonScript")*@
+    @Html.Partial("_LayoutScripts")
+</head>
+<body class="page-header-fixed page-quick-sidebar-over-content page-boxed page-sidebar-closed-hide-logo">
+    @*<div class="page-header navbar navbar-fixed-top">
+            @Html.Partial("_PageHeader")
+        </div>
+        <div class="clearfix"></div>*@
+    <div class="container">
+        <div class="page-container">
+            @*<div class="page-sidebar-wrapper">
+                    @Html.Partial("_SideBarMenu", menuItems)
+                </div>*@
+            <div>
+                <div class="page-content">
+                    @Html.Partial("_Notifiations")
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="portlet box blue" id="form_wizard_1">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-gift"></i> 请补全以下资料完成企业账户激活
+
+                                    </div>
+                                    <div class="actions">
+                                        <a href="/MembershipUser/Login" class="btn blue btn-sm">
+                                            <i class="fa fa-mail-reply"></i> 返回登录
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body form">
+                                    <!-- BEGIN FORM-->
+                                    @using (Html.BeginForm("ActiveEnterpriseUser", "MembershipUser", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+                                    {
+                                        <div class="form-body">
+
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">公司名称:</label>
+                                                <div class="col-md-4">
+                                                    @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control", placeholder = "请输入公司名称" })
+                                                    <span class="help-block font-red">
+                                                        @Html.ValidationMessageFor(x => x.CompanyName)
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">电话:</label>
+                                                <div class="col-md-4">
+                                                    @Html.TextBoxFor(model => model.Telephone, new { @class = "form-control", placeholder = "" })
+                                                    @*<span class="help-block font-red">
+                                                            @Html.ValidationMessageFor(x => x.Email)
+                                                        </span>*@
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">传真:</label>
+                                                <div class="col-md-4">
+                                                    @Html.TextBoxFor(model => model.Fax, new { @class = "form-control", placeholder = "" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">地址:</label>
+                                                <div class="col-md-4">
+                                                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control", placeholder = "" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">邮编:</label>
+                                                <div class="col-md-4">
+                                                    @Html.TextBoxFor(model => model.PostCode, new { @class = "form-control", placeholder = "" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">休息日:</label>
+                                                <div class="col-md-4">
+                                                    @Html.TextBoxFor(model => model.RestDay, new { @class = "form-control", placeholder = "" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">法定代表:</label>
+                                                <div class="col-md-4">
+                                                    @Html.TextBoxFor(model => model.LegalPerson, new { @class = "form-control", placeholder = "" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">登记日期:</label>
+                                                <div class="col-md-4">
+                                                    @Html.TextBoxFor(model => model.RegisterDate, new { @class = "form-control  date-picker" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">单位性质:</label>
+                                                <div class="col-md-4">
+                                                    @Html.DropDownListFor(model => model.CompanyType, Model.CompanyTypeList, new { @class = "form-control", placeholder = "" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">企业注册类型:</label>
+                                                <div class="col-md-4">
+                                                    @Html.DropDownListFor(model => model.CompanyRegisterType, Model.CompanyRegisterTypeList, new { @class = "form-control", placeholder = "" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">上传企业电子签章:</label>
+                                                <div class="col-md-4">
+                                                    @Html.TextBoxFor(model => model.StampFilePath, new { @class = "form-control", @name = "upfile", @id = "upfile", placeholder = "请上传电子签章", @readonly = "readonly" })
+
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <input type="button" value="浏览..." onclick="ImportFile.click()" class="btn green">
+                                                </div>
+                                                <input type="file" id="ImportFile" name="ImportFile" style="display:none" onchange="upfile.value=this.value" accept=".png,.jpg,.jpeg,.bmp">
+                                                <div class="col-md-1">
+                                                    <input type="button" value="删除" onclick="ClearUploadFile()" class="btn red">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions fluid">
+                                            <div class="col-md-offset-3 col-md-9">
+                                                <button type="submit" class="btn blue">提交</button>
+                                                <a href="@Url.Action("Login", "MembershipUser" )" class="btn default">返回登录界面</a>
+                                            </div>
+                                        </div>
+                                    }
+                                    <!-- END FORM-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-footer">
+        <div class="page-footer-inner">
+            2016 &copy; 版权所有
+        </div>
+        <div class="scroll-to-top">
+            <i class="icon-arrow-up"></i>
+        </div>
+    </div>
+
+</body>
+</html>
+<script>
+    function ClearUploadFile()
+    {
+        $('#upfile').val('');
+        var file = $("#ImportFile")
+        file.after(file.clone().val(""));
+        file.remove();
+    }
+</script>

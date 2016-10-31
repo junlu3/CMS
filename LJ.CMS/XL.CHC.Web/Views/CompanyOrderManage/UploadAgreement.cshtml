@@ -1,0 +1,33 @@
+﻿@model XL.CHC.Web.Models.CompanyOrderDownLoadViewModel
+@using (Html.BeginForm("UploadAgreement", "CompanyOrderManage", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(x => x.Order.Id)
+    <div class="form-body">
+        <div class="form-group">
+            <label class="col-md-3 control-label">上传协议书:</label>
+            <div class="col-md-4">
+                <input type="text" id="upfile" name="upfile" placeholder="请上传协议书" , readonly="readonly" class="form-control" />
+            </div>
+            <div class="col-md-1">
+                <input type="button" value="浏览..." onclick="ImportFile.click()" class="btn green">
+            </div>
+            <input type="file" id="ImportFile" name="ImportFile" style="display:none" onchange="upfile.value=this.value" accept=".xlsx">
+            <div class="col-md-1">
+            </div>
+        </div>
+        <div class="form-actions text-center">
+            <input type="button" value="删除" onclick="ClearUploadFile()" class="btn red">
+            <button class="btn blue" type="submit">确认上传</button>
+        </div>
+    </div>
+}
+
+<script>
+    function ClearUploadFile()
+    {
+        $('#upfile').val('');
+        var file = $("#ImportFile")
+        file.after(file.clone().val(""));
+        file.remove();
+    }
+</script>

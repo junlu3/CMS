@@ -1,0 +1,388 @@
+﻿@model XL.CHC.Web.Models.CompanyOrderCreateViewModel
+@{
+    ViewBag.Title = "订单生成";
+    ViewBag.CurrentPage = "HealthManage_ComapnyOrderBuild";
+    var activeClass = "";
+
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> 订单生成 - <span class="step-title">
+                        Step  @Model.CurrentStep  of 3
+                    </span>
+                </div>
+                <div class="tools hidden-xs">
+                    <a href="javascript:;" class="collapse">
+                    </a>
+                    <a href="#portlet-config" data-toggle="modal" class="config">
+                    </a>
+                    <a href="javascript:;" class="reload">
+                    </a>
+                    <a href="javascript:;" class="remove">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                @using (Html.BeginForm("Create", "CompanyOrderManage", FormMethod.Post, new { id = "submit_form", @class = "form-horizontal" }))
+                {
+@Html.HiddenFor(x => x.OrderId)
+                    @Html.HiddenFor(x => x.CurrentStep)
+                    @Html.HiddenFor(x => x.AssignedSubOrderString)
+
+                    <div class="form-wizard">
+                        <div class="form-body">
+                            <ul class="nav nav-pills nav-justified steps">
+                                <li>
+                                    <a href="#tab1" data-toggle="tab" class="step">
+                                        <span class="number">
+                                            1
+                                        </span>
+                                        <span class="desc">
+                                            <i class="fa fa-check"></i> 选择预约
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#tab2" data-toggle="tab" class="step">
+                                        <span class="number">
+                                            2
+                                        </span>
+                                        <span class="desc">
+                                            <i class="fa fa-check"></i> 选择体检员工
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#tab3" data-toggle="tab" class="step ">
+                                        <span class="number">
+                                            3
+                                        </span>
+                                        <span class="desc">
+                                            <i class="fa fa-check"></i> 确认生成
+                                        </span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <div id="bar" class="progress progress-striped" role="progressbar">
+                                <div class="progress-bar progress-bar-success">
+                                </div>
+                            </div>
+                            <div class="tab-content">
+                                <div class="alert alert-danger display-none">
+                                    <button class="close" data-dismiss="alert"></button>
+                                    <span id="spanErrorMessage">
+                                    </span>
+                                </div>
+                                <div class="alert alert-success display-none">
+                                    <button class="close" data-dismiss="alert"></button>
+                                    <span id="spanSuccessMessage">
+                                    </span>
+                                </div>
+                                @if (Model.CurrentStep == 1)
+                                {
+                                    activeClass = "active";
+                                }
+                                else
+                                {
+                                    activeClass = "";
+                                }
+                                <div class="tab-pane @activeClass" id="tab1">
+                                    <h3 class="block">选择预约</h3>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-lg-2">
+                                            订单备注:
+                                        </label>
+                                        <div class="col-md-4">
+                                            @Html.TextAreaFor(x => x.Comment, new { @class = "form-control", @rows = 5 })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-lg-2">
+                                            预约列表(绿色为选中)： <span class="required">
+                                            </span>
+                                        </label>
+                                        <div class="col-md-4">
+                                            <div class="table-scrollable  " style="max-width:800px;">
+                                                <table id="tableProject" class="table table-striped table-bordered table-hover" data-height="200">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:100px">
+                                                                操作
+                                                            </th>
+
+                                                            <th>
+                                                                预定时间
+                                                            </th>
+                                                            <th>
+                                                                预约状态
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in Model.AssignedSubOrders)
+                                                        {
+                                                 <tr>
+                                                                <td>
+                                                                    <a class="btn default btn-xs blue" href="javascript:;" onclick='UnSelectSubOrder(this," @item.Id ")'><i class="fa fa-trash-o"></i> 取消选择</a>
+                                                                </td>
+
+                                                                <td>
+                                                                    @Convert.ToDateTime(item.StartDate).ToString("yyyy-MM-dd")
+                                                                </td>
+                                                                <td>
+                                                                    @item.Comment
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                        @foreach (var item in Model.NotAssignedSubOrders)
+                                                        {
+
+<tr>
+                                                                <td>
+                                                                    <a class="btn default btn-xs blue" href="javascript:;" onclick='SelectSubOrder(this," @item.Id ")'><i class="fa fa-check"></i> 选择</a>
+                                                                </td>
+                                                                <td>
+                                                                    @Convert.ToDateTime(item.StartDate).ToString("yyyy-MM-dd")
+                                                                </td>
+                                                                <td>
+                                                                    @item.Comment
+                                                                </td>
+                                                            </tr>                                }
+
+#line default
+#line hidden
+
+#line 21 "D:\XProjects\Shanghai\changyin\BodyHealth\src\XL.CHC\XL.CHC.Web\Views\CompanyOrderManage\Create.cshtml"
+                                                        foreach (var item in Model.AssignedSubOrders)
+                                                        {
+                                                            item.Id;}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                @if (Model.CurrentStep == 2)
+                                {
+                                    activeClass = "active";
+                                }
+                                else
+                                {
+                                    activeClass = "";
+                                }
+                                <div class="tab-pane @item.Id" id="tab2">
+                                    <h3 class="block">Provide your profile details</h3>
+
+                                </div>
+                                <div class="tab-pane" id="tab3">
+                                    <h3 class="block">Provide your adfasdf</h3>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <a href="javascript:;" class="btn default button-previous">
+                                        <i class="m-icon-swapleft"></i> 上一步
+                                    </a>
+                                    <a href="javascript:;" class="btn blue button-next">
+                                        下一步 <i class="m-icon-swapright m-icon-white"></i>
+                                    </a>
+                                    <a href="javascript:;" class="btn green button-submit">
+                                        提交 <i class="m-icon-swapright m-icon-white"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+
+#line default
+#line hidden
+
+#line 32 "D:\XProjects\Shanghai\changyin\BodyHealth\src\XL.CHC\XL.CHC.Web\Views\CompanyOrderManage\Create.cshtml"
+
+
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var selectedSubOrders = new Array();
+    function SelectSubOrder(sender, subOrderId)
+    {
+        $(sender).parent().parent().addClass("bg-green");
+        $(sender).removeClass("blue");
+        $(sender).addClass("grey");
+        $(sender).html("<i class=\"fa fa-trash-o\"></i> 取消选择");
+        $(sender).attr("onclick", "UnSelectSubOrder(this,'" + subOrderId + "')");
+        selectedSubOrders.push(subOrderId);
+    }
+
+    function UnSelectSubOrder(sender, subOrderId)
+    {
+        $(sender).parent().parent().removeClass("bg-green");
+        $(sender).removeClass("grey");
+        $(sender).addClass("blue");
+        $(sender).html("<i class=\"fa fa-check\"></i> 选择");
+        $(sender).attr("onclick", "SelectSubOrder(this,'" + subOrderId + "')");
+        for (var i = 0; i < selectedSubOrders.length; i++)
+        {
+            if (selectedSubOrders[i] == subOrderId)
+            {
+                selectedSubOrders.splice(i, 1);
+                break;
+            }
+        }
+    }
+
+    var FormWizard = function ()
+    {
+        return {
+            //main function to initiate the module
+            init: function ()
+            {
+                if (!jQuery().bootstrapWizard)
+                {
+                    return;
+                }
+
+                function format(state)
+                {
+                    if (!state.id) return state.text; // optgroup
+                    return "<img class='flag' src='../../assets/global/img/flags/" + state.id.toLowerCase() + ".png'/>&nbsp;&nbsp;" + state.text;
+                }
+                var handleTitle = function (tab, navigation, index)
+                {
+                    var total = navigation.find('li').length;
+                    var current = index + 1;
+                    // set wizard title
+                    $('.step-title', $('#form_wizard_1')).text('Step ' + (index + 1) + ' of ' + total);
+                    // set done steps
+                    jQuery('li', $('#form_wizard_1')).removeClass("done");
+                    var li_list = navigation.find('li');
+                    for (var i = 0; i < index; i++)
+                    {
+                        jQuery(li_list[i]).addClass("done");
+                    }
+
+                    if (current == 1)
+                    {
+                        $('#form_wizard_1').find('.button-previous').hide();
+                    } else
+                    {
+                        $('#form_wizard_1').find('.button-previous').show();
+                    }
+
+                    if (current >= total)
+                    {
+                        $('#form_wizard_1').find('.button-next').hide();
+                        $('#form_wizard_1').find('.button-submit').show();
+                    } else
+                    {
+                        $('#form_wizard_1').find('.button-next').show();
+                        $('#form_wizard_1').find('.button-submit').hide();
+                    }
+                    Metronic.scrollTo($('.page-title'));
+                }
+                // default form wizard
+                $('#form_wizard_1').bootstrapWizard({
+                    'nextSelector': '.button-next',
+                    'previousSelector': '.button-previous',
+                    onTabClick: function (tab, navigation, index, clickedIndex)
+                    {
+                        return false;
+                        /*
+                        success.hide();
+                        error.hide();
+                        if (form.valid() == false) {
+                            return false;
+                        }
+                        handleTitle(tab, navigation, clickedIndex);
+                        */
+                    },
+                    onNext: function (tab, navigation, index)
+                    {
+                        $("#AssignedSubOrderString").val(selectedSubOrders.join(","));
+
+                        SaveStepFirstInfo();
+                        handleTitle(tab, navigation, index);
+
+                    },
+                    onPrevious: function (tab, navigation, index)
+                    {
+                        //success.hide();
+                        //error.hide();
+
+                        handleTitle(tab, navigation, index);
+                    },
+                    onTabShow: function (tab, navigation, index)
+                    {
+                        var total = navigation.find('li').length;
+                        var current = index + 1;
+                        var $percent = (current / total) * 100;
+                        $('#form_wizard_1').find('.progress-bar').css({
+                            width: $percent + '%'
+                        });
+                    }
+                });
+
+                $('#form_wizard_1').find('.button-previous').hide();
+                $('#form_wizard_1 .button-submit').click(function ()
+                {
+                    $('#bpo_submit_form').submit();
+                }).hide();
+
+
+            }
+
+        };
+
+    }();
+    jQuery(document).ready(function ()
+    {
+        FormWizard.init();
+    });
+
+    function SaveStepFirstInfo()
+    {
+
+        var orderId = $("#OrderId").val();
+        var subOrders = $("#AssignedSubOrderString").val();
+        var comment = $("#Comment").val();
+        $.ajax({
+            type: "post",
+            url: "/CompanyOrderManage/SaveFirstStepInfo",
+            data: { "orderId": orderId, "subOrdersString": subOrders, "comment": comment },
+            dataType: "json",
+            success: function (data)
+            {
+                if (data.Status == -1)
+                {
+                    $("#spanErrorMessage").val(data.Message);
+                    $(".alert-danger").show();
+                }
+                else
+                {
+                    $("#OrderId").val(data.orderId);
+                }
+            },
+            error: function (ex)
+            {
+                alert("获取数据失败！" + ex.error);
+            }
+        });
+    }
+</script>

@@ -1,0 +1,48 @@
+﻿@using XL.CHC.Web.Infrastructure
+@model List<XL.CHC.Domain.Constants.MenuItemWithChildren>
+
+<input type="hidden" id="currentPage" value="@ViewBag.CurrentPage" />
+<div class="page-sidebar navbar-collapse collapse">
+    <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+        <li class="sidebar-toggler-wrapper">
+            <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+            <div class="sidebar-toggler">
+            </div>
+
+            <!-- END SIDEBAR TOGGLER BUTTON -->
+        </li>
+        <li>
+            <div style="height:35px">
+            </div>
+        </li>
+        @foreach (var item in Model)
+        {
+            <li id="@item.MenuItem.MenuName" name="PermissionGroup">
+                <a href="javascript:;">
+                    <i class="fa @item.MenuItem.IconClass">
+                    </i>
+                    <span class="tile">
+                        @item.MenuItem.MenuText
+                    </span>
+                    <span class="arrow"></span>
+                </a>
+                @if (item.SubMenuItems.Count > 0)
+                {
+                    <ul class="sub-menu">
+                        @foreach (var m in item.SubMenuItems)
+                        {
+                            <li id="@m.MenuName" name="PermissionGroup">
+                                <a href="@m.Url">
+                                    @m.MenuText
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+                }
+
+            </li>
+        }
+
+    </ul>
+</div>

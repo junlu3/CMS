@@ -1,0 +1,122 @@
+﻿@model XL.CHC.Web.Models.HazardousSubstancesViewModel
+<div class="modal-dialog  " style="width:750px;" id="formSearchEmp">
+    <input type="hidden" id="Notification4" name="Notification" value="@Model.Notification" />
+    <input type="hidden" id="NotificationType4" name="NotificationType" value="@Model.NotificationType" />
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title font-yellow-casablanca">新增危险组分</h4>
+        </div>
+
+            <div class="modal-body">
+                <div class="note note-danger hidden" id="note_danger_AddHSForm">
+                    <p>
+                        保存失败
+                    </p>
+                </div>
+@using (Ajax.BeginForm("AddHazardousSubstances", "Specification", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "formSearchEmp", OnSuccess="OnSuccess_AddHS" }, new { id = "addHazardousSubstances_form", @class = "form-horizontal" }))
+            {
+                @Html.HiddenFor(x=>x.Specification_Id)
+                @Html.HiddenFor(x=>x.Id)
+                <div class="form-body   ">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label ">CAS号：</label>
+                        <div class="col-md-6 ">
+                            @if (Model.Id.ToString() == "00000000-0000-0000-0000-000000000000")
+                            {
+                                <input type="hidden" id="hidGASCode" name="HS_CASCode" value="@Model.HS_CASCode" />
+                                <select id="selGASCode" class="bs-select form-control col-md-6" data-live-search="true" style="width:90%">
+                                    @foreach (var item in Model.CASCodes)
+                                    {
+                                        var selectedStr = string.Empty;
+                                        if (item.Selected)
+                                        {
+                                            selectedStr = "selected";
+                                        }
+
+                                        <option value="@item.Value" @selectedStr>@item.Text</option>
+                                    }
+                                </select>
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(model => model.HS_CASCode, new { @class = "form-control" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.HS_CASCode)
+                                </span>
+                            }
+                        </div><a href="/Specification/AddComposition" target="_blank"><i class="fa fa-plus"></i></a> 
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">名称：</label>
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.HS_Name, new { @class = "form-control" })
+                            <span class="help-block font-red">
+                                @Html.ValidationMessageFor(x => x.HS_Name)
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-inline">
+                        <label class="col-md-3 control-label">含量：</label>
+                        <div class="col-md-6">
+                            <div class="col-md-4 input-group">
+                                @Html.TextBoxFor(model => model.HS_MinPercent, new { @class = "form-control" })
+                                <span class="input-group-addon">%</span>
+                            </div>
+                            ~
+                            <div class="col-md-4 input-group">
+                                @Html.TextBoxFor(model => model.HS_MaxPercent, new { @class = "form-control" })
+                                <span class="input-group-addon">%</span>
+                            </div>
+                            <span class="help-block font-red">
+                                @Html.ValidationMessageFor(x => x.HS_MinPercent)
+                            </span>
+                            <span class="help-block font-red">
+                                @Html.ValidationMessageFor(x => x.HS_MaxPercent)
+                            </span>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label ">GHS有害分类代码：</label>
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(model => Model.HS_HStatement_Str, Model.HS_HStatementSel, new { @class = "ui-multiselect", @multiple = "multiple" })
+                        </div>
+                    </div>
+                </div>
+}
+            </div>
+            <div class="modal-footer">
+                <button id="btnConfirmRegister" class="btn green" onclick="SubmitAddHS()"  >确认</button>
+                <button id="btnCloseRegister" class="btn default" type="button" data-dismiss="modal">关闭</button>
+            </div>
+    </div>
+</div>
+
+<script>
+
+    if ($("#Id").val() == "00000000-0000-0000-0000-000000000000")
+    {
+        $("#HS_Name").val($("#selGASCode").val());
+        $("#hidGASCode").val($("#selGASCode").find("option:selected").text());
+    }
+
+
+
+    $('.bs-select').selectpicker({
+        iconBase: 'fa',
+        tickIcon: 'fa-check'
+    });
+
+    $('#selGASCode').on('changed.bs.select', function (e)
+    {
+        $("#HS_Name").val(this.value);
+        $("#hidGASCode").val(this.options[this.options.selectedIndex].text);
+    });
+
+    function SubmitAddHS()
+    {
+        $("#addHazardousSubstances_form").submit();
+    }
+</script>

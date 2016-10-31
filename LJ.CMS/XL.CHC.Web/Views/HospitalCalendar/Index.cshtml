@@ -1,0 +1,319 @@
+﻿
+@{
+    ViewBag.CurrentPage = "HealthManage_HospitalCalendar";
+    ViewBag.Title = "日历管理";
+    var nowDate = DateTime.Now.ToString("yyyy-MM");
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue calendar">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-2x fa-calendar-o"></i>日历管理</div>
+            </div>
+            <div class="portlet-body light-grey">
+                <div class="row">
+                    <div class="col-md-3 col-sm-12">
+                        <div id="divMonthInfo">
+                            <h3 class="event-form-title">选择年月:</h3>
+                            <div class="form-group">
+                                <div id="divDate" class="input-group input-medium date datepicker-months" data-date-format="yyyy-mm"
+                                     data-date-viewmode="months" data-date-minviewmode="months">
+                                    <input type="text" id="txtDate" value="@nowDate" class="form-control" readonly />
+                                    <span class="input-group-btn">
+                                        <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            颜色
+                                        </th>
+                                        <th>
+                                            说明
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="background-color:silver"></td>
+                                        <td>
+                                            灰色，当天不可被企业预定
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color:#3598DC"></td>
+                                        <td>
+                                            蓝色，可以被预定。默认颜色
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color:#F4D03F"></td>
+                                        <td>橙色，已被预定但医生还未确认</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color:#E08283"></td>
+                                        <td>红色，已被预定且得到医生的确认</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="inline-form">
+                            <button id="btnSave" class="btn blue" onclick="SaveCalendar()">保存日历</button>
+                            <button id="btnCancle" class="btn default">取消</button>
+                        </div>
+                    </div>
+                    <div class="col-md-9 col-sm-12">
+                        <div id="calendar" class="has-toolbar">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Content/Scripts/HospitalCalendar.js"></script>
+<script type="text/javascript">
+    var calendarData;
+    var oldDate; //old current Date
+
+    jQuery(document).ready(function ()
+    {
+        loadDatePicker();
+        HospitalCalendar.init();
+        InitCalendarData();
+    });
+
+
+    function InitCalendarData()
+    {
+        InitCalendarStyle();
+        GetCalendarData();
+    }
+
+    function InitCalendarStyle()
+    {
+        HospitalCalendar.InitStyle();
+        $(".fc-day").text("可预定");
+        $(".fc-day").mouseenter(function ()
+        {
+            $(this).css("font-weight", "bold");
+            if ($(this).text() == "可预定")
+            {
+                $(this).text("点击改为不可预定");
+            }
+            else
+            {
+                $(this).text("点击改为可预定");
+            }
+        });
+        $(".fc-day").mouseleave(function ()
+        {
+            $(this).css("font-weight", "normal");
+            if ($(this).text() == "点击改为不可预定")
+            {
+                $(this).text("可预定");
+            }
+            else
+            {
+                $(this).text("不可预定");
+            }
+        });
+
+        $(".fc-day-number").mouseenter(function ()
+        {
+            var index = $(this).index();
+            var fcDay = $(this).parents(".fc-row").find(".fc-day")[index];
+            $(fcDay).css("font-weight", "bold");
+            if ($(fcDay).text() == "可预定")
+            {
+                $(fcDay).text("点击改为不可预定");
+            }
+            else
+            {
+                $(fcDay).text("点击改为可预定");
+            }
+        });
+
+        $(".fc-day-number").mouseleave(function ()
+        {
+            var index = $(this).index();
+            var fcDay = $(this).parents(".fc-row").find(".fc-day")[index];
+            $(fcDay).css("font-weight", "normal");
+            if ($(fcDay).text() == "点击改为不可预定")
+            {
+                $(fcDay).text("可预定");
+            }
+            else
+            {
+                $(fcDay).text("不可预定");
+            }
+        });
+
+        $(".fc-other-month").unbind();
+        $("td[class*='fc-other-month'][class*='fc-day fc-widget-content']").text("");
+        $(".fc-day").click(function ()
+        {
+            var element = $(this);
+            var dateData = element.data("date");
+            var date = new Date(dateData);
+            var day = date.getDate();
+            if (element.text() == "点击改为不可预定")
+            {
+                element.css("background-color", "silver");
+                $(this).text("点击改为可预定");
+                calendarData[day - 1].Enabled = false;
+            }
+            else
+            {
+                element.css("background-color", "#3598DC");
+                $(this).text("点击改为不可预定");
+                calendarData[day - 1].Enabled = true;
+            }
+        });
+
+        $(".fc-day-number").click(function ()
+        {
+            var index = $(this).index();
+            var fcDay = $(this).parents(".fc-row").find(".fc-day")[index];
+            var element = $(fcDay);
+            var dateData = element.data("date");
+            var date = new Date(dateData);
+            var day = date.getDate();
+            if (element.text() == "点击改为不可预定")
+            {
+                element.css("background-color", "silver");
+                $(element).text("点击改为可预定");
+                calendarData[day - 1].Enabled = false;
+            }
+            else
+            {
+                element.css("background-color", "#3598DC");
+                $(element).text("点击改为不可预定");
+                calendarData[day - 1].Enabled = true;
+            }
+        });
+    }
+
+    function SaveCalendar()
+    {
+        var date = $("#txtDate").val();
+        var year = date.substr(0, 4);
+        var month = date.substr(5, 2);
+        $.ajax({
+            type: "post",
+            url: "/HospitalCalendar/SaveCalendar",
+            data: { "calendarData": calendarData },
+            dataType: "json",
+            success: function (data)
+            {
+                if (data.Status == 0)
+                {
+                    alert("保存成功！");
+                }
+                else
+                {
+                    alert("保存失败：" + data.Message);
+                }
+            },
+            error: function (ex)
+            {
+                alert("保存错误：" + ex.error)
+            }
+        });
+    }
+
+    function GetCalendarData()
+    {
+        var date = $("#txtDate").val();
+        var year = date.substr(0, 4);
+        var month = date.substr(5, 2);
+        $.ajax({
+            type: "post",
+            url: "/HospitalCalendar/GetMonthData",
+            data: { "year": year, "month": month },
+            dataType: "json",
+            success: function (data)
+            {
+                calendarData = data;
+                if (data.length > 0)
+                {
+                    for (var i = 0; i < data.length; i++)
+                    {
+                        var element = $("td[class*='fc-day fc-widget-content'][data-date='" + data[i].StartDateString + "']");
+                        element.css("color", "white");
+                        element.css("background", "#3598DC");
+                        element.css("cursor", "pointer");
+                        var fcNumber = $(element).parents(".fc-row").find(".fc-day-number")[element.index()];
+                        $(fcNumber).css("cursor", "pointer");
+                        if (data[i].Enabled == false)
+                        {
+                            element.css("background-color", "silver");
+                            element.text("不可预定");
+                        }
+                        if (data[i].OrderStatus == 1)
+                        {
+                            element.css("background-color", "#F4D03F");
+                            element.text("已被预定未确认");
+                            element.css("cursor", "not-allowed");
+                            element.unbind();
+                            $(fcNumber).css("cursor", "not-allowed");
+                            $(fcNumber).unbind();
+                        }
+                        else if (data[i].OrderStatus == 2)
+                        {
+                            element.css("background-color", "#E08283");
+                            element.text("已确认预约");
+                            element.css("cursor", "not-allowed");
+                            element.unbind();
+                            $(fcNumber).css("cursor", "not-allowed");
+                            $(fcNumber).unbind();
+                        }
+                    }
+                }
+
+            },
+            error: function (ex)
+            {
+                alert("获取数据失败！" + ex.error);
+            }
+        });
+    }
+
+    function loadDatePicker()
+    {
+        oldDate = $("txtDate").val();
+        if (jQuery().datepicker)
+        {
+            $('#divDate').datepicker({
+                startView: 1,
+                maxViewMode: 1,
+                minViewMode: 1,
+                forceParse: false,
+                language: 'zh-CN',
+                autoclose: true,
+
+
+            }).on('changeDate', function (arg)
+            {
+                if (arg.date.format("yyyy-MM") != oldDate)
+                {
+                    oldDate = arg.date.format("yyyy-MM");
+                    HospitalCalendar.init();
+                    InitCalendarData();
+
+                }
+            });
+            $('body').removeClass("modal-open");
+        }
+
+    }
+
+
+</script>

@@ -1,0 +1,211 @@
+﻿@model XL.CHC.Web.Models.SpecificationViewModel
+@{
+    Layout = null;
+}
+<input type="hidden" id="Notification4" name="Notification" value="@Model.Notification" />
+<input type="hidden" id="NotificationType4" name="NotificationType" value="@Model.NotificationType" />
+
+@using (Ajax.BeginForm("PhysicoChemical", "Specification", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "sp_form4", OnSuccess = "OnSuccess_form4", OnFailure = "OnFailure_form4" }, new { @class = "form-horizontal", @id = "form4" }))
+{
+    <div class="form-body">
+        @Html.AntiForgeryToken()
+        <input id="sid4" name="Id" type="hidden" value="@Model.Id" />
+        @*<div class="form-group">
+            <label class="col-md-3 control-label">暴露限值(固体):</label>
+            <div class="col-md-4">
+                <div class="col-md-4 input-group">
+                    @Html.TextBoxFor(model => model.ExposedLimit_Solid, new { @class = "form-control", @rows = "4" })
+                    <span class="input-group-addon">mg/m3</span>
+                </div>
+
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.ExposedLimit_Solid)
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">暴露限值(蒸汽/气体):</label>
+            <div class="col-md-4">
+                <div class="col-md-4 input-group">
+                    @Html.TextBoxFor(model => model.ExposedLimit_Gas, new { @class = "form-control", @rows = "4" })
+                    <span class="input-group-addon">mg/m3</span>
+                </div>
+
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.ExposedLimit_Gas)
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">物理状态:</label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.PhysicalState, new { @class = "form-control", @rows = "4" })
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.PhysicalState)
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">外观/气味:</label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.AppearanceAndSmell, new { @class = "form-control", @rows = "4" })
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.AppearanceAndSmell)
+                </span>
+            </div>
+        </div>*@
+        <div class="form-group form-inline">
+            <label class="col-md-3 control-label">沸点(液体):</label>
+            <div class="col-md-4">
+                <div class="col-md-4 input-group">
+                    @Html.TextBoxFor(model => model.BoilingPoint_Liquid_C, new { @class = "form-control",  style = "min-width:100px" })
+                    <span class="input-group-addon">℃</span>
+                </div>
+                &nbsp;&nbsp;
+                <a href="javascript:;" >
+                    <span class="glyphicon glyphicon-resize-horizontal"></span>
+                </a>
+                &nbsp;&nbsp;
+                <div class="col-md-4 input-group">
+                    @Html.TextBoxFor(model => model.BoilingPoint_Liquid_F, new { @class = "form-control",  style = "min-width:100px" })
+                    <span class="input-group-addon">℃</span>
+                </div>
+
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.BoilingPoint_Liquid_C)
+                </span>
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.BoilingPoint_Liquid_F)
+                </span>
+            </div>
+        </div>
+        <div class="form-group form-inline">
+            <label class="col-md-3 control-label">闪点:</label>
+            <div class="col-md-4">
+                <div class="col-md-4 input-group">
+                    @Html.TextBoxFor(model => model.FlashingPoint_C, new { @class = "form-control",  style = "min-width:100px" })
+                    <span class="input-group-addon">℃</span>
+                </div>
+                &nbsp;&nbsp;
+                <a href="javascript:;">
+                    <span class="glyphicon glyphicon-resize-horizontal"></span>
+                </a>
+                &nbsp;&nbsp;
+                <div class="col-md-4 input-group">
+                    @Html.TextBoxFor(model => model.FlashingPoint_F, new { @class = "form-control",  style = "min-width:100px" })
+                    <span class="input-group-addon">℃</span>
+                </div>
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.FlashingPoint_C)
+                </span>
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.FlashingPoint_F)
+                </span>
+            </div>
+        </div>
+        <div class="form-group form-inline">
+            <label class="col-md-3 control-label">燃烧极限范围:</label>
+            <div class="col-md-4">
+                <div class="col-md-4 input-group">
+                    @Html.TextBoxFor(model => model.BurningLimit_Min, new { @class = "form-control", style = "min-width:100px" })
+                    <span class="input-group-addon">%</span>
+                </div>
+                &nbsp;&nbsp;&nbsp;
+                ~
+                &nbsp;&nbsp;&nbsp;
+                <div class="col-md-4 input-group">
+                    @Html.TextBoxFor(model => model.BurningLimit_Max, new { @class = "form-control", style = "min-width:100px" })
+                    <span class="input-group-addon">%</span>
+                </div>
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.BurningLimit_Min)
+                </span>
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.BurningLimit_Max)
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group form-inline">
+            <label class="col-md-3 control-label">蒸汽压:</label>
+            <div class="col-md-4">
+                <div class="col-md-4 input-group">
+                    @Html.TextBoxFor(model => model.VaporPressure, new { @class = "form-control", style = "min-width:100px" })
+                    <span class="input-group-addon">mmHg</span>
+                </div>
+                &nbsp;&nbsp;
+                <a href="javascript:;">
+                    <span class="glyphicon glyphicon-resize-horizontal"></span>
+                </a>
+                &nbsp;&nbsp;
+                <div class="col-md-4 input-group">
+                    @Html.TextBoxFor(model => model.VaporPressure_Pa, new { @class = "form-control", style = "min-width:100px" })
+                    <span class="input-group-addon">Pa</span>
+                </div>
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.VaporPressure)
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="form-actions fluid">
+        <div class="col-md-offset-3 col-md-9">
+            <button type="button" class="btn blue" onclick="btnSubmit(4)">保存</button>
+            <a href="@Url.Action("Index", "Specification" )" class="btn default">返回化学品列表</a>
+        </div>
+    </div>
+}
+<script>
+    $("#BoilingPoint_Liquid_C").change(function (data)
+    {
+        if (this.value != "")
+        {
+            var _temp_f = parseFloat(this.value) * 1.8 + 32;
+            $("#BoilingPoint_Liquid_F").val(_temp_f.toFixed(2));
+        }
+
+    });
+    $("#BoilingPoint_Liquid_F").change(function (data)
+    {
+        if (this.value != "")
+        {
+            var _temp_c = (parseFloat(this.value) - 32) / 1.8;
+            $("#BoilingPoint_Liquid_C").val(_temp_c.toFixed(2));
+        }
+
+    });
+    $("#FlashingPoint_C").change(function ()
+    {
+        if (this.value != "")
+        {
+            var _temp_f = parseFloat(this.value) * 1.8 + 32;
+            $("#FlashingPoint_F").val(_temp_f.toFixed(2));
+        }
+
+    });
+    $("#FlashingPoint_F").change(function ()
+    {
+        if (this.value != "")
+        {
+            var _temp_c = (parseFloat(this.value) - 32) / 1.8;
+            $("#FlashingPoint_C").val(_temp_c.toFixed(2));
+        }
+
+    });
+    $("#VaporPressure").change(function ()
+    {
+        if (this.value != "")
+        {
+            var _temp_mmhg = parseFloat(this.value) * 133.32;
+            $("#VaporPressure_Pa").val(_temp_mmhg.toFixed(2));
+        }
+    });
+    $("#VaporPressure_Pa").change(function ()
+    {
+        if (this.value != "")
+        {
+            var _temp_pa = parseFloat(this.value) / 133.32;
+            $("#VaporPressure").val(_temp_pa.toFixed(2));
+        }
+    });
+</script>

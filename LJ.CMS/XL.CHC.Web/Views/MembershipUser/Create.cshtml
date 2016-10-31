@@ -1,0 +1,85 @@
+﻿@model XL.CHC.Web.Models.MembershipUserEditViewModel
+
+@{
+    ViewBag.Title = "新建用户";
+    ViewBag.CurrentPage = "SystemManage_UserManage";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> 创建用户
+
+                </div>
+                <div class="actions">
+                    <a href="/MembershipUser/Manage" class="btn blue btn-sm">
+                        <i class="fa fa-mail-reply"></i> 返回
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                @using (Html.BeginForm("Create", "MembershipUser", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    <div class="form-body">
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">用户名:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", placeholder = "请输入账号" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.UserName)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">邮箱:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "请输入电子邮箱" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Email)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">公司:</label>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => model.Company_Id, Model.Companys, new { @class = "form-control",  })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">角色:</label>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => model.Role_Id, Model.Roles, new { @class = "form-control", })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="submit" class="btn blue">提交</button>
+                            <a href="@Url.Action("Manage", "MembershipUser" )" class="btn default">返回用户列表</a>
+                        </div>
+                    </div>
+                }
+                <!-- END FORM-->
+            </div>
+        </div>
+    </div>
+</div>
+<input id="hidGetRoles" type="hidden" value="@Url.Action("GetRoles","MembershipUser")" />
+<script type="text/javascript">
+    $("#Company_Id").change(function ()
+    {
+        $.post($("#hidGetRoles").val(), { id: this.value }, function (data)
+        {
+            var strHtml = "";
+            $.each(data, function (i, n)
+            {
+                strHtml += "<option value='" + n.Value + "' " + (n.Selected? " 'selected=selected' " : "" )  + ">" + n.Text + "</option>";
+            });
+            $("#Role_Id").html(strHtml);
+        });
+    });
+</script>

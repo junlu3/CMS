@@ -1,0 +1,121 @@
+﻿@model XL.CHC.Web.Models.EmployeeAttachementViewModel
+<div class="row" id="divAttachement">
+    <div class="col-md-12">
+        <h3 class="form-section">表单下载</h3>
+        <div class="row margin-bottom-10">
+            @using (Ajax.BeginForm("_OrderAttachement", "Employee", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "divAttachement" }, new { id = "attachement_form" }))
+            {
+                @Html.HiddenFor(x => x.IDCard)
+                <div class="col-md-12 col-lg-10">
+
+                    <div class="form-body   ">
+                        <div class="row">
+                            <div class="col-md-6  col-lg-4">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button class="btn grey" type="button">体检日期：</button>
+                                    </span>
+                                    <div class="input-group input-large date-picker input-daterange" data-date-format="yyyy-MM-dd">
+                                        @Html.TextBoxFor(x => x.MinSearchTime, new { @class = "form-control", @name = "from" })
+                                        @*<input type="text" class="form-control" name="from">*@
+                                        <span class="input-group-addon">
+                                            ~
+                                        </span>
+                                        @Html.TextBoxFor(x => x.MaxSearchTime, new { @class = "form-control", @name = "to" })
+                                        @*<input type="text" class="form-control" name="to">*@
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="form-actions  ">
+                                    <button type="submit" class="btn blue"><i class="fa fa-search"></i> 查询</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="row margin-bottom-10">
+            @using (Html.BeginForm("ExportAttachement", "Employee", FormMethod.Post, new { @id = "order_attachement_form" }))
+            {
+                @Html.HiddenFor(x => x.IDCard)
+                @Html.HiddenFor(x => x.ExportTarget)
+                @Html.HiddenFor(x => x.ExportOrderId)
+                <input type="hidden" name="ExportFileName" id="ExportFileName" />
+                <div class="col-md-4 col-lg-3">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <td>职业病危害因素告知书</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in Model.CompanyOrders)
+                            {
+                                var fileName = "职业病危害因素告知书";
+
+                                var minOrderDate = order.SubOrders.OrderBy(x => x.StartDate).FirstOrDefault().StartDate;
+                                var maxOrderDate = order.SubOrders.OrderBy(x => x.StartDate).LastOrDefault().StartDate;
+
+                                if (maxOrderDate > minOrderDate)
+                                {
+                                    fileName += Convert.ToDateTime(minOrderDate).ToString("yyyy-MM-dd") + "~" + Convert.ToDateTime(maxOrderDate).ToString("yyyy-MM-dd") + ".xlsx";
+                                }
+                                else
+                                {
+                                    fileName += Convert.ToDateTime(minOrderDate).ToString("yyyy-MM-dd") + ".xlsx";
+                                }
+                                <tr>
+                                    <td>
+                                        <input type="submit" value="@fileName" class="btn blue" onclick='SubmitExport(0,"@order.Id", "@fileName")' />
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <td>上海市职业健康检查表</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in Model.CompanyOrders)
+                            {
+
+                                var minOrderDate = order.SubOrders.OrderBy(x => x.StartDate).FirstOrDefault().StartDate;
+                                var maxOrderDate = order.SubOrders.OrderBy(x => x.StartDate).LastOrDefault().StartDate;
+                                var fileName = "上海市职业健康检查表" + Convert.ToDateTime(minOrderDate).ToString("yyyy-MM-dd") + ".xlsx";
+                                if (maxOrderDate > minOrderDate)
+                                {
+                                    fileName = "上海市职业健康检查表" + Convert.ToDateTime(minOrderDate).ToString("yyyy-MM-dd") + "~" + Convert.ToDateTime(maxOrderDate).ToString("yyyy-MM-dd") + ".xlsx";
+                                }
+                                <tr>
+                                    <td>
+                                        <input type="submit" value="@fileName" class="btn blue" onclick='SubmitExport(1,"@order.Id", "@fileName")' />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function SubmitExport(exportTarget, exportOrderId, exportFileName) {
+        $("#ExportTarget").val(exportTarget);
+        $("#ExportOrderId").val(exportOrderId);
+        $("#ExportFileName").val(exportFileName);
+        $("#order_attachement_form").submit();
+    }
+</script>

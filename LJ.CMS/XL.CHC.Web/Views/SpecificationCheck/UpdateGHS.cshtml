@@ -1,0 +1,218 @@
+﻿@model XL.CHC.Web.Models.SpecificationViewModel
+@{
+   
+}
+<input type="hidden" id="Notification2" name="Notification" value="@Model.Notification" />
+<input type="hidden" id="NotificationType2" name="NotificationType" value="@Model.NotificationType" />
+<!-- BEGIN FORM-->
+@using (Ajax.BeginForm("UpdateGHS", "SpecificationCheck", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "sp_form2", OnSuccess = "OnSuccess_form2", OnFailure = "OnFailure_form2" }, new { @class = "form-horizontal", id = "form2" }))
+{
+    <div class="form-body">
+        @Html.AntiForgeryToken()
+        <input id="sid2" name="Id" type="hidden" value="@Model.Id" />
+        <div class="form-group">
+            <label class="col-md-3 control-label">危险性分类:</label>
+            <div class="col-md-4">
+                @Html.TextAreaFor(model => model.GHS_Category, new { @class = "form-control", @rows = "4" })
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.GHS_Category)
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">警告词:</label>
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => Model.GHS_Warning, Model.ProductWarningSignItems, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">危险说明:</label>
+            <div class="col-md-4">
+                <select id="GHS_HazardouDes_Array" name="GHS_HazardouDes_Array" class="ui-multiselect" multiple="multiple">
+                    @foreach (var item in Model.GHS_HazardouDes)
+                    {
+                        <option value="@item.Value" selected="@item.Selected">@item.Text</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">补充(选填):</label>
+            <div class="col-md-4">
+                @Html.TextAreaFor(model => model.GHS_HazardouDes_Append, new { @class = "form-control", @rows = "4" })
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.GHS_HazardouDes_Append)
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">防范说明(预防):</label>
+            <div class="col-md-4">
+                <select id="GHS_DefenceDes_Array" name="GHS_DefenceDes_Array" class="ui-multiselect" multiple="multiple">
+                    @foreach (var item in Model.GHS_DefenceDes)
+                    {
+                        <option value="@item.Value" selected="@item.Selected">@item.Text</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">补充(选填):</label>
+            <div class="col-md-4">
+                @Html.TextAreaFor(model => Model.GHS_DefenceDes_Append, new { @class = "form-control", @rows = "4" })
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.GHS_DefenceDes_Append)
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">防范说明(响应):</label>
+            <div class="col-md-4">
+                <select id="GHS_DealDES_Array" name="GHS_DealDES_Array" class="ui-multiselect" multiple="multiple">
+                    @foreach (var item in Model.GHS_DealDES)
+                    {
+                        <option value="@item.Value" selected="@item.Selected">@item.Text</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">补充(选填):</label>
+            <div class="col-md-4">
+                @Html.TextAreaFor(model => model.GHS_DealDES_Append, new { @class = "form-control", @rows = "4" })
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.GHS_DealDES_Append)
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">防范说明(储存):</label>
+            <div class="col-md-4">
+                <select id="GHS_StoreDes_Array" name="GHS_StoreDes_Array" class="ui-multiselect" multiple="multiple">
+                    @foreach (var item in Model.GHS_StoreDes)
+                    {
+                        <option value="@item.Value" selected="@item.Selected">@item.Text</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">补充(选填):</label>
+            <div class="col-md-4">
+                @Html.TextAreaFor(model => model.GHS_StoreDes_Append, new { @class = "form-control", @rows = "4" })
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.GHS_StoreDes_Append)
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">警示标识:</label>
+            <div class="col-md-4">
+                <div class="checkbox-list">
+                    <label>
+                        @if (Model.IsExplosive)
+                        {
+                            @Html.CheckBoxFor(x => x.IsExplosive, new { @checked = true });
+                        }
+                        else
+                        {
+                            @Html.CheckBoxFor(x => x.IsExplosive);
+                        } <img src="~/Content/Images/Explosive.png" width="50" height="50" /> 爆炸物
+                    </label>
+                    <label>
+                        @if (Model.IsFlammable)
+                        {
+                            @Html.CheckBoxFor(x => x.IsFlammable, new { @checked = true });
+                        }
+                        else
+                        {
+                            @Html.CheckBoxFor(x => x.IsFlammable);
+                        } <img src="~/Content/Images/Flammable.png" width="50" height="50" /> 易燃物
+                    </label>
+                    <label>
+                        @if (Model.IsCorrosive)
+                        {
+                            @Html.CheckBoxFor(x => x.IsCorrosive, new { @checked = true });
+                        }
+                        else
+                        {
+                            @Html.CheckBoxFor(x => x.IsCorrosive);
+                        } <img src="~/Content/Images/Corrosive.png" width="50" height="50" /> 腐蚀
+                    </label>
+                    <label>
+                        @if (Model.IsHealthHazard)
+                        {
+                            @Html.CheckBoxFor(x => x.IsHealthHazard, new { @checked = true });
+                        }
+                        else
+                        {
+                            @Html.CheckBoxFor(x => x.IsHealthHazard);
+                        }  <img src="~/Content/Images/HealthHazard.png" width="50" height="50" /> 长期危害健康
+                    </label>
+                    <label>
+                        @if (Model.IsToxic)
+                        {
+                            @Html.CheckBoxFor(x => x.IsToxic, new { @checked = true });
+                        }
+                        else
+                        {
+                            @Html.CheckBoxFor(x => x.IsToxic);
+                        } <img src="~/Content/Images/Toxic.png" width="50" height="50" /> 剧毒
+                    </label>
+                    <label>
+                        @if (Model.IsOxidizing)
+                        {
+                            @Html.CheckBoxFor(x => x.IsOxidizing, new { @checked = true });
+                        }
+                        else
+                        {
+                            @Html.CheckBoxFor(x => x.IsOxidizing);
+                        } <img src="~/Content/Images/Oxidizing.png" width="50" height="50" /> 氧化剂
+                    </label>
+                    <label>
+                        @if (Model.IsGasUnderPressure)
+                        {
+                            @Html.CheckBoxFor(x => x.IsGasUnderPressure, new { @checked = true });
+                        }
+                        else
+                        {
+                            @Html.CheckBoxFor(x => x.IsGasUnderPressure);
+                        }  <img src="~/Content/Images/GasUnderPressure.png" width="50" height="50" /> 高压气体
+                    </label>
+                    <label>
+                        @if (Model.IsIrritant)
+                        {
+                            @Html.CheckBoxFor(x => x.IsIrritant, new { @checked = true });
+                        }
+                        else
+                        {
+                            @Html.CheckBoxFor(x => x.IsIrritant);
+                        } <img src="~/Content/Images/Irritant.png" width="50" height="50" /> 刺激性
+                    </label>
+                    <label>
+                        @if (Model.IsDangerousToEnvironment)
+                        {
+                            @Html.CheckBoxFor(x => x.IsDangerousToEnvironment, new { @checked = true });
+                        }
+                        else
+                        {
+                            @Html.CheckBoxFor(x => x.IsDangerousToEnvironment);
+                        }  <img src="~/Content/Images/DangerousToEnvironment.png" width="50" height="50" /> 环境危害
+                    </label>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-actions fluid">
+        <div class="col-md-offset-3 col-md-9">
+            <button type="button" class="btn blue" onclick="btnSubmit(2)">保存</button>
+            @if (Model.Id.ToString() != "00000000-0000-0000-0000-000000000000")
+            {
+                <a href="javascript:if(confirm('确认提交审批吗?'))location='/SpecificationCheck/ApplyCheck/@Model.Id'" class="btn green">提交审批</a>
+            }
+            <a href="@Url.Action("Index", "SpecificationCheck" )" class="btn default">返回化学品列表</a>
+        </div>
+    </div>
+}
+<!-- END FORM-->

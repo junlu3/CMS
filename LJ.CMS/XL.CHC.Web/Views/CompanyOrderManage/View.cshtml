@@ -1,0 +1,223 @@
+﻿@model XL.CHC.Web.Models.CompanyOrderCreateViewModel
+@{
+    ViewBag.Title = "订单查看";
+    ViewBag.CurrentPage = "HealthManage_ComapnyOrderManage";
+    DateTime? startDate = null;
+    DateTime? endDate = null;
+    string startDateStr = string.Empty;
+    string endDateStr = string.Empty;
+    if (Model.OrderId != null)
+    {
+        var subOrders = Model.AssignedSubOrders;
+        if (subOrders != null && subOrders.Count > 0)
+        {
+            startDate = subOrders.OrderBy(x => x.StartDate).FirstOrDefault().StartDate;
+            endDate = subOrders.OrderBy(x => x.StartDate).LastOrDefault().EndDate;
+            startDateStr = startDate == null ? string.Empty : Convert.ToDateTime(startDate).ToString("yyyy-MM-dd");
+            endDateStr = endDate == null ? string.Empty : Convert.ToDateTime(endDate).ToString("yyyy-MM-dd");
+        }
+    }
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> 订单查看
+
+                </div>
+                <div class="tools hidden-xs">
+                    <a href="javascript:;" class="collapse">
+                    </a>
+                    <a href="#portlet-config" data-toggle="modal" class="config">
+                    </a>
+                    <a href="javascript:;" class="reload">
+                    </a>
+                    <a href="javascript:;" class="remove">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                @using (Html.BeginForm("Create", "CompanyOrderManage", FormMethod.Post, new { id = "submit_form", @class = "form-horizontal" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.OrderId)
+                    @Html.HiddenFor(x => x.AssignedSubOrderString)
+                    @Html.HiddenFor(x => x.AssignedEmployeesString)
+                    @Html.HiddenFor(x => x.IsLocked)
+                    <div class="form-body">
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-lg-2">
+                                订单备注:
+                            </label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(x => x.Comment, new { @class = "form-control", @rows = 5, @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-lg-2">
+                                预约列表： <span class="required">
+                                </span>
+                            </label>
+                            <div class="col-md-4">
+                                <div class="table-scrollable  " style="max-width:800px;">
+                                    <table id="tableProject" class="table table-striped table-bordered table-hover" data-height="200">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    预定时间
+                                                </th>
+                                                <th>
+                                                    备注
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.AssignedSubOrders)
+                                            {
+                                                <tr class="bg-green">
+                                                    <td>
+                                                        @Convert.ToDateTime(item.StartDate).ToString("yyyy-MM-dd")
+                                                    </td>
+                                                    <td>
+                                                        @item.Comment
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-lg-2">
+                                未选择列表： <span class="required">
+                                </span>
+                            </label>
+                            <div class="col-md-4">
+                                <div class="table-scrollable  " style="max-width:800px;">
+                                    <table id="tableProject" class="table table-striped table-bordered table-hover" data-height="200">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    时间
+                                                </th>
+                                                <th>
+                                                    备注
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.NotAssignedSubOrders)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Convert.ToDateTime(item.StartDate).ToString("yyyy-MM-dd")
+                                                    </td>
+                                                    <td>
+                                                        @item.Comment
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-lg-2">
+                                造册表： <span class="required">
+                                </span>
+                            </label>
+                            <div class="col-md-8">
+                                <div class="table-scrollable  ">
+                                    <table id="tableAssignedEmployees" class="table table-striped table-bordered table-hover" data-height="200">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    姓名
+                                                </th>
+                                                <th>
+                                                    性别
+                                                </th>
+                                                <th>
+                                                    年龄
+                                                </th>
+                                                <th>
+                                                    是否为民工
+                                                </th>
+                                                <th>
+                                                    车间/部门
+                                                </th>
+                                                <th>
+                                                    工种
+                                                </th>
+                                                <th>
+                                                    接害因素
+                                                </th>
+                                                <th>
+                                                    接害工龄
+                                                </th>
+                                                <th>
+                                                    体检状态
+                                                </th>
+                                                <th>
+                                                    备注
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.AssignedEmployees)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <a href="/Employee/MainPage/@item.EmployeeBaseInfo.Id?startDate=@startDateStr&endDate=@endDateStr" class="font-yellow-casablanca">@item.EmployeeBaseInfo.UserName</a>
+                                                    </td>
+                                                    <td>
+                                                        @item.EmployeeBaseInfo.Sex
+                                                    </td>
+                                                    <td>
+                                                        @XL.Utilities.IDCardHelper.GetAge(item.EmployeeBaseInfo.IDCard).ToString()
+                                                    </td>
+                                                    <td>
+                                                        @item.MigrantWorker.Name
+                                                    </td>
+                                                    <td>
+                                                        @item.Department
+                                                    </td>
+                                                    <td>
+                                                        @item.WorkType
+                                                    </td>
+                                                    <td>
+                                                        @item.AdverseFactor
+                                                    </td>
+                                                    <td>
+                                                        @item.AdverseMonthes
+                                                    </td>
+                                                    <td>
+                                                        @item.HealthStatus.Name
+                                                    </td>
+                                                    <td>
+                                                        @item.Comment
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <a href="/CompanyOrderManage/Index" class="btn grey"><i class="fa fa-mail-reply"></i> 返回订单列表 </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

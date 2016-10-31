@@ -1,0 +1,163 @@
+﻿@using XL.CHC.Domain.DomainModel;
+@model XL.CHC.Web.Models.EmployeeMainPageViewModel
+
+@{
+    ViewBag.Title = "员工主页";
+    ViewBag.CurrentPage = "StaffManage_EmployeeProfile";
+    var companyEmployee = new CompanyEmployee();
+    if (Model.EmployeeBaseInfo != null)
+    {
+        companyEmployee = Model.EmployeeBaseInfo.CompanyEmployees.FirstOrDefault(x => x.LeaveDate == null);
+        if (companyEmployee == null)
+        {
+            companyEmployee = Model.EmployeeBaseInfo.CompanyEmployees.OrderBy(x => x.LeaveDate).LastOrDefault();
+        }
+    }
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> 员工主页
+
+                </div>
+
+            </div>
+            <div class="portlet-body  ">
+                <div class="table-toolbar">
+                    @using (Html.BeginForm("Index", "HospitalCompanyManage", FormMethod.Post, new { id = "search_submit_form" }))
+                    {
+
+                        <div class="form-body   ">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-4 ">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button class="btn grey" type="button">关键字：</button>
+                                        </span>
+                                        @Html.TextBoxFor(x => x.KeyWord, new { @class = "form-control" })
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-actions  ">
+                                        @*<button type="button" class="btn blue"> <i class="fa  fa-refresh"></i>重置</button>*@
+                                        <button type="submit" class="btn blue"><i class="fa fa-search"></i> 查询</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                @if (Model.EmployeeBaseInfo != null)
+                {
+                    <div id="divEmployeeBaseInfo" class="row">
+                        <div class="col-md-8 col-lg-6">
+                            <h2 class="margin-bottom-20"> @Model.EmployeeBaseInfo.UserName - 员工主页 </h2>
+                            <h3 class="form-section">员工基本信息</h3>
+                            <table class="table table-bordered  ">
+                                <tr>
+                                    <td class=" text-right" style="width:80px;">姓名：</td>
+                                    <td style="width:200px;">@Model.EmployeeBaseInfo.UserName</td>
+                                    <td class=" text-right" style="width:80px;">性别：</td>
+                                    <td style="width:200px;">@Model.EmployeeBaseInfo.Sex</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-grey text-right" style="width:80px;">身份证号码：</td>
+                                    <td style="width:200px;">@Model.EmployeeBaseInfo.IDCard</td>
+                                    <td class="bg-grey text-right" style="width:80px;">婚姻状况：</td>
+                                    <td style="width:200px;">
+                                        @{
+                                            var marriedStr = string.Empty;
+                                            var married = companyEmployee.Married;
+                                            if (married != null)
+                                            {
+                                                marriedStr = married.Name;
+                                            }
+                                        }
+                                        @marriedStr
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class=" text-right" style="width:80px;">总工龄(月):</td>
+                                    <td style="width:200px;">@companyEmployee.TotalWorkMonthes</td>
+                                    <td class=" text-right" style="width:60px;">接害工龄(月):</td>
+                                    <td style="width:200px;">@companyEmployee.AdverseMonthes</td>
+                                </tr>
+
+                            </table>
+
+
+                        </div>
+
+
+                    </div>
+                    <div id="divWorkHistory" class="row">
+                        <div class="col-md-10">
+                            <h3 class="form-section">职业史</h3>
+                            <div class="row ">
+                                <div class="col-md-8">
+                                    <table class="table table-bordered table-striped">
+                                        <thead class="bg-blue">
+                                            <tr>
+                                                <th>
+                                                    开始时间
+                                                </th>
+                                                <th>结束时间</th>
+                                                <th>工作单位</th>
+                                                <th>车间/部门</th>
+                                                <th>有害因素</th>
+                                                <th>防护措施</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.EmployeeBaseInfo.WorkHistories)
+                                            {
+                                            <tr>
+                                                <td>
+                                                    @(item.EntryDate == null ? string.Empty : Convert.ToDateTime(item.EntryDate).ToString("yyyy-MM-dd"))
+                                                </td>
+                                                <td>
+                                                    @(item.LeaveDate == null ? string.Empty : Convert.ToDateTime(item.LeaveDate).ToString("yyyy-MM-dd"))
+                                                </td>
+                                                <td>
+                                                    @item.CompanyName
+                                                </td>
+                                                <td>@item.Department</td>
+                                                <td>@item.AdverseFactor</td>
+                                                <td>
+                                                    @item.ProtectType
+                                                </td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    @Html.Partial("_OrderAttachement", Model.AttachementViewModel)
+
+                    <div id="divHealthResult" class="row">
+                        <div class="col-md-12">
+                            <h3>
+                                职业卫生监护档案导出
+                            </h3>
+                            @using (Html.BeginForm("ExportHealthResult", "Employee", FormMethod.Post, new { @id = "healthResult_attachement_form" }))
+                            {
+                                @Html.HiddenFor(x=>x.EmployeeBaseInfo.IDCard )
+                                <input type="submit" value="职业卫生监护档案导出" class="btn blue"   />
+                            }
+                        </div>
+                    </div>
+               }
+            </div>
+        </div>
+    </div>
+</div>

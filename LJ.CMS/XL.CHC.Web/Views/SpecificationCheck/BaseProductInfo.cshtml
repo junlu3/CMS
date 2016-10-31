@@ -1,0 +1,134 @@
+﻿@model XL.CHC.Web.Models.SpecificationViewModel
+@{
+    Layout = null;
+}
+
+<input type="hidden" id="Notification1" name="Notification" value="@Model.Notification" />
+<input type="hidden" id="NotificationType1" name="NotificationType" value="@Model.NotificationType" />
+@Html.Hidden("nid", Model.Id);
+<!-- BEGIN FORM-->
+@using (Ajax.BeginForm("BaseProductInfo", "SpecificationCheck", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "sp_form1", OnSuccess = "OnSuccess_form1" }, new { @class = "form-horizontal", @id = "form1" }))
+{
+    <div class="form-body">
+        @Html.AntiForgeryToken()
+        @*@Html.HiddenFor(o=>o.Id)*@
+        <input id="sid1" name="Id" type="hidden" value="@Model.Id" />
+        <div class="form-group">
+            <label class="col-md-3 control-label">商品名:</label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Product_Name, new { @class = "form-control" })
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.Product_Name)
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">商品名(中文):</label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.CN_Name, new { @class = "form-control" })
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.CN_Name)
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">用途:</label>
+            <div class="col-md-4">
+                @Html.TextAreaFor(model => model.Purpose, new { @class = "form-control", @rows = "4" })
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.Purpose)
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">状态:</label>
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => Model.Product_State, Model.ProductStateItems, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">有害化学品:</label>
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => Model.UnHazardousChemical, Model.UnHazardousChemicalItems, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">UN编号:</label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Product_UN, new { @class = "form-control" })
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.Product_UN)
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">CAS号:</label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.CASCode, new { @class = "form-control" })
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.CASCode)
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">危害:</label>
+            <div class="col-md-4">
+                @Html.TextAreaFor(model => model.Product_HazardousDescription, new { @class = "form-control", @rows = "4" })
+                <span class="help-block font-red">
+                    @Html.ValidationMessageFor(x => x.Product_HazardousDescription)
+                </span>
+            </div>
+        </div>
+    </div>
+        <div class="form-body">
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(x => x.Id)
+            <div class="form-group">
+                <label class="col-md-3 control-label">供应商名称:</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Supplier_Name, new { @class = "form-control" })
+                    <span class="help-block font-red">
+                        @Html.ValidationMessageFor(x => x.Supplier_Name)
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">供应商地址:</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Supplier_Address, new { @class = "form-control" })
+                    <span class="help-block font-red">
+                        @Html.ValidationMessageFor(x => x.Supplier_Address)
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">供应商电话:</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Supplier_Phone, new { @class = "form-control" })
+                    <span class="help-block font-red">
+                        @Html.ValidationMessageFor(x => x.Supplier_Phone)
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">二十四小时应急电话:</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Supplier_UrgencyCall, new { @class = "form-control" })
+                    <span class="help-block font-red">
+                        @Html.ValidationMessageFor(x => x.Supplier_UrgencyCall)
+                    </span>
+                </div>
+            </div>
+        </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="button" class="btn blue" onclick="btnSubmit(1)">保存</button>
+                            @if (Model.Id.ToString() != "00000000-0000-0000-0000-000000000000")
+                            {
+                                <a href="javascript:if(confirm('确认提交审批吗?'))location='/SpecificationCheck/ApplyCheck/@Model.Id'" class="btn green">提交审批</a>
+                            }
+                            <a href="@Url.Action("Index", "SpecificationCheck" )" class="btn default">返回化学品列表</a>
+                        </div>
+                    </div>
+}
+<!-- END FORM-->

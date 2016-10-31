@@ -1,0 +1,86 @@
+﻿
+<link href="~/Content/metronic/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/Content/metronic/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" />
+<link href="~/Content/metronic/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/metronic/assets/global/plugins/uniform/css/uniform.default.min.css" rel="stylesheet" />
+<link href="~/Content/metronic/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" />
+
+<link href="~/Content/metronic/assets/global/css/components.css" rel="stylesheet" />
+<link href="~/Content/metronic/assets/global/css/plugins.css" rel="stylesheet" />
+<link href="~/Content/metronic/assets/admin/layout/css/layout.css" rel="stylesheet" />
+<link href="~/Content/metronic/assets/admin/layout/css/themes/darkblue.css" rel="stylesheet" />
+<link href="~/Content/metronic/assets/admin/layout/css/custom.css" rel="stylesheet" />
+<link href="~/Content/multiselect/ui/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/metronic/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+<link href="~/Content/metronic/assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" />
+<link href="~/Content/metronic/assets/global/plugins/jquery-multi-select/css/multi-select.css" rel="stylesheet" />
+<link href="~/Content/multiselect/jquery.multiselect.css" rel="stylesheet" />
+<link href="~/Content/metronic/assets/global/plugins/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet"/>
+<link href="~/Content/metronic/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-select.min.css" rel="stylesheet" />
+
+<script src="~/Content/metronic/assets/global/plugins/jquery.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<script src="~/Content/metronic/assets/global/plugins/jquery-migrate.min.js"></script>
+<script src="~/Content/metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js"></script>
+<script src="~/Content/metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+
+<script src="~/Content/metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"></script>
+<script src="~/Content/metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="~/Content/metronic/assets/global/plugins/jquery.blockui.min.js"></script>
+<script src="~/Content/metronic/assets/global/plugins/jquery.cokie.min.js"></script>
+<script src="~/Content/metronic/assets/global/plugins/uniform/jquery.uniform.min.js"></script>
+<script src="~/Content/metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script src="~/Content/metronic/assets/global/scripts/metronic.js"></script>
+<script src="~/Content/metronic/assets/admin/layout/scripts/layout.js"></script>
+<script src="~/Content/metronic/assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+<script src="~/Content/metronic/assets/global/plugins/moment.min.js"></script>
+<script src="~/Content/metronic/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="~/Content/metronic/assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<script src="~/Content/metronic/assets/global/plugins/fullcalendar/fullcalendar.js"></script>
+<script src="~/Content/metronic/assets/global/plugins/fullcalendar/lang/zh-cn.js"></script>
+ <script src="~/Content/metronic/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
+<script src="~/Content/metronic/assets/global/plugins/jquery-multi-select/js/jquery.quicksearch.js"></script>
+<script src="~/Content/Scripts/jquery.multiselect.min.js"></script>
+@*<script src="~/Content/Scripts/xl.chc.js"></script>*@
+<script src="~/Content/metronic/assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="~/Content/metronic/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/bootstrap-select.min.js"></script>
+<script>
+    jQuery(document).ready(function () {
+        Metronic.init(); // init metronic core components
+        Layout.init(); // init current layout
+        InitSideMenuBar();
+        InitDatePickers();
+    });
+
+    function InitDatePickers()
+    {
+        $('.date-picker').datepicker({
+            language: 'zh-CN',
+            format:'yyyy-MM-dd',
+            forceParse: false,
+            autoclose: true,
+        });
+    }
+
+    function InitSideMenuBar() {
+        $(".active").removeClass("active");
+        //设置当前页对应的导航栏
+        var page = $("#currentPage").attr("value");
+        if (page)
+        {
+            var parent = page.split("_")[0];
+            $("#" + parent.trim()).addClass("active");
+
+            $("#" + page.trim()).addClass("active");
+        }
+       
+    }
+</script>
+

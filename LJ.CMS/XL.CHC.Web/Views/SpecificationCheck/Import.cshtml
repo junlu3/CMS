@@ -1,0 +1,66 @@
+﻿@model XL.CHC.Web.Models.SpecificationImportViewModel
+@{
+    ViewBag.Title = "上传文件";
+    ViewBag.CurrentPage = "SpecificationManage_UploadFile";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div id="form_wizard_5" class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> 上传附件
+                </div>
+                <div class="actions">
+                </div>
+            </div>
+            <div class="portlet-body form" id="sp_form5">
+                <div class="form-horizontal form-row-seperated">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                @using (Html.BeginForm("Import", "SpecificationCheck", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+                                {
+                                    <input id="sid5" name="Id" type="hidden" value="@Model.Id" />
+                                    <label class="control-label col-md-2" style="text-align:left">选择需要上传的文件:</label>
+
+                                    <div class="col-md-3">
+                                        <input type="text" name="upfile" id="upfile" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-1">
+                                        <input type="button" value="浏览..." onclick="Upload()" class="btn green">
+                                    </div>
+
+                                    <input type="file" id="ImportExcelFile" name="ImportExcelFile" style="display:none">
+
+                                    <div class="col-md-1">
+                                        <input type="submit" class="btn green" value="上传" />
+                                    </div>
+
+                                    <a href="/SpecificationCheck/CreateOrUpdate/@Model.Id" class="btn green">
+                                        返回
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+    $("#ImportExcelFile").change(function ()
+    {
+        $("#upfile").val(this.value);
+    });
+
+    function Upload()
+    {
+        $("#ImportExcelFile").trigger("click");
+
+    }
+
+</script>

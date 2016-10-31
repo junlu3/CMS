@@ -1,0 +1,1557 @@
+﻿@model XL.CHC.Web.Models.SpecificationViewModel
+@{
+    ViewBag.Title = "编辑化学品";
+    ViewBag.CurrentPage = "SpecificationManage_NotCheck";
+}
+<div class="row">
+    <div class="col-md-12">
+        @*化学品基本信息*@
+        <div class="portlet box blue" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> 化学品基本信息
+                </div>
+                <div class="actions">
+                    <a href="/SpecificationCheck/Index" class="btn blue btn-sm">
+                        <i class="fa fa-mail-reply"></i> 返回
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form" id="sp_form1">
+
+                <!-- BEGIN FORM-->
+                @using (Html.BeginForm("BaseProductInfo", "SpecificationCheck", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", @id = "form1" }))
+                {
+                    <div class="form-body">
+                        @Html.AntiForgeryToken()
+                        <input id="sid1" name="Id" type="hidden" value="@Model.Id" />
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">商品名:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Product_Name, new { @class = "form-control" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Product_Name)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">商品名(中文):</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.CN_Name, new { @class = "form-control" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.CN_Name)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">用途:</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Purpose, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Purpose)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">状态:</label>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => Model.Product_State, Model.ProductStateItems, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">有害化学品:</label>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => Model.UnHazardousChemical, Model.UnHazardousChemicalItems, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">UN编号:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Product_UN, new { @class = "form-control" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Product_UN)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">CAS号:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.CASCode, new { @class = "form-control" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.CASCode)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">危害:</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Product_HazardousDescription, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Product_HazardousDescription)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">供应商名称:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Supplier_Name, new { @class = "form-control" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Supplier_Name)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">供应商地址:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Supplier_Address, new { @class = "form-control" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Supplier_Address)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">供应商电话:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Supplier_Phone, new { @class = "form-control" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Supplier_Phone)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">二十四小时应急电话:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Supplier_UrgencyCall, new { @class = "form-control" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Supplier_UrgencyCall)
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="button" class="btn blue" onclick="btnSubmit(1)">保存</button>
+                            @if (Model.Id.ToString() != "00000000-0000-0000-0000-000000000000")
+                            {
+                                <a href="javascript:if(confirm('确认提交审批吗?'))location='/SpecificationCheck/ApplyCheck/@Model.Id'" class="btn green">提交审批</a>
+                            }
+                            <a href="@Url.Action("Index", "SpecificationCheck" )" class="btn default">返回化学品列表</a>
+                        </div>
+                    </div>
+                }
+                <!-- END FORM-->
+            </div>
+        </div>
+        <div class="note note-success hidden" id="note_success_form1">
+            <p>
+                保存成功
+            </p>
+        </div>
+        <div class="note note-danger hidden" id="note_danger_form1">
+            <p>
+                保存失败
+            </p>
+        </div>
+
+        @*SDS 附件*@
+        <div class="portlet box blue" id="form_wizard_5">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i>  SDS
+                </div>
+                <div class="actions">
+                </div>
+            </div>
+
+            <div class="portlet-body form" id="sp_form5">
+                <div class="form-horizontal">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"> SDS:</label>
+                            <div class="col-md-4">
+                                @if (string.IsNullOrEmpty(Model.AttachmentPath))
+                                {
+                                    <a href="javascript:;" class="btn green" onclick="Upload()">
+                                        <i class="fa fa-plus"></i> 上传PDF/EXECL
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="@Model.AttachmentPath" class="btn blue" target="_blank">
+                                        <i class="fa fa-gift">下载附件</i>
+                                    </a>
+                                        <a href="javascript:;" class="btn green" onclick="Upload()">
+                                            <i class="fa fa-plus"></i> 更新PDF/EXECL
+                                        </a>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions fluid">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*GHS*@
+        <div class="portlet box blue" id="form_wizard_2">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> GHS
+                </div>
+            </div>
+            <div class="portlet-body form" id="sp_form2">
+                <!-- BEGIN FORM-->
+                @using (Ajax.BeginForm("UpdateGHS", "SpecificationCheck", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "sp_form2", OnComplete = "OnSuccess_form2", OnFailure = "OnFailure_form2" }, new { @class = "form-horizontal", id = "form2" }))
+                {
+                    <div class="form-body">
+                        @Html.AntiForgeryToken()
+                        <input id="sid2" name="Id" type="hidden" value="@Model.Id" />
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">危险性分类:</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.GHS_Category, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.GHS_Category)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">警告词:</label>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => Model.GHS_Warning, Model.ProductWarningSignItems, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">危险说明:</label>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => Model.GHS_HazardouDes_Array, Model.GHS_HazardouDes, new { @class = "ui-multiselect", @multiple = "multiple" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">补充(选填):</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.GHS_HazardouDes_Append, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.GHS_HazardouDes_Append)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">防范说明(预防):</label>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => Model.GHS_DefenceDes_Array, Model.GHS_DefenceDes, new { @class = "ui-multiselect", @multiple = "multiple" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">补充(选填):</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => Model.GHS_DefenceDes_Append, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.GHS_DefenceDes_Append)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">防范说明(响应):</label>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => Model.GHS_DealDES_Array, Model.GHS_DealDES, new { @class = "ui-multiselect", @multiple = "multiple" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">补充(选填):</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.GHS_DealDES_Append, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.GHS_DealDES_Append)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">防范说明(储存):</label>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => Model.GHS_StoreDes_Array, Model.GHS_StoreDes, new { @class = "ui-multiselect", @multiple = "multiple" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">补充(选填):</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.GHS_StoreDes_Append, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.GHS_StoreDes_Append)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">警示标识:</label>
+                            <div class="col-md-4">
+                                <div class="checkbox-list">
+                                    <label>
+                                        @if (Model.IsExplosive)
+                                        {
+                                            @Html.CheckBoxFor(x => x.IsExplosive, new { @checked = true });
+                                        }
+                                        else
+                                        {
+                                            @Html.CheckBoxFor(x => x.IsExplosive);
+                                        } <img src="~/Content/Images/Explosive.png" width="50" height="50" /> 爆炸物
+                                    </label>
+                                    <label>
+                                        @if (Model.IsFlammable)
+                                        {
+                                            @Html.CheckBoxFor(x => x.IsFlammable, new { @checked = true });
+                                        }
+                                        else
+                                        {
+                                            @Html.CheckBoxFor(x => x.IsFlammable);
+                                        } <img src="~/Content/Images/Flammable.png" width="50" height="50" /> 易燃物
+                                    </label>
+                                    <label>
+                                        @if (Model.IsCorrosive)
+                                        {
+                                            @Html.CheckBoxFor(x => x.IsCorrosive, new { @checked = true });
+                                        }
+                                        else
+                                        {
+                                            @Html.CheckBoxFor(x => x.IsCorrosive);
+                                        } <img src="~/Content/Images/Corrosive.png" width="50" height="50" /> 腐蚀
+                                    </label>
+                                    <label>
+                                        @if (Model.IsHealthHazard)
+                                        {
+                                            @Html.CheckBoxFor(x => x.IsHealthHazard, new { @checked = true });
+                                        }
+                                        else
+                                        {
+                                            @Html.CheckBoxFor(x => x.IsHealthHazard);
+                                        }  <img src="~/Content/Images/HealthHazard.png" width="50" height="50" /> 长期危害健康
+                                    </label>
+                                    <label>
+                                        @if (Model.IsToxic)
+                                        {
+                                            @Html.CheckBoxFor(x => x.IsToxic, new { @checked = true });
+                                        }
+                                        else
+                                        {
+                                            @Html.CheckBoxFor(x => x.IsToxic);
+                                        } <img src="~/Content/Images/Toxic.png" width="50" height="50" /> 剧毒
+                                    </label>
+                                    <label>
+                                        @if (Model.IsOxidizing)
+                                        {
+                                            @Html.CheckBoxFor(x => x.IsOxidizing, new { @checked = true });
+                                        }
+                                        else
+                                        {
+                                            @Html.CheckBoxFor(x => x.IsOxidizing);
+                                        } <img src="~/Content/Images/Oxidizing.png" width="50" height="50" /> 氧化剂
+                                    </label>
+                                    <label>
+                                        @if (Model.IsGasUnderPressure)
+                                        {
+                                            @Html.CheckBoxFor(x => x.IsGasUnderPressure, new { @checked = true });
+                                        }
+                                        else
+                                        {
+                                            @Html.CheckBoxFor(x => x.IsGasUnderPressure);
+                                        }  <img src="~/Content/Images/GasUnderPressure.png" width="50" height="50" /> 高压气体
+                                    </label>
+                                    <label>
+                                        @if (Model.IsIrritant)
+                                        {
+                                            @Html.CheckBoxFor(x => x.IsIrritant, new { @checked = true });
+                                        }
+                                        else
+                                        {
+                                            @Html.CheckBoxFor(x => x.IsIrritant);
+                                        } <img src="~/Content/Images/Irritant.png" width="50" height="50" /> 刺激性
+                                    </label>
+                                    <label>
+                                        @if (Model.IsDangerousToEnvironment)
+                                        {
+                                            @Html.CheckBoxFor(x => x.IsDangerousToEnvironment, new { @checked = true });
+                                        }
+                                        else
+                                        {
+                                            @Html.CheckBoxFor(x => x.IsDangerousToEnvironment);
+                                        }  <img src="~/Content/Images/DangerousToEnvironment.png" width="50" height="50" /> 环境危害
+                                    </label>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="button" class="btn blue" onclick="btnSubmit(2)">保存</button>
+                            @if (Model.Id.ToString() != "00000000-0000-0000-0000-000000000000")
+                            {
+                                <a href="javascript:if(confirm('确认提交审批吗?'))location='/SpecificationCheck/ApplyCheck/@Model.Id'" class="btn green">提交审批</a>
+                            }
+                            <a href="@Url.Action("Index", "SpecificationCheck" )" class="btn default">返回化学品列表</a>
+                        </div>
+                    </div>
+                }
+                <!-- END FORM-->
+            </div>
+        </div>
+        <div class="note note-success hidden" id="note_success_form2">
+            <p>
+                保存成功
+            </p>
+        </div>
+        <div class="note note-danger hidden" id="note_danger_form2">
+            <p>
+                保存失败
+            </p>
+        </div>
+
+        @*危险组分*@
+        <div class="portlet box blue" id="form_wizard_6">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> 危险组分
+                </div>
+                <div class="actions">
+                    <a href="javascript:void(0)" class="btn blue btn-sm" id="btnAddHazardousSubstances">
+                        <i class="fa fa-plus"></i> 新建组分
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body light-grey">
+                <div class="table-scrollable">
+                    <table id="tableProject" class="table table-striped table-bordered table-hover" data-height="200">
+                        <thead>
+                            <tr>
+                                <th style="min-width:150px">
+                                    操作
+                                </th>
+                                <th style="min-width:150px">
+                                    危害组分名称
+                                </th>
+                                <th style="min-width:80px;">
+                                    含量
+                                </th>
+                                <th style="min-width:80px;">
+                                    CAS号
+                                </th>
+                                <th style="min-width:80px;">
+                                    GHS有害分类代码
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Product_HazardousSubstances)
+                            {
+                                <tr>
+                                    <td>
+                                        <a class="btn default btn-xs blue" href="javascript:void(0)" hid="@item.HS_Id" onclick="Edit_HS(this)"><i class="fa fa-edit"></i> 修改</a>
+                                        <a class="btn default btn-xs grey" href="javascript:void(0)" hid="@item.HS_Id" onclick="Del_HS(this)"><i class="fa fa-trash-o"></i> 删除</a>
+                                    </td>
+                                    <td>
+                                        @item.HS_Name
+                                    </td>
+                                    <td>
+                                        @item.HS_MinPercent %  ~  @item.HS_MaxPercent %
+                                    </td>
+                                    <td>@item.HS_CASCode</td>
+                                    <td>
+                                        @foreach (var row in item.HS_HStatements)
+                                        {
+                                            <span>@row.Code</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        @*其他信息*@
+        <div class="portlet box blue" id="form_wizard_3">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> 其他信息
+                </div>
+            </div>
+            <div class="portlet-body form" id="sp_form3">
+                @using (Ajax.BeginForm("Other", "SpecificationCheck", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "sp_form3", OnSuccess = "OnSuccess_form3", OnFailure = "OnFailure_form3" }, new { @class = "form-horizontal", @id = "form3" }))
+                {
+                    <div class="form-body">
+                        @Html.AntiForgeryToken()
+                        <input id="sid3" name="Id" type="hidden" value="@Model.Id" />
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">眼面部沾染:</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Product_ET_FaceAndEye, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Product_ET_FaceAndEye)
+                                </span>
+                            </div>
+                            <img src="~/Content/Images/Product_ET_FaceAndEye.png" class="img-responsive" width="50" height="50" />
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">皮肤手部沾染:</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Product_ET_SkinAndHand, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Product_ET_SkinAndHand)
+                                </span>
+                            </div>
+                            <img src="~/Content/Images/Product_ET_SkinAndHand.png" class="img-responsive" width="50" height="50" />
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">吸入:</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Product_ET_Inhalation, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Product_ET_Inhalation)
+                                </span>
+                            </div>
+                            <img src="~/Content/Images/Product_ET_Inhalation.png" class="img-responsive" width="50" height="50" />
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">食入:</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Product_ET_Ingestion, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Product_ET_Ingestion)
+                                </span>
+                            </div>
+                            <img src="~/Content/Images/Product_ET_Ingestion.png" class="img-responsive" width="50" height="50" />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">眼面部:</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Product_Protection_FaceAndEye, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Product_Protection_FaceAndEye)
+                                </span>
+                            </div>
+                            <img src="~/Content/Images/Product_Protection_FaceAndEye.png" class="img-circle" width="50" height="50" />
+                            @if (Model.IsProtection_FaceAndEye)
+                            {
+                                @Html.CheckBoxFor(x => x.IsProtection_FaceAndEye, new { @checked = true });
+                            }
+                            else
+                            {
+                                @Html.CheckBoxFor(x => x.IsProtection_FaceAndEye);
+                            }
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">手部:</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Product_Protection_Hand, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Product_Protection_Hand)
+                                </span>
+                            </div>
+                            <img src="~/Content/Images/Product_Protection_Hand.png" class="img-circle" width="50" height="50" />
+                            @if (Model.IsProtection_Hand)
+                            {
+                                @Html.CheckBoxFor(x => x.IsProtection_Hand, new { @checked = true });
+                            }
+                            else
+                            {
+                                @Html.CheckBoxFor(x => x.IsProtection_Hand);
+                            }
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">呼吸保护:</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Product_Protection_Breathing, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Product_Protection_Breathing)
+                                </span>
+                            </div>
+                            <img src="~/Content/Images/Product_Protection_Breathing.png" class="img-circle" width="50" height="50" />
+                            @if (Model.IsProtection_Breathing)
+                            {
+                                @Html.CheckBoxFor(x => x.IsProtection_Breathing, new { @checked = true });
+                            }
+                            else
+                            {
+                                @Html.CheckBoxFor(x => x.IsProtection_Breathing);
+                            }
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">足部保护:</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Product_Protection_Foot, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Product_Protection_Foot)
+                                </span>
+                            </div>
+                            <img src="~/Content/Images/Product_Protection_Foot.png" class="img-circle" width="50" height="50" />
+                            @if (Model.IsProtection_Foot)
+                            {
+                                @Html.CheckBoxFor(x => x.IsProtection_Foot, new { @checked = true });
+                            }
+                            else
+                            {
+                                @Html.CheckBoxFor(x => x.IsProtection_Foot);
+                            }
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">身体保护:</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Product_Protection_Body, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Product_Protection_Body)
+                                </span>
+                            </div>
+                            <img src="~/Content/Images/Product_Protection_Body.png" class="img-circle" width="50" height="50" />
+
+                            @if (Model.IsProtection_Body)
+                            {
+                                @Html.CheckBoxFor(x => x.IsProtection_Body, new { @checked = true });
+                            }
+                            else
+                            {
+                                @Html.CheckBoxFor(x => x.IsProtection_Body);
+                            }
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">其他防护:</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Product_Protection_Other, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Product_Protection_Other)
+                                </span>
+                            </div>
+                            <img src="~/Content/Images/Product_Protection_Other.png" class="img-circle" width="50" height="50" />
+                            @if (Model.IsProtection_Other)
+                            {
+                                @Html.CheckBoxFor(x => x.IsProtection_Other, new { @checked = true });
+                            }
+                            else
+                            {
+                                @Html.CheckBoxFor(x => x.IsProtection_Other);
+                            }
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">应急消防:</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Product_FireProtection, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Product_FireProtection)
+                                </span>
+                            </div>
+                            <img src="~/Content/Images/Product_FireProtection.png" class="img-responsive" width="50" height="50" />
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">泄漏处置:</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Product_LeakageHanding, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Product_LeakageHanding)
+                                </span>
+                            </div>
+                            <img src="~/Content/Images/Product_LeakageHanding.png" class="img-responsive" width="50" height="50" />
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">作业安全:</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Product_OperationSecure, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Product_OperationSecure)
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">储存要求:</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Product_StoreRequirement, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Product_StoreRequirement)
+                                </span>
+                            </div>
+                            <img src="~/Content/Images/Product_StoreRequirement.png" class="img-responsive" width="50" height="50" />
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">废弃物处置:</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Product_WasteHanding, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Product_WasteHanding)
+                                </span>
+                            </div>
+                            <img src="~/Content/Images/Product_WasteHanding.png" class="img-responsive" width="50" height="50" />
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">运输信息(当地法规):</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Policie_Local, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Policie_Local)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">运输信息(联合国法规):</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Policie_UN, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Policie_UN)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">备注:</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Product_Note, new { @class = "form-control", @rows = "4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Product_Note)
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="button" class="btn blue" onclick="btnSubmit(3)">保存</button>
+                            @if (Model.Id.ToString() != "00000000-0000-0000-0000-000000000000")
+                            {
+                                <a href="javascript:if(confirm('确认提交审批吗?'))location='/SpecificationCheck/ApplyCheck/@Model.Id'" class="btn green">提交审批</a>
+                            }
+                            <a href="@Url.Action("Index", "SpecificationCheck" )" class="btn default">返回化学品列表</a>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+        <div class="note note-success hidden" id="note_success_form3">
+            <p>
+                保存成功
+            </p>
+        </div>
+        <div class="note note-danger hidden" id="note_danger_form3">
+            <p>
+                保存失败
+            </p>
+        </div>
+
+        @*理化性质*@
+        <div id="form_wizard_4" class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> 理化性质
+                </div>
+            </div>
+            <div class="portlet-body form" id="sp_form4">
+                @using (Ajax.BeginForm("PhysicoChemical", "SpecificationCheck", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "sp_form4", OnSuccess = "OnSuccess_form4", OnFailure = "OnFailure_form4" }, new { @class = "form-horizontal", @id = "form4" }))
+                {
+                    <div class="form-body">
+                        @Html.AntiForgeryToken()
+                        <input id="sid4" name="Id" type="hidden" value="@Model.Id" />
+                        @*<div class="form-group">
+                                <label class="col-md-3 control-label">暴露限值(固体):</label>
+                                <div class="col-md-4">
+                                    <div class="col-md-4 input-group">
+                                        @Html.TextBoxFor(model => model.ExposedLimit_Solid, new { @class = "form-control", @rows = "4" })
+                                        <span class="input-group-addon">mg/m3</span>
+                                    </div>
+                                    <span class="help-block font-red">
+                                        @Html.ValidationMessageFor(x => x.ExposedLimit_Solid)
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">暴露限值(蒸汽/气体):</label>
+                                <div class="col-md-4">
+                                    <div class="col-md-4 input-group">
+                                        @Html.TextBoxFor(model => model.ExposedLimit_Gas, new { @class = "form-control", @rows = "4" })
+                                        <span class="input-group-addon">mg/m3</span>
+                                    </div>
+
+                                    <span class="help-block font-red">
+                                        @Html.ValidationMessageFor(x => x.ExposedLimit_Gas)
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">物理状态:</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.PhysicalState, new { @class = "form-control", @rows = "4" })
+                                </div>
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.PhysicalState)
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">外观/气味:</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.AppearanceAndSmell, new { @class = "form-control", @rows = "4" })
+                                    <span class="help-block font-red">
+                                        @Html.ValidationMessageFor(x => x.AppearanceAndSmell)
+                                    </span>
+                                </div>
+                            </div>*@
+                        <div class="form-group form-inline">
+                            <label class="col-md-3 control-label" style="">沸点(液体):</label>
+                            <div class="col-md-4">
+                                <div class="col-md-4 input-group">
+                                    @Html.TextBoxFor(model => model.BoilingPoint_Liquid_C, new { @class = "form-control", style = "min-width:100px" })
+                                    <span class="input-group-addon">℃</span>
+                                </div>
+                                &nbsp;&nbsp;
+                                <a href="javascript:;">
+                                    <span class="glyphicon glyphicon-resize-horizontal"></span>
+                                </a>
+                                &nbsp;&nbsp;
+                                <div class="col-md-4 input-group">
+                                    @Html.TextBoxFor(model => model.BoilingPoint_Liquid_F, new { @class = "form-control", style = "min-width:100px" })
+                                    <span class="input-group-addon">℉</span>
+                                </div>
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.BoilingPoint_Liquid_C)
+                                </span>
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.BoilingPoint_Liquid_F)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group form-inline">
+                            <label class="col-md-3 control-label">闪点:</label>
+                            <div class="col-md-4">
+                                <div class="col-md-4 input-group">
+                                    @Html.TextBoxFor(model => model.FlashingPoint_C, new { @class = "form-control", style = "min-width:100px" })
+                                    <span class="input-group-addon">℃</span>
+                                </div>
+                                &nbsp;&nbsp;
+                                <a href="javascript:;">
+                                    <span class="glyphicon glyphicon-resize-horizontal"></span>
+                                </a>
+                                &nbsp;&nbsp;
+                                <div class="col-md-4 input-group">
+                                    @Html.TextBoxFor(model => model.FlashingPoint_F, new { @class = "form-control", style = "min-width:100px" })
+                                    <span class="input-group-addon">℉</span>
+                                </div>
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.FlashingPoint_C)
+                                </span>
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.FlashingPoint_F)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group form-inline">
+                            <label class="col-md-3 control-label">燃烧极限范围:</label>
+                            <div class="col-md-4">
+                                <div class="col-md-4 input-group">
+                                    @Html.TextBoxFor(model => model.BurningLimit_Min, new { @class = "form-control", style = "min-width:100px" })
+                                    <span class="input-group-addon">%</span>
+                                </div>
+                                &nbsp;&nbsp;&nbsp;
+                                ~
+                                &nbsp;&nbsp;&nbsp;
+                                <div class="col-md-4 input-group">
+                                    @Html.TextBoxFor(model => model.BurningLimit_Max, new { @class = "form-control", style = "min-width:100px" })
+                                    <span class="input-group-addon">%</span>
+                                </div>
+
+                            </div>
+                            <span class="help-block font-red">
+                                @Html.ValidationMessageFor(x => x.BurningLimit_Min)
+                            </span>
+                            <span class="help-block font-red">
+                                @Html.ValidationMessageFor(x => x.BurningLimit_Max)
+                            </span>
+                        </div>
+
+                        <div class="form-group form-inline">
+                            <label class="col-md-3 control-label">蒸汽压:</label>
+                            <div class="col-md-4">
+                                <div class="col-md-4 input-group">
+                                    @Html.TextBoxFor(model => model.VaporPressure, new { @class = "form-control", style = "min-width:100px" })
+                                    <span class="input-group-addon">mmHg</span>
+                                </div>
+                                &nbsp;&nbsp;
+                                <a href="javascript:;">
+                                    <span class="glyphicon glyphicon-resize-horizontal"></span>
+                                </a>
+                                &nbsp;&nbsp;
+                                <div class="col-md-4 input-group">
+                                    @Html.TextBoxFor(model => model.VaporPressure_Pa, new { @class = "form-control", style = "min-width:100px" })
+                                    <span class="input-group-addon">Pa</span>
+                                </div>
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.VaporPressure)
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="button" class="btn blue" onclick="btnSubmit(4)">保存</button>
+                            @if (Model.Id.ToString() != "00000000-0000-0000-0000-000000000000")
+                            {
+                                <a href="javascript:if(confirm('确认提交审批吗?'))location='/SpecificationCheck/ApplyCheck/@Model.Id'" class="btn green">提交审批</a>
+                            }
+                            <a href="@Url.Action("Index", "SpecificationCheck" )" class="btn default">返回化学品列表</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="note note-success hidden" id="note_success_form4">
+            <p>
+                保存成功
+            </p>
+        </div>
+        <div class="note note-danger hidden" id="note_danger_form4">
+            <p>
+                保存失败
+            </p>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="AddHazardousSubstances" tabindex="-1" role="dialog" aria-hidden="true">
+    @{Html.RenderAction("AddHazardousSubstances", "SpecificationCheck");}
+</div>
+<input type="hidden" id="hidUrl1" value="@Url.Action("AddHazardousSubstances","SpecificationCheck")" />
+<input type="hidden" id="hidUrl2" value="@Url.Action("DelHazardousSubstances","SpecificationCheck")" />
+<input type="hidden" id="hidUrl3" value="@Url.Action("Import","SpecificationCheck")" />
+<input type="hidden" id="hidUrl4" value="@Url.Action("GetCASCode", "SpecificationCheck")" />
+<script type="text/javascript">
+
+
+
+    jQuery(document).ready(function ()
+    {
+        $('#GHS_HazardouDes_Array').multiSelect({
+            selectableHeader: multiSelect("txt_ha_left"),//"<input type='text' class='form-control' autocomplete='off' placeholder='键入搜索条件' >",
+            selectionHeader: multiSelect("txt_ha_right"),//"<input type='text' class='form-control' autocomplete='off' placeholder='键入搜索条件' >",
+            afterInit: funSearchSelect,
+            afterSelect: function (values)
+            {
+                $("#txt_ha_left").val("");
+                this.qs1.cache();
+                this.qs2.cache();
+            },
+            afterDeselect: function ()
+            {
+                $("#txt_ha_right").val("");
+                this.qs1.cache();
+                this.qs2.cache();
+            }
+        });
+
+        $('#GHS_DefenceDes_Array').multiSelect({
+            selectableHeader: multiSelect("txt_def_left"),// "<input type='text' class='form-control' autocomplete='off' placeholder='键入搜索条件' >",
+            selectionHeader: multiSelect("txt_def_right"),//"<input type='text' class='form-control' autocomplete='off' placeholder='键入搜索条件' >",
+            afterInit: funSearchSelect,
+            afterSelect: function (values)
+            {
+                $("#txt_def_left").val("");
+                this.qs1.cache();
+                this.qs2.cache();
+            },
+            afterDeselect: function ()
+            {
+                $("#txt_def_right").val("");
+                this.qs1.cache();
+                this.qs2.cache();
+            }
+        });
+
+        $('#GHS_DealDES_Array').multiSelect({
+            selectableHeader: multiSelect("txt_dea_left"),//"<input type='text' id='txt_def_left' class='form-control' autocomplete='off' placeholder='键入搜索条件' >",
+            selectionHeader: multiSelect("txt_dea_right"),//"<input type='text' id='txt_def_right' class='form-control' autocomplete='off' placeholder='键入搜索条件' >",
+            afterInit: funSearchSelect,
+            afterSelect: function (values)
+            {
+                $("#txt_dea_left").val("");
+                this.qs1.cache();
+                this.qs2.cache();
+
+            },
+            afterDeselect: function (values)
+            {
+                $("#txt_dea_right").val("");
+                this.qs1.cache();
+                this.qs2.cache();
+            }
+        });
+
+        $('#GHS_StoreDes_Array').multiSelect({
+            selectableHeader: multiSelect("txt_sto_left"),//"<input type='text' class='form-control' autocomplete='off' placeholder='键入搜索条件' >",
+            selectionHeader: multiSelect("txt_sto_right"),//"<input type='text' class='form-control' autocomplete='off' placeholder='键入搜索条件' >",
+            afterInit: funSearchSelect,
+            afterSelect: function (values)
+            {
+                $("#txt_sto_left").val("");
+                this.qs1.cache();
+                this.qs2.cache();
+            },
+            afterDeselect: function ()
+            {
+                $("#txt_sto_right").val("");
+                this.qs1.cache();
+                this.qs2.cache();
+            }
+        });
+
+        $('#HS_HStatement_Str').multiSelect({
+            selectableHeader: multiSelect("txt_hs_left"),// "<input type='text' class='form-control' autocomplete='off' placeholder='键入搜索条件'>",
+            selectionHeader: multiSelect("txt_hs_right"),//"<input type='text' class='form-control' autocomplete='off' placeholder='键入搜索条件'>",
+            afterInit: funSearchSelect,
+            afterSelect: function (values)
+            {
+                $("#txt_hs_left").val("");
+                this.qs1.cache();
+                this.qs2.cache();
+            },
+            afterDeselect: function ()
+            {
+                $("#txt_hs_right").val("");
+                this.qs1.cache();
+                this.qs2.cache();
+            }
+        });
+
+       
+        //新增组分
+        $("#btnAddHazardousSubstances").click(function ()
+        {
+            var sid = $("#sid1").val();
+            //$("#Specification_Id").val(d);
+            if (sid != "00000000-0000-0000-0000-000000000000")
+            {
+                $("#Specification_Id").val(sid);
+                var modal_arg = {
+                    sid: sid,
+                    hid: ""
+                };
+                RenderHSModal(modal_arg);
+            }
+            else
+            {
+                if ($("#nid").val())
+                {
+                    sid = $("#nid").val();
+                    $("#sid1").val(sid);
+                    var modal_arg = {
+                        sid: sid,
+                        hid: ""
+                    };
+                    RenderHSModal(modal_arg);
+                }
+                else
+                {
+                    var obj = {
+                        elementName: "note_danger_form2",
+                        content: "请先保存基本信息！"
+                    };
+                    ShowNotification(obj);
+                }
+            }
+
+
+        });
+
+        $("#BoilingPoint_Liquid_C").change(function (data)
+        {
+            if (this.value != "")
+            {
+                var _temp_f = parseFloat(this.value) * 1.8 + 32;
+                $("#BoilingPoint_Liquid_F").val(_temp_f.toFixed(2));
+            }
+
+        });
+        $("#BoilingPoint_Liquid_F").change(function (data)
+        {
+            if (this.value != "")
+            {
+                var _temp_c = (parseFloat(this.value) - 32) / 1.8;
+                $("#BoilingPoint_Liquid_C").val(_temp_c.toFixed(2));
+            }
+
+        });
+        $("#FlashingPoint_C").change(function ()
+        {
+            if (this.value != "")
+            {
+                var _temp_f = parseFloat(this.value) * 1.8 + 32;
+                $("#FlashingPoint_F").val(_temp_f.toFixed(2));
+            }
+
+        });
+        $("#FlashingPoint_F").change(function ()
+        {
+            if (this.value != "")
+            {
+                var _temp_c = (parseFloat(this.value) - 32) / 1.8;
+                $("#FlashingPoint_C").val(_temp_c.toFixed(2));
+            }
+
+        });
+        $("#VaporPressure").change(function ()
+        {
+            if (this.value != "")
+            {
+                var _temp_mmhg = parseFloat(this.value) * 133.32;
+                $("#VaporPressure_Pa").val(_temp_mmhg.toFixed(2));
+            }
+        });
+        $("#VaporPressure_Pa").change(function ()
+        {
+            if (this.value != "")
+            {
+                var _temp_pa = parseFloat(this.value) / 133.32;
+                $("#VaporPressure").val(_temp_pa.toFixed(2));
+            }
+        });
+    });
+
+    function btnSubmit(obj)
+    {
+        if (obj == 1)
+        {
+            $("#form1").submit();
+        }
+        else if (obj == 2)
+        {
+            var sid = $("#sid1").val();
+            $("#sid2").val(sid);
+
+            $("#form2").submit();
+        }
+        else if (obj == 3)
+        {
+            var sid = $("#sid1").val();
+            $("#sid3").val(sid);
+
+            $("#form3").submit();
+        }
+        else if (obj == 4)
+        {
+            var sid = $("#sid1").val();
+            $("#sid4").val(sid);
+
+            $("#form4").submit();
+        }
+    }
+
+    function multiSelect(obj)
+    {
+        return "<input type='text' id='"+ obj +"' class='form-control' autocomplete='off' placeholder='键入搜索条件' >";
+    }
+    //构建多选搜索空间
+    var funSearchSelect = function (ms)
+    {
+        var that = this,
+        $selectableSearch = that.$selectableUl.prev(),
+        $selectionSearch = that.$selectionUl.prev(),
+        selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)',
+        selectionSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selection.ms-selected';
+
+        that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+        .on('keydown', function (e)
+        {
+            if (e.which === 40)
+            {
+                that.$selectableUl.focus();
+                return false;
+            }
+        });
+
+        that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+        .on('keydown', function (e)
+        {
+            if (e.which == 40)
+            {
+                that.$selectionUl.focus();
+                return false;
+            }
+        });
+
+    }
+
+    function format(state)
+    {
+        if (!state.id) return state.text; // optgroup
+        return "<img class='flag' src='" + Metronic.getGlobalImgPath() + "flags/" + state.id.toLowerCase() + ".png'/>&nbsp;&nbsp;" + state.text;
+    }
+    //渲染组分
+    function RenderHSModal(obj)
+    {
+        $.get($("#hidUrl1").val(), { name: obj.hid }, function (data)
+        {
+            $("#AddHazardousSubstances").html(data);
+
+
+            $("#Specification_Id").val(obj.sid);
+
+            $('#HS_HStatement_Str').multiSelect({
+                selectableHeader: multiSelect("txt_hs_left"),//"<input type='text' class='form-control' autocomplete='off' placeholder='键入搜索条件'>",
+                selectionHeader: multiSelect("txt_hs_right"),//"<input type='text' class='form-control' autocomplete='off' placeholder='键入搜索条件'>",
+                afterInit: funSearchSelect,
+                afterSelect: function (values)
+                {
+                    $("#txt_hs_left").val("");
+                    this.qs1.cache();
+                    this.qs2.cache();
+                },
+                afterDeselect: function ()
+                {
+                    $("#txt_hs_right").val("");
+                    this.qs1.cache();
+                    this.qs2.cache();
+                }
+            });
+
+            $('.bs-select').selectpicker({
+                iconBase: 'fa',
+                tickIcon: 'fa-check'
+            });
+            $('#selGASCode').on('changed.bs.select', function (e)
+            {
+                $("#HS_Name").val(this.value);
+                $("#hidGASCode").val(this.options[this.options.selectedIndex].text);
+            });
+
+            $("#AddHazardousSubstances").modal('toggle');
+        });
+    }
+    //修改组分
+    function Edit_HS(obj)
+    {
+        var obj = $(obj);
+        $("#Specification_Id").val($("#sid1").val());
+        var modal_arg = {
+            sid: $("#sid1").val(),
+            hid: obj.attr("hid")
+        };
+        RenderHSModal(modal_arg);
+
+    }
+    //删除组分
+    function Del_HS(obj)
+    {
+        if (confirm('确实要删除吗?'))
+        {
+            var obj = $(obj);
+            $.post($("#hidUrl2").val(), { sid: $("#sid1").val(), hid: obj.attr("hid") }, function (data)
+            {
+                if (data == "True")
+                {
+                    if (window.location.toString().indexOf("?") > 0)
+                    {
+                        window.location = window.location.toString().substr(0, window.location.toString().indexOf("?")) + "?i=" + Math.random() + "#form_wizard_6";
+                    }
+                    else
+                    {
+                        window.location = window.location + "?i=" + Math.random() + "#form_wizard_6";
+                    }
+                }
+                else
+                {
+                    var obj = {
+                        elementName: "note_danger_form1",
+                        content: "删除失败"
+                    };
+                    ShowNotification(obj);
+                }
+
+            });
+        }
+    }
+
+    //新增组分成功回调
+    function OnSuccess_AddHS(data)
+    {
+        var s = $("#NotificationType4").val();
+        if (s == "True")
+        {
+            $("#AddHazardousSubstances").modal('toggle');
+            var sid = $("#sid1").val();
+            var strLocation = window.location.toString();
+            if (strLocation.indexOf("?") > 0)
+            {
+                window.location = strLocation.substr(0, strLocation.indexOf("?")) + "?i=" + Math.random() + "#form_wizard_6";
+            }
+            else
+            {
+                window.location = window.location + "?i=" + Math.random() + "#form_wizard_6";
+            }
+
+        }
+        else
+        {
+            $('#HS_HStatement_Str').multiSelect({
+                selectableHeader: multiSelect("txt_hs_left"),//"<input type='text' class='form-control' autocomplete='off' placeholder='键入搜索条件'>",
+                selectionHeader: multiSelect("txt_hs_right"),//"<input type='text' class='form-control' autocomplete='off' placeholder='键入搜索条件'>",
+                afterInit: funSearchSelect,
+                afterSelect: function (values)
+                {
+                    $("#txt_hs_left").val("");
+                    this.qs1.cache();
+                    this.qs2.cache();
+                },
+                afterDeselect: function ()
+                {
+                    $("#txt_hs_right").val("");
+                    this.qs1.cache();
+                    this.qs2.cache();
+                }
+            });
+
+            var obj = {
+                elementName: "note_danger_AddHSForm",
+                content: $("#Notification4").val(),
+                nohide: 1
+            };
+            ShowNotification(obj);
+        }
+
+    }
+
+    function OnSuccess_form1(data)
+    {
+        var s = $("#NotificationType1").val();
+        if (s == "True")
+        {
+            var obj = {
+                elementName: "note_success_form1",
+                content: $("#Notification1").val()
+            };
+            $("#sid5").val($("#sid1").val());
+            ShowNotification(obj);
+        }
+        else
+        {
+            var obj = {
+                elementName: "note_danger_form1",
+                content: $("#Notification1").val()
+            };
+            ShowNotification(obj);
+        }
+
+    }
+
+    function OnFailure_form1(data)
+    {
+        var obj = {
+            elementName: "note_danger_form1",
+            content: $("#Notification1").val()
+        };
+        ShowNotification(obj);
+    }
+
+    function OnSuccess_form2(data)
+    {
+        $('#GHS_HazardouDes_Array').multiSelect({
+            selectableHeader: multiSelect("txt_ha_left"),//"<input type='text' id='txt_ha_left' class='form-control' autocomplete='off' placeholder='键入搜索条件' >",
+            selectionHeader: multiSelect("txt_ha_right"),//"<input type='text' id='txt_ha_right' class='form-control' autocomplete='off' placeholder='键入搜索条件' >",
+            afterInit: funSearchSelect,
+            afterSelect: function (values)
+            {
+                $("#txt_ha_left").val("");
+                this.qs1.cache();
+                this.qs2.cache();
+            },
+            afterDeselect: function ()
+            {
+                $("#txt_ha_right").val("");
+                this.qs1.cache();
+                this.qs2.cache();
+            }
+        });
+
+        $('#GHS_DefenceDes_Array').multiSelect({
+            selectableHeader: multiSelect("txt_def_left"),//"<input type='text' id='txt_def_left' class='form-control' autocomplete='off' placeholder='键入搜索条件' >",
+            selectionHeader: multiSelect("txt_def_right"),//"<input type='text' id='txt_def_right' class='form-control' autocomplete='off' placeholder='键入搜索条件' >",
+            afterInit: funSearchSelect,
+            afterSelect: function (values)
+            {
+                $("#txt_def_left").val("");
+                this.qs1.cache();
+                this.qs2.cache();
+            },
+            afterDeselect: function ()
+            {
+                $("#txt_def_right").val("");
+                this.qs1.cache();
+                this.qs2.cache();
+            }
+        });
+
+        $('#GHS_DealDES_Array').multiSelect({
+            selectableHeader: multiSelect("txt_dea_left"),//"<input type='text' id='txt_def_left' class='form-control' autocomplete='off' placeholder='键入搜索条件' >",
+            selectionHeader: multiSelect("txt_dea_right"),//"<input type='text' id='txt_def_right' class='form-control' autocomplete='off' placeholder='键入搜索条件' >",
+            afterInit: funSearchSelect,
+            afterSelect: function (values)
+            {
+                $("#txt_dea_left").val("");
+                this.qs1.cache();
+                this.qs2.cache();
+
+            },
+            afterDeselect: function ()
+            {
+                $("#txt_dea_right").val("");
+                this.qs1.cache();
+                this.qs2.cache();
+            }
+        });
+
+        $('#GHS_StoreDes_Array').multiSelect({
+            selectableHeader: multiSelect("txt_sto_left"),//"<input type='text' id='txt_sto_left' class='form-control' autocomplete='off' placeholder='键入搜索条件' >",
+            selectionHeader: multiSelect("txt_sto_right"),//"<input type='text' id='txt_sto_right' class='form-control' autocomplete='off' placeholder='键入搜索条件' >",
+            afterInit: funSearchSelect,
+            afterSelect: function (values)
+            {
+                $("#txt_sto_left").val("");
+                this.qs1.cache();
+                this.qs2.cache();
+            },
+            afterDeselect: function ()
+            {
+                $("#txt_sto_right").val("");
+                this.qs1.cache();
+                this.qs2.cache();
+            }
+        });
+
+        var s = $("#NotificationType2").val();
+        if (s == "True")
+        {
+            var obj = {
+                elementName: "note_success_form2",
+                content: $("#Notification2").val()
+            };
+            ShowNotification(obj);
+        }
+        else
+        {
+            var obj = {
+                elementName: "note_danger_form2",
+                content: $("#Notification2").val()
+            };
+            ShowNotification(obj);
+        }
+
+    }
+
+    function OnFailure_form2(data)
+    {
+        var obj = {
+            elementName: "note_danger_form2",
+            content: $("#Notification2").val()
+        };
+        ShowNotification(obj);
+    }
+
+    function OnSuccess_form3(data)
+    {
+        var s = $("#NotificationType3").val();
+        if (s == "True")
+        {
+            var obj = {
+                elementName: "note_success_form3",
+                content: $("#Notification3").val()
+            };
+            ShowNotification(obj);
+        }
+        else
+        {
+            var obj = {
+                elementName: "note_danger_form3",
+                content: $("#Notification3").val()
+            };
+            ShowNotification(obj);
+        }
+    }
+
+    function OnFailure_form3()
+    {
+        var obj = {
+            elementName: "note_danger_form3",
+            content: $("#Notification3").val()
+        };
+        ShowNotification(obj);
+    }
+
+    function OnSuccess_form4(data)
+    {
+        var s = $("#NotificationType4").val();
+        if (s == "True")
+        {
+            var obj = {
+                elementName: "note_success_form4",
+                content: $("#Notification4").val()
+            };
+            ShowNotification(obj);
+        }
+        else
+        {
+            var obj = {
+                elementName: "note_danger_form4",
+                content: $("#Notification4").val()
+            };
+            ShowNotification(obj);
+        }
+    }
+
+    function OnFailure_form4()
+    {
+        var obj = {
+            elementName: "note_danger_form4",
+            content: $("#Notification4").val()
+        };
+        ShowNotification(obj);
+    }
+
+    function ShowNotification(obj)
+    {
+
+        $("#" + obj.elementName).removeClass("hidden");
+        $("#" + obj.elementName).html(obj.content);
+        if (!obj.nohide)
+        {
+            setTimeout(function ()
+            {
+                $("#" + obj.elementName).addClass("hidden");
+            }, 4000);
+        }
+
+    }
+
+    function Upload()
+    {
+
+        var id = $("#sid1").val();
+        var url = $("#hidUrl3").val();
+        if (id != "00000000-0000-0000-0000-000000000000" && id != "undefined")
+        {
+            window.location = url + "/" + id;
+        }
+        else
+        {
+            if ($("#nid").val())
+            {
+                var sid = $("#nid").val();
+                $("#sid1").val(sid);
+                window.location = url + "/" + sid;
+            }
+            else
+            {
+                var obj = {
+                    elementName: "note_danger_form1",
+                    content: "请先保存基本信息！"
+                };
+                ShowNotification(obj);
+            }
+        }
+    }
+</script>

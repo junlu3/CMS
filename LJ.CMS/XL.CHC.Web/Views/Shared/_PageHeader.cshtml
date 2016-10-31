@@ -1,0 +1,59 @@
+﻿@using Microsoft.AspNet.Identity
+@using XL.CHC.Domain.Interfaces
+
+@{
+    var workContext = IoCManager.Container.GetInstance<IWorkContext>();
+
+}
+<div class="page-header-inner">
+    <div class="page-logo">
+        <a href="~/Specification/Index">
+            @*<img src="~/Content/Images/logo.png" class="margin-top-10" />*@
+            <h4 style="color:white">全面化学品管理系统 -- @workContext.CurrentMembershipUser.Company.CompanyName</h4>
+        </a>
+        <div class="menu-toggler sidebar-toggler hide"></div>
+    </div>
+    <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+    </a>
+    @if (workContext.CurrentMembershipUser != null)
+    {
+
+        <div class="top-menu">
+            <ul class="nav navbar-nav pull-right">
+                <li class="dropdown dropdown-user">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                        <span class="username username-hide-on-mobile">
+                            @workContext.CurrentMembershipUser.Username
+                        </span>
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-default">
+                        <li>
+
+                            @*@if (workContext.CurrentMembershipUser.MembershipRoles.FirstOrDefault(x => x.Id == new Guid("04544256-4A44-4876-9C30-3186A71CC862")) != null)
+                            {
+                                <a href="@Url.Action("PersonalInfo", "MembershipUser", new { @id = workContext.CurrentMembershipUser.Id })">
+                                    <i class="fa fa-key"></i>
+                                    个人主页
+                                 </a>
+                            }*@
+
+                            <a href="@Url.Action("EditPassword", "MembershipUser", new { @username = workContext.CurrentMembershipUser.Username })">
+                                <i class="fa fa-key"></i>
+                                修改密码
+                            </a>
+                            <a href="/MembershipUser/Logout">
+                                <i class="fa fa-sign-out"></i> 注销用户
+                            </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    }
+    else
+    {
+
+    }
+
+</div>

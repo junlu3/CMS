@@ -1,0 +1,112 @@
+﻿@model XL.CHC.Web.Models.WorkerViewModel
+@{
+    ViewBag.Title = "分配工位";
+    ViewBag.CurrentPage = "WorkManage_WorkerManage_AssignWorkStation";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> 分配工位
+                </div>
+                <div class="actions">
+                    <a href="/Worker/Index" class="btn blue btn-sm">
+                        <i class="fa fa-mail-reply"></i> 返回
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                @using (Html.BeginForm("AssignWorkStation", "Worker", FormMethod.Post, new { @id="form1", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                {
+                    <div class="form-body">
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(x => x.Id)
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">车间:</label>
+                            <div class="col-md-4">
+                                @Html.DropDownList("WorkShop", Model.WorkShops, new { @class = "form-control", @name = "from" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">工位:</label>
+                            <div class="col-md-4">
+                                @Html.DropDownList("WorkStation",Model.WorkStations, new { @class = "form-control", @name = "from" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"></label>
+                            <div class="col-md-4">
+                                <button type="button" class="btn blue" onclick="AddStation()">+</button>
+                                <button type="button" class="btn default" onclick="removeStation()">-</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">工人所属工位:</label>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(x=>x.WorkStations_Seleted_Value, Model.WorkStations_Seleted, new { @class = "form-control", @name = "from", multiple = "multiple",@readonly="readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="button" class="btn blue" onclick="Sub()">保存</button>
+                            <a href="@Url.Action("Index", "Worker" )" class="btn default">返回工人列表</a>
+                        </div>
+                    </div>
+                }
+                <!-- END FORM-->
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="hidGetWorkStations" value="@Url.Action("GetWorkStations","Worker")" />
+<script>
+    $("#WorkShop").change(function ()
+    {
+        $.post($("#hidGetWorkStations").val(), { id: this.value }, function (data)
+        {
+            var strHtml = "";
+            $.each(data, function (i, n)
+            {
+                strHtml += "<option value='" + n.Value + "' " + (n.Selected ? " 'selected=selected' " : "") + ">" + n.Text + "</option>";
+            });
+            $("#WorkStation").html(strHtml);
+        });
+    });
+
+    function AddStation()
+    {
+        var station = $("#WorkStation");
+        var shop = $("#WorkShop");
+
+        var shopText = shop.find("option:selected").text();
+        var stationText = station.find("option:selected").text();
+        var selectedValue = station.val();
+
+        var addItem = "<option value='" + selectedValue + "'>[" + shopText + "][" + stationText + "]</option>";
+        var k = $("#WorkStations_Seleted_Value").find("option[value=" + selectedValue + "]");
+        if (k.length == 0)
+        {
+            $("#WorkStations_Seleted_Value").append(addItem);
+        }        
+    }
+    
+    function removeStation()
+    {
+        var selectedValue = $("#WorkStation").val();
+        var k = $("#WorkStations_Seleted_Value").find("option[value=" + selectedValue + "]");
+        if (k.length > 0)
+        {
+            var strName = "#WorkStations_Seleted_Value option[value='" + selectedValue + "']";
+            $(strName).remove();
+        }
+    }
+
+    function Sub()
+    {
+        $("#WorkStations_Seleted_Value option").attr("selected", "selected");
+        $("#form1").submit();
+    }
+</script>

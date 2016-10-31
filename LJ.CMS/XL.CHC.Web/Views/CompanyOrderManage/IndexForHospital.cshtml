@@ -1,0 +1,209 @@
+﻿@model XL.CHC.Web.Models.CompanyOrderSearchViewModel
+@{
+    ViewBag.Title = "订单查看";
+    ViewBag.CurrentPage = "HealthManage_CompanyOrderManageForHospital";
+}
+
+<div class="row">
+    <div class="col-md-12 ">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cubes font-blue"></i>
+                    <span class="caption-subject font-blue bold uppercase">订单查看</span>
+                </div>
+
+            </div>
+            <div class="portlet-body">
+                <div class="table-toolbar">
+                    @using (Html.BeginForm("IndexForHospital", "CompanyOrderManage", FormMethod.Post, new { id = "search_submit_form" }))
+                    {
+                        @Html.HiddenFor(x => x.PageIndex)
+                        <div class="form-body   ">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 ">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button class="btn grey" type="button">时间范围：</button>
+                                        </span>
+                                        <div class="input-group input-large date-picker input-daterange" data-date-format="yyyy-MM-dd">
+                                            @Html.TextBoxFor(x => x.MinSearchTime, new { @class = "form-control", @name = "from" })
+                                            @*<input type="text" class="form-control" name="from">*@
+                                            <span class="input-group-addon">
+                                                ~
+                                            </span>
+                                            @Html.TextBoxFor(x => x.MaxSearchTime, new { @class = "form-control", @name = "to" })
+                                            @*<input type="text" class="form-control" name="to">*@
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4 col-sm-12">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button class="btn  grey" type="button">选择公司：</button>
+                                        </span>
+                                        @Html.DropDownListFor(x => Model.SelectedCompanyId, Model.CompanyList, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions margin-top-10">
+                            @*<button type="button" class="btn blue"> <i class="fa  fa-refresh"></i>重置</button>*@
+                            <button type="submit" class="btn blue"><i class="fa fa-search"></i>查询</button>
+
+                        </div>
+
+                    }
+                </div>
+                <div class="table-scrollable  ">
+                    <table id="tableProject" class="table table-striped table-bordered table-hover" data-height="200">
+                        <thead>
+                            <tr>
+                                <th style="width:150px">
+                                    操作
+                                </th>
+                                <th style="width:250px;">公司名称</th>
+                                <th style="min-width:100px;">
+                                    生成时间
+                                </th>
+                                <th style="min-width:150px;">
+                                    订单附件
+                                </th>
+                                <th style="min-width:100px;">
+                                    状态
+                                </th>
+                                <th>
+                                    预约时间
+                                </th>
+                                <th>造册人数</th>
+                                <th>
+                                    备注
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.CompanyOrders)
+                            {
+                                <tr>
+                                    <td>
+
+                                        <a class="btn default btn-xs blue" href="/CompanyOrderManage/View/@item.Id"><i class="fa fa-edit"></i> 查看</a>
+
+                                    </td>
+                                    <td>@item.Company.CompanyName</td>
+                                    <td>
+                                        @Convert.ToDateTime(item.CreatedDate).ToString("yyyy-MM-dd")
+                                    </td>
+                                    <td>
+                                        @if (item.IsBuildCompleted == true)
+                                        {
+                                            <a href="/CompanyOrderManage/DownLoad/@item.Id">点击获取</a>
+                                        }
+                                        else if (item.Locked == true)
+                                        {
+                                            <span>生成中...</span>
+                                        }
+                                        else
+                                        {
+                                            <span>完成编辑后才能生成</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @(item.Locked == true ? "锁定" : "未完成编辑")
+                                    </td>
+                                    <td>
+                                        @{
+                                            var dateStr = string.Empty;
+                                            foreach (var t in item.SubOrders)
+                                            {
+                                                dateStr += Convert.ToDateTime(t.StartDate).ToString("yyyy-MM-dd");
+                                                dateStr += ",";
+                                            }
+                                        }
+                                        @dateStr
+                                    </td>
+                                    <td>
+                                        @item.CompanyEmployees.Count
+                                    </td>
+                                    <td>
+                                        @item.Comment
+                                    </td>
+                                </tr>
+                                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        @if (Model.CompanyOrders.TotalPages > 1)
+                        {
+                            <ul class="pagination">
+                                @if (Model.CompanyOrders.PageIndex > 1)
+                                {
+                                    <li>
+                                        <a href="javascript:;" onclick="GoPage(1)">
+                                            <i class="fa fa-angle-left"></i>
+                                        </a>
+                                    </li>
+                                }
+                                @if (Model.CompanyOrders.PageIndex > 8)
+                                {
+                                    <li>
+                                        <a href="javascript:;">...</a>
+                                    </li>
+                                }
+                                @for (var i = 1; i <= Model.CompanyOrders.TotalPages; i++)
+                                {
+                                    if (i == Model.CompanyOrders.PageIndex)
+                                    {
+                                        <li>
+                                            <a href="javascript:;" class="font-red">
+                                                @i
+                                            </a>
+                                        </li>
+                                    }
+                                    else if (i >= Model.CompanyOrders.PageIndex - 7 && i <= Model.CompanyOrders.PageIndex + 7)
+                                    {
+                                        <li>
+                                            <a href="javascript:;" onclick="GoPage(@i)">
+                                                @i
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                                @if (Model.CompanyOrders.PageIndex < Model.CompanyOrders.TotalPages - 8)
+                                {
+                                    <li>
+                                        <a href="javascript:;">...</a>
+                                    </li>
+                                }
+                                @if (Model.CompanyOrders.PageIndex != Model.CompanyOrders.TotalPages)
+                                {
+                                    <li>
+                                        <a href="javascript:;" onclick="GoPage(@Model.CompanyOrders.TotalPages)">
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </li>
+                                }
+
+                            </ul>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    function GoPage(pageIndex)
+    {
+        $("#PageIndex").val(pageIndex);
+        $("#search_submit_form").submit();
+    }
+
+
+</script>
+

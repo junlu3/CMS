@@ -1,0 +1,49 @@
+﻿@model XL.CHC.Web.Models.SpecificationCheckViewModel
+@{
+    ViewBag.Title = "驳回审批申请";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div id="form_wizard_5" class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> 驳回审批申请
+                </div>
+                <div class="actions">
+                </div>
+            </div>
+            <div class="portlet-body form" id="sp_form5">
+                <div class="form-horizontal form-row-seperated">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                @using (Html.BeginForm("RejectCheck", "SpecificationCheck", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+                                {
+                                    <input id="sid5" name="Id" type="hidden" value="@Model.Id.ToString()" />
+                                    <label class="control-label col-md-2" style="text-align:left">驳回理由:</label>
+
+                                    <div class="col-md-3">
+                                        @*<input type="text" name="upfile" id="upfile" class="form-control">*@
+                                        @*<textarea id="RejectReason" name="RejectReason" class="form-control" rows="4"></textarea>*@
+                                        @Html.TextAreaFor(model => model.RejectReason, new { @class = "form-control", @rows = "4" })
+                                    </div>
+
+                                    <div class="col-md-1">
+                                        <input type="submit" class="btn green" value="驳回审批" />
+                                    </div>
+
+                                    <a href="/SpecificationCheck/WaitForChecking" class="btn green">
+                                        返回列表
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+

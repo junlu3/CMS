@@ -1,0 +1,855 @@
+﻿@model XL.CHC.Web.Models.SpecificationManageViewModel
+@{
+    ViewBag.Title = "标签管理";
+    ViewBag.CurrentPage = "SpecificationManage_Tag";
+}
+<div class="row">
+    <div class="col-md-12 ">
+        <div class="portlet  light">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-2x fa-group font-blue"></i><span class="caption-subject font-blue bold uppercase">化学品管理</span></div>
+                <div class="actions">
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-toolbar">
+                    @using (Html.BeginForm("Index", "Tag", FormMethod.Post, new { id = "search_submit_form" }))
+                    {
+                        @Html.HiddenFor(x => x.SortCol)
+                        @Html.HiddenFor(x => x.SortType)
+                        @Html.HiddenFor(x => x.PageIndex)
+                        <div class="form-body   ">
+                            <div class="row margin-bottom-10">
+
+                                <div class="col-md-6 col-lg-6 ">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button class="btn grey" type="button" style="width:120px">产品名称：</button>
+                                        </span>
+                                        <div class="input-group input-large input-daterange">
+                                            @Html.TextBoxFor(x => x.Product_Name, new { @class = "form-control", @name = "from" })
+                                        </div>
+                                    </div>
+                                    <span class="help-block font-red">
+                                        @Html.ValidationMessageFor(x => x.Product_Name)
+                                    </span>
+                                </div>
+                                <div class="col-md-6 col-lg-6 ">
+                                    <div class="input-group">
+                                        <span class="input-group-btn" >
+                                            <button class="btn grey" type="button"  style="width:120px">产品中文名：</button>
+                                        </span>
+                                        <div class="input-group input-large input-daterange">
+                                            @Html.TextBoxFor(x => x.CN_Name, new { @class = "form-control", @name = "from" })
+                                        </div>
+                                    </div>
+                                    <span class="help-block font-red">
+                                        @Html.ValidationMessageFor(x => x.CN_Name)
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row margin-bottom-10">
+
+                                <div class="col-md-6 col-lg-6 ">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button class="btn grey" type="button" style="width:120px">UN编号：</button>
+                                        </span>
+                                        <div class="input-group input-large input-daterange">
+                                            @Html.TextBoxFor(x => x.Product_UN, new { @class = "form-control", @name = "from" })
+                                        </div>
+                                    </div>
+                                    <span class="help-block font-red">
+                                        @Html.ValidationMessageFor(x => x.Product_UN)
+                                    </span>
+                                </div>
+                                <div class="col-md-6 col-lg-6 ">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button class="btn grey" type="button" style="width:120px">CAS号：</button>
+                                        </span>
+                                        <div class="input-group input-large input-daterange">
+                                            @Html.TextBoxFor(x => x.CASCode, new { @class = "form-control", @name = "from" })
+                                        </div>
+                                    </div>
+                                    <span class="help-block font-red">
+                                        @Html.ValidationMessageFor(x => x.CASCode)
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row margin-bottom-10">
+
+                                <div class="col-md-6 col-lg-6 ">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button class="btn grey" type="button" style="width:120px">供应商名称：</button>
+                                        </span>
+                                        <div class="input-group input-large input-daterange">
+                                            @Html.TextBoxFor(x => x.Supplier_Name, new { @class = "form-control", @name = "from" })
+                                        </div>
+                                    </div>
+                                    <span class="help-block font-red">
+                                        @Html.ValidationMessageFor(x => x.Supplier_Name)
+                                    </span>
+                                </div>
+                                <div class="col-md-6 col-lg-6 ">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button class="btn grey" type="button" style="width:120px">创建时间：</button>
+                                        </span>
+                                        <div class="input-group input-large date-picker input-daterange" data-date-format="yyyy-MM-dd">
+                                            @Html.TextBoxFor(x => x.STime, new { @class = "form-control", @name = "from" })
+                                            @*<input type="text" class="form-control" name="from">*@
+                                            <span class="input-group-addon">
+                                                ~
+                                            </span>
+                                            @Html.TextBoxFor(x => x.ETime, new { @class = "form-control", @name = "to" })
+                                            @*<input type="text" class="form-control" name="to">*@
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row margin-bottom-10">
+                                <div class="col-md-6 col-lg-6 ">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button class="btn grey" type="button" style="width:120px">组分的CAS号：</button>
+                                        </span>
+                                        <div class="input-group input-large input-daterange">
+                                            @Html.TextBoxFor(x => x.HS_CASCode, new { @class = "form-control", @name = "from" })
+                                        </div>
+                                    </div>
+                                    <span class="help-block font-red">
+                                        @Html.ValidationMessageFor(x => x.HS_CASCode)
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions margin-top-10">
+                            <button type="submit" class="btn blue"><i class="fa fa-search"></i>查询</button>
+                            <a class="btn blue" href="/Tag/Index">
+                                <i class="fa fa-refresh"></i> 重置
+                            </a>
+                        </div>
+
+                    }
+                </div>
+                <div class="full-height-content-body">
+                    <div class="portlet box blue   margin-top-20 ">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-2x fa-cube"></i>查询结果
+                            </div>
+                            <div class="actions">
+
+                            </div>
+                        </div>
+                        <div class="portlet-body light-grey">
+                            <div class="table-scrollable">
+                                <table id="tableProject" class="table table-striped table-bordered table-hover" data-height="200">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                操作
+                                            </th>
+                                            <th style="min-width:110px">
+                                                导出标签
+                                            </th>
+                                            <th>
+                                                SDS
+                                            </th>
+                                            <th>
+                                                安全告知
+                                            </th>
+                                            <th style="min-width:150px">
+                                                <a href="javascript:;" onclick="SortColumn('Product_Name')">产品名</a>
+                                            </th>
+                                            <th style="min-width:80px;">
+                                                <a href="javascript:;" onclick="SortColumn('CN_Name')">产品名(中文)</a>
+                                            </th>
+                                            @*<th>
+                                                <a href="javascript:;" onclick="SortColumn('Product_State')">状态</a>
+                                            </th>*@
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('CASCode')">CAS号</a>
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('Product_UN')">UN编号</a>
+                                            </th>
+                                            @*<th>
+                                                <a href="javascript:;" onclick="SortColumn('UnHazardousChemical')">非危险化学品</a>
+                                            </th>*@
+                                            @*<th style="min-width:200px;">
+                                                <a href="javascript:;" onclick="SortColumn('Supplier_Name')">供应商名称</a>
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('Supplier_Phone')">供应商电话</a>
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('Supplier_UrgencyCall')">供应商24小时应急电话</a>
+                                            </th>
+
+                                            <th style="min-width:200px;">
+                                                <a href="javascript:;" onclick="SortColumn('GHS_Category')">危险性分类</a>
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('GHS_Warning')">警告词</a>
+                                            </th>
+                                            <th style="min-width:200px;">
+                                                危害简述
+                                            </th>
+                                            <th>
+                                                防范说明(预防)
+                                            </th>
+                                            <th>
+                                                防范说明(响应)
+                                            </th>
+                                            <th>
+                                                防范说明(储存)
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('IsExplosive')">爆炸物</a>
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('IsFlammable')">易燃物</a>
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('IsCorrosive')">腐蚀</a>
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('IsHealthHazard')">长期危害健康</a>
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('IsToxic')">剧毒</a>
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('IsOxidizing')">氧化剂</a>
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('IsGasUnderPressure')">高压气体</a>
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('IsIrritant')">刺激性</a>
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('IsDangerousToEnvironment')">环境危害</a>
+                                            </th>
+                                            <th style="min-width:200px;">
+                                                个人防护用品<br />
+                                                (眼面部)
+                                            </th>
+                                            <th style="min-width:200px;">
+                                                个人防护用品<br />
+                                                (手部)
+                                            </th>
+                                            <th style="min-width:200px;">
+                                                个人防护用品<br />
+                                                (呼吸保护)
+                                            </th>
+                                            <th style="min-width:200px;">
+                                                个人防护用品<br />
+                                                (足部)
+                                            </th>
+                                            <th style="min-width:200px;">
+                                                个人防护用品<br />
+                                                (身体)
+                                            </th>
+                                            <th style="min-width:200px;">
+                                                个人防护用品<br />
+                                                (其他防护)
+                                            </th>
+                                            <th style="min-width:200px;">
+                                                急救措施<br />
+                                                (眼面部沾染)
+                                            </th>
+                                            <th style="min-width:200px;">
+                                                急救措施<br />
+                                                (皮肤手部沾染)
+                                            </th>
+                                            <th style="min-width:200px;">
+                                                急救措施<br />
+                                                (吸入)
+                                            </th>
+                                            <th style="min-width:200px;">
+                                                急救措施<br />
+                                                (食入)
+                                            </th>
+                                            <th style="min-width:200px;">
+                                                急救措施<br />
+                                                (应急消防)
+                                            </th>
+                                            <th style="min-width:200px;">
+                                                急救措施<br />
+                                                (泄漏处置)
+                                            </th>
+                                            <th style="min-width:200px;">
+                                                急救措施<br />
+                                                (作业安全)
+                                            </th>
+                                            <th style="min-width:200px;">
+                                                急救措施<br />
+                                                (储存要求)
+                                            </th>
+                                            <th style="min-width:200px;">
+                                                急救措施<br />
+                                                (废弃物处置)
+                                            </th>
+                                            <th style="min-width:200px;">
+                                                急救措施<br />
+                                                (备注)
+                                            </th>
+                                            <th style="min-width:200px;">
+                                                运输信息<br />
+                                                (当地法规)
+                                            </th>
+                                            <th style="min-width:200px;">
+                                                运输信息<br />
+                                                (联合国法规)
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('ExposedLimit_Solid')">暴露限值(固体)</a>
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('ExposedLimit_Gas')">暴露限值(蒸汽/气体)</a>
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('PhysicalState')">物理状态</a>
+                                            </th>
+                                            <th>
+                                                外观/气味
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('BoilingPoint_Liquid')">沸点(液体) ℃</a>
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('FlashingPoint')">闪点 ℃</a>
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('BurningLimit_Min')">燃烧极限范围(下限)</a>
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('BurningLimit_Max')">燃烧极限范围(上限)</a>
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('VaporPressure')">蒸汽压 mmHg</a>
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('LD50_KG')">LD50 mg/kg(最低)</a>
+                                            </th>
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('LD50_L')">LD50 mg/L(最低)</a>
+                                            </th>*@
+                                            <th>
+                                                <a href="javascript:;" onclick="SortColumn('Create_Date')">创建时间</a>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.ViewList)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <a class="btn default btn-xs blue" href="/Tag/Detail/@item.Id">
+                                                        <i class="fa fa-edit"></i> 详细
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn default btn-xs grey margin-bottom-5" href="/Tag/Download/@item.Id?size=1"  target="_blank">
+                                                        <i class="fa fa-file-excel-o"></i> 标签50*70
+                                                    </a>
+                                                    <a class="btn default btn-xs grey margin-bottom-5" href="/Tag/Download/@item.Id?size=2"  target="_blank">
+                                                        <i class="fa fa-file-excel-o"></i> 标签75*100
+                                                    </a>
+                                                    <a class="btn default btn-xs grey margin-bottom-5" href="/Tag/Download/@item.Id?size=3"  target="_blank">
+                                                        <i class="fa fa-file-excel-o"></i> 标签100*150
+                                                    </a>
+                                                    <a class="btn default btn-xs grey margin-bottom-5" href="/Tag/Download/@item.Id?size=4"  target="_blank">
+                                                        <i class="fa fa-file-excel-o"></i> 标签150*200
+                                                    </a>
+                                                    <a class="btn default btn-xs grey" href="/Tag/Download/@item.Id?size=5"  target="_blank">
+                                                        <i class="fa fa-file-excel-o"></i> 标签200*300
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    @if (string.IsNullOrEmpty(item.AttachmentPath))
+                                                    {
+                                                        <span>无</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="@item.AttachmentPath" class="btn default btn-xs blue" target="_blank">
+                                                            附件
+                                                        </a>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <a class="btn default btn-xs grey margin-bottom-5" href="/Tag/Download2/@item.Id" target="_blank">
+                                                        <i class="fa fa-file-excel-o"></i> 下载
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    @item.Product_Name
+                                                </td>
+                                                <td>
+                                                    @item.CN_Name
+                                                </td>
+                                                @*@switch (item.Product_State)
+                                                {
+                                                    case 1:
+                                                        <td>气体</td>
+                                                        break;
+                                                    case 2:
+                                                        <td>液体</td>
+                                                        break;
+                                                    case 3:
+                                                        <td>固态</td>
+                                                        break;
+                                                    case 4:
+                                                        <td>气溶胶</td>
+                                                        break;
+                                                    case 5:
+                                                        <td>凝胶</td>
+                                                        break;
+                                                    case 6:
+                                                        <td>膏状物</td>
+                                                        break;
+                                                    case 7:
+                                                        <td>其他</td>
+                                                        break;
+                                                    default:
+                                                        <td>N/A</td>
+                                                        break;
+                                                }*@
+                                                <td>
+                                                    @item.CASCode
+                                                </td>
+                                                <td>
+                                                    @item.Product_UN
+                                                </td>
+                                                @*@if (item.UnHazardousChemical.HasValue)
+                                                {
+                                                    if (item.UnHazardousChemical.Value)
+                                                    {
+                                                        <td>是</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>否</td>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <td>否</td>
+                                                }*@
+                                                @*<td>
+                                                    @item.Supplier_Name
+                                                </td>
+                                                <td>
+                                                    @item.Supplier_Phone
+                                                </td>
+                                                <td>
+                                                    @item.Supplier_UrgencyCall
+                                                </td>
+
+                                                <td>
+                                                    @item.GHS_Category
+                                                </td>
+                                                <td>
+                                                    @item.GHS_Warning
+                                                </td>
+                                                @if (!string.IsNullOrEmpty(item.Product_HazardousDescription))
+                                                {
+                                                    if (item.Product_HazardousDescription.Length >= 28)
+                                                    {
+                                                        <td>@item.Product_HazardousDescription.Substring(0, 28) ...</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@item.Product_HazardousDescription</td>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                                <td>
+                                                    @item.GHS_DefenceDes_Values
+                                                </td>
+                                                <td>
+                                                    @item.GHS_DealDES_Values
+                                                </td>
+                                                <td>
+                                                    @item.GHS_StoreDes_Values
+                                                </td>
+                                                @if (item.IsExplosive)
+                                                {
+                                                    <td>是</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                                @if (item.IsFlammable)
+                                                {
+                                                    <td>是</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                                @if (item.IsCorrosive)
+                                                {
+                                                    <td>是</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                                @if (item.IsHealthHazard)
+                                                {
+                                                    <td>是</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                                @if (item.IsToxic)
+                                                {
+                                                    <td>是</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                                @if (item.IsOxidizing)
+                                                {
+                                                    <td>是</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                                @if (item.IsGasUnderPressure)
+                                                {
+                                                    <td>是</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                                @if (item.IsIrritant)
+                                                {
+                                                    <td>是</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                                @if (item.IsDangerousToEnvironment)
+                                                {
+                                                    <td>是</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                                @if (item.Product_Protection_FaceAndEye?.Length >= 28)
+                                                {
+                                                    <td>@item.Product_Protection_FaceAndEye.Substring(0, 28) ...</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@item.Product_Protection_FaceAndEye</td>
+                                                }
+
+                                                @if (item.Product_Protection_Hand?.Length >= 28)
+                                                {
+                                                    <td>@item.Product_Protection_Hand.Substring(0, 28) ...</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@item.Product_Protection_Hand</td>
+                                                }
+
+                                                @if (item.Product_Protection_Breathing?.Length >= 28)
+                                                {
+                                                    <td>@item.Product_Protection_Breathing.Substring(0, 28) ...</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@item.Product_Protection_Breathing</td>
+                                                }
+
+
+                                                @if (item.Product_Protection_Foot?.Length >= 28)
+                                                {
+                                                    <td>@item.Product_Protection_Foot.Substring(0, 28) ...</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@item.Product_Protection_Foot</td>
+                                                }
+
+
+                                                @if (item.Product_Protection_Body?.Length >= 28)
+                                                {
+                                                    <td>@item.Product_Protection_Body.Substring(0, 28) ...</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@item.Product_Protection_Body</td>
+                                                }
+
+
+                                                @if (item.Product_Protection_Other?.Length >= 28)
+                                                {
+                                                    <td>@item.Product_Protection_Other.Substring(0, 28) ...</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@item.Product_Protection_Other</td>
+                                                }
+
+
+                                                @if (item.Product_ET_FaceAndEye?.Length >= 28)
+                                                {
+                                                    <td>@item.Product_ET_FaceAndEye.Substring(0, 28) ...</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@item.Product_ET_FaceAndEye</td>
+                                                }
+
+
+                                                @if (item.Product_ET_SkinAndHand?.Length >= 28)
+                                                {
+                                                    <td>@item.Product_ET_SkinAndHand.Substring(0, 28) ...</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@item.Product_ET_SkinAndHand</td>
+                                                }
+
+
+                                                @if (item.Product_ET_Inhalation?.Length >= 28)
+                                                {
+                                                    <td>@item.Product_ET_Inhalation.Substring(0, 28) ...</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@item.Product_ET_Inhalation</td>
+                                                }
+
+
+                                                @if (item.Product_ET_Ingestion?.Length >= 28)
+                                                {
+                                                    <td>@item.Product_ET_Ingestion.Substring(0, 28) ...</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@item.Product_ET_Ingestion</td>
+                                                }
+
+
+                                                @if (item.Product_FireProtection?.Length >= 28)
+                                                {
+                                                    <td>@item.Product_FireProtection.Substring(0, 28) ...</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@item.Product_FireProtection</td>
+                                                }
+
+
+                                                @if (item.Product_LeakageHanding?.Length >= 28)
+                                                {
+                                                    <td>@item.Product_LeakageHanding.Substring(0, 28) ...</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@item.Product_LeakageHanding</td>
+                                                }
+
+
+                                                @if (item.Product_OperationSecure?.Length >= 28)
+                                                {
+                                                    <td>@item.Product_OperationSecure.Substring(0, 28) ...</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@item.Product_OperationSecure</td>
+                                                }
+
+                                                @if (item.Product_StoreRequirement?.Length >= 28)
+                                                {
+                                                    <td>@item.Product_StoreRequirement.Substring(0, 28) ...</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@item.Product_StoreRequirement</td>
+                                                }
+                                                @if (item.Product_WasteHanding?.Length >= 28)
+                                                {
+                                                    <td>@item.Product_WasteHanding.Substring(0, 28) ...</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@item.Product_WasteHanding</td>
+                                                }
+
+                                                @if (item.Product_Note?.Length >= 28)
+                                                {
+                                                    <td>@item.Product_Note.Substring(0, 28) ...</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@item.Product_Note</td>
+                                                }
+
+                                                @if (item.Policie_Local?.Length >= 28)
+                                                {
+                                                    <td>@item.Policie_Local.Substring(0, 28) ...</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@item.Policie_Local</td>
+                                                }
+
+                                                @if (item.Policie_UN?.Length >= 28)
+                                                {
+                                                    <td>@item.Policie_UN.Substring(0, 28) ...</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@item.Policie_UN</td>
+                                                }
+                                                <td>
+                                                    @item.ExposedLimit_Solid
+                                                </td>
+                                                <td>
+                                                    @item.ExposedLimit_Gas
+                                                </td>
+                                                <td>
+                                                    @item.PhysicalState
+                                                </td>
+                                                <td>
+                                                    @item.AppearanceAndSmell
+                                                </td>
+                                                <td>
+                                                    @item.BoilingPoint_Liquid
+                                                </td>
+                                                <td>
+                                                    @item.FlashingPoint
+                                                </td>
+                                                <td>
+                                                    @item.BurningLimit_Min
+                                                </td>
+                                                <td>
+                                                    @item.BurningLimit_Max
+                                                </td>
+                                                <td>
+                                                    @item.VaporPressure
+                                                </td>
+                                                <td>
+                                                    @item.LD50_KG
+                                                </td>
+                                                <td>
+                                                    @item.LD50_L
+                                                </td>*@
+                                                <td>
+                                                    @(item.Create_Date.HasValue ? item.Create_Date.Value.ToString("yyyy-MM-dd HH:mm:ss") : "N/A")
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @if (Model.ViewList.TotalPages > 1)
+                                    {
+                                        <ul class="pagination">
+                                            @if (Model.ViewList.PageIndex > 1)
+                                            {
+                                                <li>
+                                                    <a href="javascript:;" onclick="GoPage(1)">
+                                                        <i class="fa fa-angle-left"></i>
+                                                    </a>
+                                                </li>
+                                            }
+                                            @if (Model.ViewList.PageIndex > 8)
+                                            {
+                                                <li>
+                                                    <a href="javascript:;">...</a>
+                                                </li>
+                                            }
+                                            @for (var i = 1; i <= Model.ViewList.TotalPages; i++)
+                                            {
+                                                if (i == Model.ViewList.PageIndex)
+                                                {
+                                                    <li>
+                                                        <a href="javascript:;" class="font-red">
+                                                            @i
+                                                        </a>
+                                                    </li>
+                                                }
+                                                else if (i >= Model.ViewList.PageIndex - 7 && i <= Model.ViewList.PageIndex + 7)
+                                                {
+                                                    <li>
+                                                        <a href="javascript:;" onclick="GoPage(@i)">
+                                                            @i
+                                                        </a>
+                                                    </li>
+                                                }
+                                            }
+                                            @if (Model.ViewList.PageIndex < Model.ViewList.TotalPages - 8)
+                                            {
+                                                <li>
+                                                    <a href="javascript:;">...</a>
+                                                </li>
+                                            }
+                                            @if (Model.ViewList.PageIndex != Model.ViewList.TotalPages)
+                                            {
+                                                <li>
+                                                    <a href="javascript:;" onclick="GoPage(@Model.ViewList.TotalPages)">
+                                                        >
+                                                        <i class="fa fa-angle-right"></i>
+                                                    </a>
+                                                </li>
+                                            }
+
+                                        </ul>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function GoPage(pageIndex)
+    {
+        $("#PageIndex").val(pageIndex);
+        $("#search_submit_form").submit();
+    }
+    function SortColumn(colName)
+    {
+        $("#SortCol").val(colName);
+        var sortType = $("#SortType").val();
+        if (sortType == "DESC")
+        {
+            $("#SortType").val("ASC");
+        }
+        else
+        {
+            $("#SortType").val("DESC");
+        }
+        GoPage(1);
+    }
+</script>

@@ -1,0 +1,151 @@
+﻿@model XL.CHC.Web.Models.CompanyOrderDownLoadViewModel
+@{
+    ViewBag.Title = "下载订单附件";
+    ViewBag.CurrentPage = "HealthManage_ComapnyOrderManage";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> 下载订单附件
+
+                </div>
+                <div class="actions">
+                    <a href="/HospitalCompanyManage/Index" class="btn blue btn-sm">
+                        <i class="fa fa-mail-reply"></i> 返回订单列表
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-horizontal" role="form">
+                    <div class="form-body">
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-lg-2">
+                                生成时间:
+                            </label>
+                            <div class="col-md-3">
+                                <p class="form-control-static">
+                                    @Convert.ToDateTime(Model.Order.CreatedDate).ToString("yyyy-MM-dd hh:mm:ss")
+                                </p>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-lg-2">
+                                预约时间:
+                            </label>
+                            <div class="col-md-3">
+                                @{
+                                    var dateStr = string.Empty;
+                                    foreach (var t in Model.Order.SubOrders)
+                                    {
+                                        dateStr += Convert.ToDateTime(t.StartDate).ToString("yyyy-MM-dd");
+                                        dateStr += ",";
+                                    }
+                                }
+                                <p class="form-control-static">  @dateStr</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-lg-2">
+                                体检人数:
+                            </label>
+                            <div class="col-md-3">
+                                <p class="form-control-static"> @Model.Order.CompanyEmployees.Count</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-lg-2">
+                                备注:
+                            </label>
+                            <div class="col-md-9">
+                                <p class="form-control-static"> @Model.Order.Comment</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-lg-2">
+                                附件:
+                            </label>
+                            <div class="col-md-7">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                文件名
+                                            </th>
+                                            <th>
+                                                描述
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <a href="~/Content/ExportFiles/Orders/@Model.Order.Id/上海市职业健康检查表.zip">上海市职业健康检查表</a>
+                                            </td>
+                                            <td>
+                                                上海市职业健康检查表
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td><a href="~/Content/ExportFiles/Orders/@Model.Order.Id/职业病危害因素告知书.zip">职业病危害因素告知书</a></td>
+                                            <td>
+                                                职业病危害因素告知书
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="~/Content/ExportFiles/Orders/@Model.Order.Id/上海市职业健康检查应检者登记表.xlsx">上海市职业健康检查应检者登记表</a></td>
+                                            <td>
+                                                上海市职业健康检查应检者登记表
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="~/Content/ExportFiles/Orders/@Model.Order.Id/上海市作业人员职业病危害因素接触情况造册表.xlsx">上海市作业人员职业病危害因素接触情况造册表</a></td>
+                                            <td>
+                                                上海市作业人员职业病危害因素接触情况造册表
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="~/Content/ExportFiles/Orders/@Model.Order.Id/协议书.xlsx">协议书</a>
+                                                @if (Model.IsHospitalRole)
+                                                {
+                                                    <a class="btn blue" href="javascript:;" onclick="ShowUpload()">上传协议书</a>
+
+                                                }
+                                            </td>
+                                            <td>
+                                                协议书
+                                            </td>
+                                        </tr>
+                                        <tr id="trUploadForm" style="display:none;">
+                                            <td colspan="2">
+                                                @Html.Partial("UploadAgreement",Model)
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function ShowUpload()
+    {
+        $("#trUploadForm").show();
+    }
+     
+</script>

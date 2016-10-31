@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XL.CHC.Domain", "XL.CHC.Domain\XL.CHC.Domain.csproj", "{B486678E-511F-4C36-BAA0-0A9F1BE45C8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XL.CHC.Services", "XL.CHC.Services\XL.CHC.Services.csproj", "{348C62AA-51B9-449F-A7B9-75805E5E36DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XL.CHC.Web", "XL.CHC.Web\XL.CHC.Web.csproj", "{10CD7D6E-D3BC-4FF0-A339-296818F5E4A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XL.CHC.WindowsService", "XL.CHC.WindowsService\XL.CHC.WindowsService.csproj", "{9FA0B8B1-BD57-45C7-BB17-135CC5C7CE52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XL.Utilities", "XL.Utilities\XL.Utilities.csproj", "{8FFC8E97-ECDB-4B03-9FEE-87202440927A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XL.CHC.Data", "XL.CHC.Data\XL.CHC.Data.csproj", "{3FE69DCE-4D33-45BF-B116-FDA823874E48}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XL.CHC.DB", "XL.CHC.DB", "{813E7869-38E3-48CD-B87B-C947EE01A9CC}"
+	ProjectSection(SolutionItems) = preProject
+		XL.CHC.DB\CHC.sql = XL.CHC.DB\CHC.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XL.CHC.References", "XL.CHC.References", "{FD05AF24-97F7-47A1-BBA2-3E9DEABE5E92}"
+	ProjectSection(SolutionItems) = preProject
+		XL.CHC.References\EPPlus.dll = XL.CHC.References\EPPlus.dll
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B486678E-511F-4C36-BAA0-0A9F1BE45C8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B486678E-511F-4C36-BAA0-0A9F1BE45C8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B486678E-511F-4C36-BAA0-0A9F1BE45C8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B486678E-511F-4C36-BAA0-0A9F1BE45C8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{348C62AA-51B9-449F-A7B9-75805E5E36DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{348C62AA-51B9-449F-A7B9-75805E5E36DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{348C62AA-51B9-449F-A7B9-75805E5E36DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{348C62AA-51B9-449F-A7B9-75805E5E36DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10CD7D6E-D3BC-4FF0-A339-296818F5E4A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10CD7D6E-D3BC-4FF0-A339-296818F5E4A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10CD7D6E-D3BC-4FF0-A339-296818F5E4A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10CD7D6E-D3BC-4FF0-A339-296818F5E4A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FA0B8B1-BD57-45C7-BB17-135CC5C7CE52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FA0B8B1-BD57-45C7-BB17-135CC5C7CE52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FA0B8B1-BD57-45C7-BB17-135CC5C7CE52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FA0B8B1-BD57-45C7-BB17-135CC5C7CE52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FFC8E97-ECDB-4B03-9FEE-87202440927A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FFC8E97-ECDB-4B03-9FEE-87202440927A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FFC8E97-ECDB-4B03-9FEE-87202440927A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FFC8E97-ECDB-4B03-9FEE-87202440927A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FE69DCE-4D33-45BF-B116-FDA823874E48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FE69DCE-4D33-45BF-B116-FDA823874E48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FE69DCE-4D33-45BF-B116-FDA823874E48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FE69DCE-4D33-45BF-B116-FDA823874E48}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,202 @@
+﻿@model XL.CHC.Web.Models.ImportResultViewModel
+@{
+    ViewBag.Title = "体检导入";
+    ViewBag.CurrentPage = "HealthManage_HospitalResultView";
+}
+
+@helper GenError(XL.CHC.Domain.DomainModel.ImportErrorRowModel row)
+{
+var result = "";
+foreach (var error in row.ErrorCols)
+{
+    if (!string.IsNullOrEmpty(error.Message))
+    {
+        result += error.Message;
+        result += ";";
+    }
+}
+    @Html.Raw(result)
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue calendar full-height-content full-height-content-scrollable">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-2x fa-edit"></i>体检结果导入</div>
+                <div class="actions">
+                    <a href="/HospitalHealthManage/Index" class="btn blue btn-sm">
+                        <i class="fa fa-mail-reply"></i> 返回
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-horizontal form-row-seperated">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <a href="~/Content/Templates/体检结果模板.xlsx" class="btn blue"><i class="fa fa-download">下载模板</i></a>
+                            </div>
+                            <div class="col-md-9"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                @using (Html.BeginForm("Import", "HospitalHealthManage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    <label class="control-label col-md-2" style="text-align:left">选择需要上传的文件:</label>
+
+                                    <div class="col-md-3">
+                                        <input type="text" name="upfile" id="upfile" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-1">
+                                        <input type="button" value="浏览..." onclick="ImportExcelFile.click()" class="btn blue">
+                                    </div>
+
+                                    <input type="file" id="ImportExcelFile" name="ImportExcelFile" style="display:none" onchange="upfile.value=this.value">
+
+                                    <div class="col-md-1">
+                                        <input type="submit" class="btn blue" value="上传" />
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="IsCoverData" name="IsCoverData"> 覆盖
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-2">
+
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        @if (Model != null && Model.Results != null && Model.Results[0].ErrorRows.Count > 0)
+                        {
+                            using (Html.BeginForm("ExportErrorResult", "HospitalHealthManage", FormMethod.Post, new { id = "formExport" }))
+                            {
+                                <div class="form-group" id="divExport">
+                                    <div class="col-md-12">
+                                        <div class="alert alert-danger">
+                                            <strong>上传文件存在错误!</strong> 请下载到Excel，修改这些信息后重新上传
+                                        </div>
+                                    </div>
+
+                                    @foreach (var errorModel in Model.Results)
+                                    {
+                                        if (errorModel.ErrorRows != null && errorModel.ErrorRows.Count > 0)
+                                        {
+                                            <div class="col-md-12">
+                                                <div class="portlet box blue">
+                                                    <div class="portlet-title">
+                                                        <div class="caption">
+                                                            <i class="fa fa-coffee"></i>错误的 @errorModel.Title
+                                                        </div>
+                                                    </div>
+
+                                                    @foreach (var row in errorModel.ErrorRows)
+                                                    {
+                                                        if (row.RowIndex == 0)
+                                                        {
+                                                            <div class="portlet-body">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-bordered table-hover" style="width:auto !important">
+                                                                        <tbody>
+                                                                            @foreach (var col in row.ErrorCols)
+                                                                            {
+                                                                                <tr>
+                                                                                    <td style="white-space:nowrap;">
+                                                                                        @col.ColName :
+                                                                                    </td>
+                                                                                    <td style='background-color:red; color: white; white-space:nowrap; min-width:100px'>
+                                                                                        @row.Values[col.ColIndex]
+                                                                                    </td>
+                                                                                    <td style="white-space:nowrap">
+                                                                                        @col.Message
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                            break;
+                                                        }
+                                                    }
+
+                                                    <div class="portlet-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        @foreach (var h in errorModel.HeaderRow)
+                                                                        {
+                                                                            <th style="white-space:nowrap">
+                                                                                @h
+                                                                            </th>
+                                                                        }
+                                                                        <th style="white-space:nowrap">
+                                                                            错误
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var row in errorModel.ErrorRows)
+                                                                    {
+                                                                        if (row.RowIndex != 0 && row.ErrorCols.Count > 0 && !string.IsNullOrEmpty(row.ErrorCols[0].Message))
+                                                                        {
+                                                                            <tr>
+                                                                                @for (var i = 0; i < row.Values.Count; i++)
+                                                                                {
+                                                                                    bool isErrorCol = false;
+                                                                                    foreach (var error in row.ErrorCols)
+                                                                                    {
+                                                                                        if (i == error.ColIndex)
+                                                                                        {
+                                                                                            isErrorCol = true;
+                                                                                            break;
+                                                                                        }
+                                                                                    }
+                                                                                    if (isErrorCol)
+                                                                                    {
+                                                                                        <td style='background-color:red; color: white; white-space:nowrap'>@row.Values[i]</td>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <td style="white-space:nowrap">@row.Values[i]</td>
+                                                                                    }
+                                                                                }
+                                                                                <td style="white-space:nowrap">@GenError(row)</td>
+                                                                            </tr>
+                                                                        }
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+                                    <div class="col-md-3">
+                                        <input id="btnSubmit" type="button" value="导出错误信息" class="btn blue" />
+                                    </div>
+                                    <div class="col-md-9"></div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#btnSubmit").click(function () {
+            $("#divExport").hide();
+            $("#formExport").submit();
+        })
+    });
+</script>

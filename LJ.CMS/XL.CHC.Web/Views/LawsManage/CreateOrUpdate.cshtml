@@ -1,0 +1,91 @@
+﻿@model XL.CHC.Web.Models.LawViewModel
+
+@{
+    ViewBag.Title = "编辑法律法规";
+    ViewBag.CurrentPage = "LawsManage_LowsManage";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> 编辑法律法规
+
+                </div>
+                <div class="actions">
+                    <a href="/LawsManage/Index" class="btn blue btn-sm">
+                        <i class="fa fa-mail-reply"></i> 返回
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                @using (Html.BeginForm("CreateOrUpdate", "LawsManage", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+                {
+                    <div class="form-body">
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(x => x.Id)
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">法规名称:</label>
+                            <div class="col-md-4">
+                                @Html.TextAreaFor(model => model.Name, new { @class = "form-control", placeholder = "请输入名称", @rows="4" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Name)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">发文字号:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.DocumentNumber, new { @class = "form-control", placeholder = "请输入发文字号" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.DocumentNumber)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">实施日期:</label>
+                            <div class="col-md-4">
+                                <div class="date-picker input-daterange" data-date-format="yyyy-MM-dd">
+                                    @*@Html.TextBoxFor(x=>x.ImplementationDate)*@
+                                    <input id="ImplementationDate" name="ImplementationDate" type="text" class="form-control" placeholder="实施日期" style="text-align:left" value="@(Model.ImplementationDate.HasValue?Model.ImplementationDate.Value.ToString("yyyy-MM-dd"):"")" readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">链接:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.FilePath, new { @class = "form-control", @name= "upfile", @id= "upfile", placeholder = "请上传详情文档", @readonly="readonly" })
+                            </div>
+                            <div class="col-md-1">
+                                <input type="button" value="浏览..." onclick="ImportFile.click()" class="btn blue">
+                            </div>
+                            <input type="file" id="ImportFile" name="ImportFile" style="display:none" onchange="upfile.value=this.value" accept=".pdf">
+                            <div class="col-md-1">
+                                <input type="button" value="删除" onclick="ClearUploadFile()" class="btn grey">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="submit" class="btn blue">提交</button>
+                            <a href="@Url.Action("Index", "LawsManage" )" class="btn default">返回法律法规列表</a>
+                        </div>
+                    </div>
+                }
+                <!-- END FORM-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function ClearUploadFile()
+    {
+        $('#upfile').val('');
+        var file = $("#ImportFile")
+        file.after(file.clone().val(""));
+        file.remove();
+    }
+</script>

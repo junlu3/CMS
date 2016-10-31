@@ -1,0 +1,305 @@
+﻿@model XL.CHC.Web.Models.SubstanceExposureLimitViewMode
+@{
+    ViewBag.Title = "SubstanceExposureLimit";
+}
+<div class="row">
+    <div class="portlet light">
+        <div class="portlet-title">
+            <div class="caption"><i class="fa fa-2x fa-group font-blue"></i><span class="caption-subject font-blue bold uppercase">暴露限值 --  @Model.Specification.Product_Name </span></div>
+            <div class="actions">
+                <a href="/Specification/Index" class="btn blue">
+                        <i class="fa fa-mail-reply"></i> 返回
+                    </a>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="full-height-content-body">
+                <div class="portlet box blue margin-top-20">
+                    <div class="portlet-title">
+                        <div class="caption"></div>
+                        <div class="actions"></div>
+                    </div>
+                    <div class="portlet-body light-grey">
+                        <table id="tableResult" class="table table-striped table-bordered table-hover" data-height="200">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th colspan="4" class="text-center btn-info">WorkSafe NZ</th>
+                                    <th colspan="4" class="text-center btn-warning">Safe Work Australia</th>
+                                    <th colspan="3" class="text-center btn-info">GBZ2.1 2007</th>
+                                    <th colspan="4" class="text-center btn-warning">ACGIH TLV</th>
+                                    <th colspan="4" class="text-center btn-info">HSE UK EH40</th>
+                                    <th class="text-center btn-warning">分子量</th>
+                                    <th colspan="3" class="text-center btn-info">ERPG</th>
+                                    <th colspan="3" class="text-center btn-warning">AEGL</th>
+                                    <th colspan="4" class="text-center btn-info">TEEL</th>
+                                    <th class="text-center btn-warning">IDLH</th>
+                                    <th colspan="6" class="text-center btn-info">致癌物分类</th>
+                                    <th colspan="2" class="text-center btn-warning">其他毒性</th>
+                                    <th colspan="2" class="text-center btn-info">应急反应</th>
+                                    <th class="text-center btn-warning" width="250px">职业病危害因素目录</th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th colspan="2" class="text-center btn-info">TWA</th>
+                                    <th colspan="2" class="text-center btn-info">STEL</th>
+                                    <th colspan="2" class="text-center btn-warning">TWA</th>
+                                    <th colspan="2" class="text-center btn-warning">STEL</th>
+                                    <th class="btn-info">TWA</th>
+                                    <th class="btn-info">STEL</th>
+                                    <th class="btn-info">MAC</th>
+                                    <th colspan="2" class="text-center btn-warning">TWA</th>
+                                    <th colspan="2" class="text-center btn-warning">STEL</th>
+                                    <th colspan="2" class="text-center btn-info">TWA</th>
+                                    <th colspan="2" class="text-center btn-info">STEL</th>
+
+                                    <th class="text-center btn-warning">MW</th>
+
+                                    <th colspan="3" class="text-center btn-info"></th>
+                                    <th colspan="3" class="text-center btn-warning"></th>
+                                    <th colspan="4" class="text-center btn-info"></th>
+
+                                    <th class="text-center btn-warning"></th>
+
+                                    <th colspan="6" class="text-center btn-info"></th>
+
+                                    <th colspan="2" class="text-center btn-warning"></th>
+
+                                    <th colspan="2" class="text-center btn-info"></th>
+
+                                    <th class="text-center btn-warning"></th>
+
+                                </tr>
+                                <tr >
+                                    <th style="min-width:150px">
+                                        组分名称
+                                    </th>
+                                    <th style="min-width:70px">
+                                        组分名称(中文)
+                                    </th>
+                                    <th>
+                                        CAS 号
+                                    </th>
+
+                                    <th >PPM</th>
+                                    <th >mg/m3</th>
+                                    <th >PPM</th>
+                                    <th >mg/m3</th>
+
+                                    <th>PPM</th>
+                                    <th>mg/m3</th>
+                                    <th>PPM</th>
+                                    <th>mg/m3</th>
+
+                                    <th>mg/m3</th>
+                                    <th>mg/m3</th>
+                                    <th>mg/m3</th>
+
+                                    <th>PPM</th>
+                                    <th>mg/m3</th>
+                                    <th>PPM</th>
+                                    <th>mg/m3</th>
+
+                                    <th>PPM</th>
+                                    <th>mg/m3</th>
+                                    <th>PPM</th>
+                                    <th>mg/m3</th>
+
+                                    <th></th>
+
+                                    <th>ERPG1</th>
+                                    <th>ERPG2</th>
+                                    <th>ERPG3</th>
+
+                                    <th>AEGL1<br>(60)</th>
+                                    <th>AEGL2<br>(60)</th>
+                                    <th>AEGL3<br>(60)</th>
+
+                                    <th>TEEL-0</th>
+                                    <th>TEEL-1</th>
+                                    <th>TEEL-2</th>
+                                    <th>TEEL-3</th>
+
+                                    <th></th>
+
+                                    <th>IARC</th>
+                                    <th>NTP</th>
+                                    <th>ACGIH</th>
+                                    <th>CP65</th>
+                                    <th>OSHA</th>
+                                    <th>EPA</th>
+
+                                    <th>致畸</th>
+                                    <th>生殖毒性</th>
+
+                                    <th>北美</th>
+                                    <th>中国</th>
+
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ViewList)
+                                {
+                                    <tr>
+                                        <td>@item.Substance_Name</td>
+                                        <td>@item.Substance_CN_Name</td>
+                                        <td>@item.CASCode</td>
+
+                                        <td >@item.WorkSafe_NZ_TWA_PPM</td>
+                                        <td >@item.WorkSafe_NZ_TWA_MG</td>
+                                        <td >@item.WorkSafe_NZ_STEL_PPM</td>
+                                        <td > @item.WorkSafe_NZ_STEL_MG</td>
+
+                                        <td>@item.WorkSafe_AUS_TWA_PPM</td>
+                                        <td>@item.WorkSafe_AUS_TWA_MG</td>
+                                        <td>@item.WorkSafe_AUS_STEL_PPM</td>
+                                        <td>@item.WorkSafe_AUS_STEL_MG</td>
+
+                                        <td>@item.GBZ_TWA</td>
+                                        <td>@item.GBZ_STEL</td>
+                                        <td>@item.GBZ_MAC</td>
+
+                                        <td>@item.ACGIH_TLV_TWA_PPM</td>
+                                        <td>@item.ACGIH_TLV_TWA_MG</td>
+                                        <td>@item.ACGIH_TLV_STEL_PPM</td>
+                                        <td>@item.ACGIH_TLV_STEL_MG</td>
+
+
+                                        <td>@item.HSE_UK_EH40_TWA_PPM</td>
+                                        <td>@item.HSE_UK_EH40_TWA_MG</td>
+                                        <td>@item.HSE_UK_EH40_STEL_PPM</td>
+                                        <td>@item.HSE_UK_EH40_STEL_MG</td>
+
+                                        <td>@item.Molecular_Weight</td>
+
+                                        <td>@item.ERPG1</td>
+                                        <td>@item.ERPG2</td>
+                                        <td>@item.ERPG3</td>
+
+                                        <td>@item.AEGL1_60</td>
+                                        <td>@item.AEGL2_60</td>
+                                        <td>@item.AEGL3_60</td>
+
+                                        <td>@item.TEEL0</td>
+                                        <td>@item.TEEL1</td>
+                                        <td>@item.TEEL2</td>
+                                        <td>@item.TEEL3</td>
+
+                                        <td>@item.IDLH</td>
+
+                                        <td>@item.Cancerogen_IARC</td>
+                                        <td>@item.Cancerogen_NTP</td>
+                                        <td>@item.Cancerogen_ACGIH</td>
+                                        <td>@item.Cancerogen_CP65</td>
+                                        <td>@item.Cancerogen_OSHA</td>
+                                        <td>@item.Cancerogen_EPA</td>
+
+                                        <td>@item.Teratogenesis</td>
+                                        <td>@item.Reproduction_Toxicity</td>
+
+                                        <td>@item.ER_NA</td>
+                                        <td>@item.ER_CN</td>
+
+                                        <td>@item.Catalog</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        @*<div class="row">
+                                <div class="col-md-12">
+                                    @if (Model.ViewList.TotalPages > 1)
+                                    {
+                                        <ul class="pagination">
+                                            @if (Model.ViewList.PageIndex > 1)
+                                            {
+                                                <li>
+                                                    <a href="javascript:;" onclick="GoPage(1)">
+                                                        <i class="fa fa-angle-left"></i>
+                                                    </a>
+                                                </li>
+                                            }
+                                            @if (Model.ViewList.PageIndex > 8)
+                                            {
+                                                <li>
+                                                    <a href="javascript:;">...</a>
+                                                </li>
+                                            }
+                                            @for (var i = 1; i <= Model.ViewList.TotalPages; i++)
+                                            {
+                                                if (i == Model.ViewList.PageIndex)
+                                                {
+                                                    <li>
+                                                        <a href="javascript:;" class="font-red">
+                                                            @i
+                                                        </a>
+                                                    </li>
+                                                }
+                                                else if (i >= Model.ViewList.PageIndex - 7 && i <= Model.ViewList.PageIndex + 7)
+                                                {
+                                                    <li>
+                                                        <a href="javascript:;" onclick="GoPage(@i)">
+                                                            @i
+                                                        </a>
+                                                    </li>
+                                                }
+                                            }
+                                            @if (Model.ViewList.PageIndex < Model.ViewList.TotalPages - 8)
+                                            {
+                                                <li>
+                                                    <a href="javascript:;">...</a>
+                                                </li>
+                                            }
+                                            @if (Model.ViewList.PageIndex != Model.ViewList.TotalPages)
+                                            {
+                                                <li>
+                                                    <a href="javascript:;" onclick="GoPage(@Model.ViewList.TotalPages)">
+                                                        >
+                                                        <i class="fa fa-angle-right"></i>
+                                                    </a>
+                                                </li>
+                                            }
+
+                                        </ul>
+                                    }
+
+                                </div>
+                            </div>*@
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var table = $("#tableResult");
+    //var tableColumnToggler = $('#result_columns_list');
+    var oTable = table.dataTable({
+        "paging": false,
+        "ordering": false,
+        "info": false,
+        "searching": false,
+        // Internationalisation. For more info refer to http://datatables.net/manual/i18n
+        "language": {
+
+            "emptyTable": "未找到数据",
+
+            "infoEmpty": "未找到数据",
+
+            "zeroRecords": "未找到数据"
+        },
+
+        "columnDefs": [{
+            "visible": false,
+            "targets": []
+        }],
+
+
+    });
+</script>

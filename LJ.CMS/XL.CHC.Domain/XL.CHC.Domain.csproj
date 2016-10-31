@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B486678E-511F-4C36-BAA0-0A9F1BE45C8F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>XL.CHC.Domain</RootNamespace>
+    <AssemblyName>XL.CHC.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constants\MenuItemWithChildren.cs" />
+    <Compile Include="DomainModel\AutoTask.cs" />
+    <Compile Include="DomainModel\Category.cs" />
+    <Compile Include="DomainModel\CategoryType.cs" />
+    <Compile Include="DomainModel\Company.cs" />
+    <Compile Include="DomainModel\CompanyEmployee.cs" />
+    <Compile Include="DomainModel\CompanyOrder.cs" />
+    <Compile Include="DomainModel\CompanySubOrder.cs" />
+    <Compile Include="DomainModel\Email.cs" />
+    <Compile Include="DomainModel\EmployeeBaseInfo.cs" />
+    <Compile Include="DomainModel\EmployeeWorkHistory.cs" />
+    <Compile Include="DomainModel\Entity.cs" />
+    <Compile Include="DomainModel\HealthResult.cs" />
+    <Compile Include="DomainModel\HospitalCalendar.cs" />
+    <Compile Include="DomainModel\ImportExportModel.cs" />
+    <Compile Include="DomainModel\Law.cs" />
+    <Compile Include="DomainModel\MembershipRole.cs" />
+    <Compile Include="DomainModel\MembershipUser.cs" />
+    <Compile Include="DomainModel\MenuItem.cs" />
+    <Compile Include="DomainModel\MSDS_Composition.cs" />
+    <Compile Include="DomainModel\MSDS_GHS.cs" />
+    <Compile Include="DomainModel\MSDS_HazardousSubstances.cs" />
+    <Compile Include="DomainModel\MSDS_H_Statement.cs" />
+    <Compile Include="DomainModel\MSDS_SpecificationCheck.cs" />
+    <Compile Include="DomainModel\MSDS_Substance_ExposureLimit.cs" />
+    <Compile Include="DomainModel\MSDS_Worker.cs" />
+    <Compile Include="DomainModel\MSDS_WorkShop.cs" />
+    <Compile Include="DomainModel\MSDS_WorkStation.cs" />
+    <Compile Include="DomainModel\PagedList.cs" />
+    <Compile Include="Interfaces\IAuthenticationService.cs" />
+    <Compile Include="Interfaces\ICHCContext.cs" />
+    <Compile Include="Interfaces\IPagedList.cs" />
+    <Compile Include="Interfaces\IWebHelper.cs" />
+    <Compile Include="Interfaces\IWorkContext.cs" />
+    <Compile Include="Interfaces\Repositories\IAutoTaskRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICategoryRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICompanyEmployeeRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICompanyOrderRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICompanyRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICompanySubOrderRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEmailRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEmployeeBaseInfoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEmployeeWorkHistoryRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IHealthResultRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IHospitalCalendarRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ILawRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMembershipRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMenuItemRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMSDS_CompositionRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMSDS_HazardousSubstancesRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMSDS_H_StatementRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMSDS_P_StatementRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMSDS_SpecificationCheckRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMSDS_SpecificationRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMSDS_Substance_ExposureLimitRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMSDS_WorkerRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMSDS_WorkShopRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMSDS_WorkStationRepository.cs" />
+    <Compile Include="Interfaces\Services\IAutoTaskService.cs" />
+    <Compile Include="Interfaces\Services\ICategoryService.cs" />
+    <Compile Include="Interfaces\Services\ICompanyEmployeeService.cs" />
+    <Compile Include="Interfaces\Services\ICompanyOrderService.cs" />
+    <Compile Include="Interfaces\Services\ICompanyService.cs" />
+    <Compile Include="Interfaces\Services\ICompanySubOrderService.cs" />
+    <Compile Include="Interfaces\Services\IEmailService.cs" />
+    <Compile Include="Interfaces\Services\IEmployeeBaseInfoService.cs" />
+    <Compile Include="Interfaces\Services\IEmployeeWorkHistoryService.cs" />
+    <Compile Include="Interfaces\Services\IHealthResultService.cs" />
+    <Compile Include="Interfaces\Services\IHospitalCalendarService.cs" />
+    <Compile Include="Interfaces\Services\IImportExportService.cs" />
+    <Compile Include="Interfaces\Services\ILawService.cs" />
+    <Compile Include="Interfaces\Services\IMembershipService.cs" />
+    <Compile Include="Interfaces\Services\IMenuItemService.cs" />
+    <Compile Include="Interfaces\Services\IMSDS_CompositionService.cs" />
+    <Compile Include="Interfaces\Services\IMSDS_HazardousSubstancesService.cs" />
+    <Compile Include="Interfaces\Services\IMSDS_H_StatementService.cs" />
+    <Compile Include="Interfaces\Services\IMSDS_P_StatementService.cs" />
+    <Compile Include="Interfaces\Services\IMSDS_SpecificationCheckService.cs" />
+    <Compile Include="Interfaces\Services\IMSDS_SpecificationService.cs" />
+    <Compile Include="Interfaces\Services\IMSDS_Substance_ExposureLimitService.cs" />
+    <Compile Include="Interfaces\Services\IMSDS_WorkerService.cs" />
+    <Compile Include="Interfaces\Services\IMSDS_WorkShopService.cs" />
+    <Compile Include="Interfaces\Services\IMSDS_WorkStationService.cs" />
+    <Compile Include="Interfaces\UnitOfWork\IUnitOfWork.cs" />
+    <Compile Include="Interfaces\UnitOfWork\IUnitOfWorkManager.cs" />
+    <Compile Include="DomainModel\MSDS_Specification.cs" />
+    <Compile Include="DomainModel\MSDS_P_Statement.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

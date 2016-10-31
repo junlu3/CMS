@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3FE69DCE-4D33-45BF-B116-FDA823874E48}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>XL.CHC.Data</RootNamespace>
+    <AssemblyName>XL.CHC.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EFCache, Version=1.0.0.0, Culture=neutral, PublicKeyToken=46c4868af4307d2c, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.Cache.1.0.0\lib\net45\EFCache.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EFCache.RedisCache, Version=1.0.5567.18895, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EFCache.RedisCache.0.0.2\lib\EFCache.RedisCache.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="StackExchange.Redis, Version=1.0.316.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StackExchange.Redis.1.0.414\lib\net45\StackExchange.Redis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.5840.25917, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.6\lib\net40\System.Linq.Dynamic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Context\CHCContext.cs" />
+    <Compile Include="Mapping\AutoTaskMapping.cs" />
+    <Compile Include="Mapping\CategoryMapping.cs" />
+    <Compile Include="Mapping\CategoryTypeMapping.cs" />
+    <Compile Include="Mapping\CompanyEmployeeMapping.cs" />
+    <Compile Include="Mapping\CompanyMapping.cs" />
+    <Compile Include="Mapping\CompanyOrderMapping.cs" />
+    <Compile Include="Mapping\CompanySubOrderMapping.cs" />
+    <Compile Include="Mapping\EmailMapping.cs" />
+    <Compile Include="Mapping\EmployeeBaseInfoMapping.cs" />
+    <Compile Include="Mapping\EmployeeWorkHistoryMapping.cs" />
+    <Compile Include="Mapping\HealthResultMapping.cs" />
+    <Compile Include="Mapping\HospitalCalendarMapping.cs" />
+    <Compile Include="Mapping\LawMapping.cs" />
+    <Compile Include="Mapping\MembershipRoleMapping.cs" />
+    <Compile Include="Mapping\MembershipUserMapping.cs" />
+    <Compile Include="Mapping\MenuItemMapping.cs" />
+    <Compile Include="Mapping\MSDS_HazardousSubstancesMapping.cs" />
+    <Compile Include="Mapping\MSDS_SpecificationMapping.cs" />
+    <Compile Include="Mapping\MSDS_WorkShopMapping.cs" />
+    <Compile Include="Mapping\MSDS_WorkStationMapping.cs" />
+    <Compile Include="OrderByT.cs" />
+    <Compile Include="Repositories\MSDS_CompositionRepository.cs" />
+    <Compile Include="Repositories\MSDS_P_StatementRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AutoTaskRepository.cs" />
+    <Compile Include="Repositories\CategoryRepository.cs" />
+    <Compile Include="Repositories\CompanyEmployeeRepository.cs" />
+    <Compile Include="Repositories\CompanyOrderRepository.cs" />
+    <Compile Include="Repositories\CompanyRepository.cs" />
+    <Compile Include="Repositories\CompanySubOrderRepository.cs" />
+    <Compile Include="Repositories\EmailRepository.cs" />
+    <Compile Include="Repositories\EmployeeBaseInfoRepository.cs" />
+    <Compile Include="Repositories\EmployeeWorkHistoryRepository.cs" />
+    <Compile Include="Repositories\HealthResultRepository.cs" />
+    <Compile Include="Repositories\HospitalCalendarRepository.cs" />
+    <Compile Include="Repositories\LawRepository.cs" />
+    <Compile Include="Repositories\MembershipRepository.cs" />
+    <Compile Include="Repositories\MenuItemRepository.cs" />
+    <Compile Include="Repositories\MSDS_HazardousSubstancesRepository.cs" />
+    <Compile Include="Repositories\MSDS_H_StatementRepository.cs" />
+    <Compile Include="Repositories\MSDS_SpecificationCheckRepository.cs" />
+    <Compile Include="Repositories\MSDS_SpecificationRepository.cs" />
+    <Compile Include="Repositories\MSDS_Substance_ExposureLimitRepository.cs" />
+    <Compile Include="Repositories\MSDS_WorkerRepository.cs" />
+    <Compile Include="Repositories\MSDS_WorkShopRepository.cs" />
+    <Compile Include="Repositories\MSDS_WorkStationRepository.cs" />
+    <Compile Include="UnitOfWork\UnitOfWork.cs" />
+    <Compile Include="UnitOfWork\UnitOfWorkManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XL.CHC.Domain\XL.CHC.Domain.csproj">
+      <Project>{b486678e-511f-4c36-baa0-0a9f1be45c8f}</Project>
+      <Name>XL.CHC.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Caching\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

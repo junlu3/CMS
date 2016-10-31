@@ -1,0 +1,104 @@
+﻿@model XL.CHC.Web.Models.MembershipUserPersonalInfoViewModel
+
+@{
+    ViewBag.Title = "个人主页";
+    ViewBag.CurrentPage = "SystemManage_UserManage";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> 个人主页
+
+                </div>
+                <div class="actions">
+                    <a href="#" class="btn blue btn-sm">
+                        <i class="fa fa-mail-reply"></i> 返回
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                @using (Html.BeginForm("PersonalInfo", "MembershipUser", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(e => e.Id)
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">企业邮箱:</label>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "请输入电子邮箱" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Email)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">需要发送邮件的任务:</label>
+                            <div class="col-md-4">
+                                @if (Model.AvailableEmailTaskTypes != null && Model.AvailableEmailTaskTypes.Count > 0)
+                                {
+                                    foreach (var item in Model.AvailableEmailTaskTypes)
+                                    {
+                                        <input type="checkbox" name="SelectedEmailTaskTypeIds" value="@item.Id"
+                                               @if (Model.SelectedEmailTaskTypeIds != null && Model.SelectedEmailTaskTypeIds.Contains(item.Id)) { <text> checked="checked" </text>          } />@item.Name
+                                        <br />
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">管理企业:</label>
+                            <div class="col-md-6">
+                                <div class="table-scrollable  ">
+                                    <table id="tableProject" class="table table-striped table-bordered table-hover" data-height="200">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:300px">
+                                                    <a class="btn default btn-xs green" href="/MembershipUser/CompanyCreateOrUpdate?membershipUserId=@Model.Id"><i class="fa fa-plus"></i> 新增</a>
+                                                </th>
+                                                <th>
+                                                    企业名称
+                                                </th>
+                                                <th>
+                                                    设为默认
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.AvailableCompanies)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <a class="btn default btn-xs purple" href="/MembershipUser/CompanyCreateOrUpdate?membershipUserId=@Model.Id&id=@item.Id"><i class="fa fa-edit"></i> 修改</a>
+                                                        <a class="btn default btn-xs blue" href="javascript:if(confirm('确实要删除吗?'))location='/MembershipUser/CompanyDelete?membershipUserId=@Model.Id&id=@item.Id'"><i class="fa fa-trash-o"></i> 删除</a>
+                                                    </td>
+                                                    <td>
+                                                        @item.CompanyName
+                                                    </td>
+                                                    <td>
+                                                        <input type="radio" name="DefaultCompanyId" value="@item.Id"
+                                                        @if (Model.DefaultCompanyId.HasValue && Model.DefaultCompanyId.Value==item.Id)
+                                                        { <text> checked="checked" </text>          } />
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="submit" class="btn blue">提交</button>
+                        </div>
+                    </div>
+                }
+                <!-- END FORM-->
+            </div>
+        </div>
+    </div>
+</div>

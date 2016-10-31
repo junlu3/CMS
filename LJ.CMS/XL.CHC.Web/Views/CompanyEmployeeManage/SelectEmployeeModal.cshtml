@@ -1,0 +1,306 @@
+﻿@model XL.CHC.Web.Models.CompanyEmployeeSearchViewModel
+
+<link href="~/Content/multiselect/ui/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/multiselect/jquery.multiselect.css" rel="stylesheet" />
+<script src="~/Content/multiselect/jquery.multiselect.js"></script>
+
+<div class="modal-dialog  " style="width:1024px;" id="formSearchEmp">
+    <div class="modal-content">
+        <div class="modal-header">
+            @*<button class="close" aria-hidden="true" type="button" data-dismiss="modal"></button>*@
+            <h4 class="modal-title font-yellow-casablanca">员工信息查询</h4>
+        </div>
+        <div class="modal-body">
+
+            @using (Ajax.BeginForm("SelectEmployeeModal", "CompanyEmployeeManage", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "formSearchEmp" }, new { id = "search_submit_form" }))
+            {
+                @Html.HiddenFor(x => x.PageIndex)
+                <div class="form-body   ">
+                    <div class="row margin-bottom-10">
+                        <div class="col-md-6 ">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">在岗/离职：</label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => Model.SelectedPostStatus, Model.PostStatusList, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6  ">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">体检状态：</label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(x => Model.SelectedHealthStatus, Model.HealthStatusList, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row margin-bottom-10">
+                        <div class="col-md-6  ">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label ">有害因素：</label>
+                                <div class="col-md-8  ">
+                                    <select id="selAdverseFactor" multiple="multiple" name="selAdverseFactor" size="8" class="form-control" style="width:290px">
+                                        @foreach (var item in Model.AdverseFactorList)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </div>
+
+                                @Html.HiddenFor(x => x.SelectedAdverseFactor)
+                            </div>
+                        </div>
+                        <div class="col-md-6  ">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label ">关键字：</label>
+                                <div class="col-md-8  ">
+                                    @Html.TextBoxFor(x => x.KeyWords, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row margin-bottom-10">
+                        <div class="col-md-6  ">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label ">车间/部门：</label>
+                                <div class="col-md-8  ">
+                                    <select id="selDepartment" multiple="multiple" name="selDepartment" size="8" class="form-control" style="width:290px">
+                                        @foreach (var item in Model.DepartmentList)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </div>
+
+                                @Html.HiddenFor(x => x.SelectedDepartment)
+                            </div>
+                        </div>
+                        <div class="col-md-6  ">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label ">工种：</label>
+                                <div class="col-md-8  ">
+                                    <select id="selWorkType" multiple="multiple" name="selWorkType" size="8" class="form-control" style="width:290px">
+                                        @foreach (var item in Model.WorkTypeList)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </div>
+
+                                @Html.HiddenFor(x => x.SelectedWorkType)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions margin-top-10 " style="margin-left:20px;">
+                    <button type="submit" class="btn blue" onclick="SearchEmployee()"><i class="fa fa-search"></i> 查询</button>
+                    <button class="btn grey" onclick="Reset()"><i class="fa fa-refresh"></i> 重置</button>
+
+                </div>
+            }
+            <div class="portlet box green   margin-top-20 ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-2x fa-cube"></i>查询结果
+                    </div>
+                    <div class="actions">
+                        @*<a href="/HospitalBookManage/Index" class="btn default">
+                                <i class="fa fa-hdd-o"></i> 校验
+                            </a>*@
+                    </div>
+                </div>
+                <div class="portlet-body light-grey">
+                    <div class="table-scrollable">
+                        <table id="tableSelectEmployees" class="table table-striped table-bordered table-hover" data-height="200">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" onchange="SelectedEmployeesAll(this)" />
+                                    </th>
+                                    <th>
+                                        姓名
+                                    </th>
+                                    <th>
+                                        性别
+                                    </th>
+                                    <th>
+                                        年龄
+                                    </th>
+                                    <th>
+                                        是否为民工
+                                    </th>
+                                    <th>
+                                        车间/部门
+                                    </th>
+                                    <th>
+                                        工种
+                                    </th>
+                                    <th>
+                                        接害因素
+                                    </th>
+                                    <th>
+                                        接害工龄
+                                    </th>
+                                    <th>
+                                        体检状态
+                                    </th>
+                                    <th>
+                                        备注
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Employees)
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(item.AdverseFactor))
+                                            {
+                                                <input type="checkbox" value="@item.Id" name="AssignedEmployees" class="AssignedEmployees" />
+                                            }
+                                        </td>
+                                        <td>
+                                            <a href="/CompanyEmployeeManage/DetailInfo" class="font-yellow-casablanca">@item.EmployeeBaseInfo.UserName</a>
+                                        </td>
+                                        <td>
+                                            @item.EmployeeBaseInfo.Sex
+                                        </td>
+                                        <td>
+                                            @XL.Utilities.IDCardHelper.GetAge(item.EmployeeBaseInfo.IDCard).ToString()
+                                        </td>
+                                        <td>
+                                            @item.MigrantWorker.Name
+                                        </td>
+                                        <td>
+                                            @item.Department
+                                        </td>
+                                        <td>
+                                            @item.WorkType
+                                        </td>
+                                        <td>
+                                            @item.AdverseFactor
+                                        </td>
+                                        <td>
+                                            @item.AdverseMonthes
+                                        </td>
+                                        <td>
+                                            @item.HealthStatus.Name
+                                        </td>
+                                        <td>
+                                            @item.Comment
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button id="btnConfirmRegister" class="btn green" data-dismiss="modal">确认</button>
+            <button id="btnCloseRegister" class="btn default" type="button" data-dismiss="modal" onclick="CloseRegister()">关闭</button>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        $("#selAdverseFactor").multiselect({
+            noneSelectedText: "==请选择==",
+            checkAllText: "全选",
+            uncheckAllText: '全不选',
+            selectedList: 10
+        });
+        var factors = $("#SelectedAdverseFactor").val();
+        $("#selAdverseFactor").val(factors.split("&"));
+        $("#selAdverseFactor").multiselect("refresh");
+
+        $("#selDepartment").multiselect({
+            noneSelectedText: "==请选择==",
+            checkAllText: "全选",
+            uncheckAllText: '全不选',
+            selectedList: 10
+        });
+        var departments = $("#SelectedDepartment").val();
+        $("#selDepartment").val(departments.split("&"));
+        $("#selDepartment").multiselect("refresh");
+
+        $("#selWorkType").multiselect({
+            noneSelectedText: "==请选择==",
+            checkAllText: "全选",
+            uncheckAllText: '全不选',
+            selectedList: 10
+        });
+        var workTypes = $("#SelectedWorkType").val();
+        $("#selWorkType").val(workTypes.split("&"));
+        $("#selWorkType").multiselect("refresh");
+
+        $("#btnConfirmRegister").click(function () {
+            try {
+                var list = [];
+                $.each($(".AssignedEmployees:checked"), function (i, val) {
+                    list.push($(val).parents("tr"));
+                });
+                AddAssignedEmplyees(list);//回调
+            } catch (e) {
+                alert(e.message);
+            }
+        });
+
+        SyncSelectedEmployees();
+    });
+
+    //同步子页面状态，每次显示子页面都应调用，每次子页面查询后也应调用
+    function SyncSelectedEmployees() {
+        try {
+            $.each($("#tableSelectEmployees .AssignedEmployees"), function (i, val) {
+                if ($("#tableAssignedEmployees .AssignedEmployees[value='" + $(val).attr("value") + "']").length > 0) {
+                    $(val).attr("disabled", "true");
+                    $(val).prop("checked", "checked");
+                }
+                else {
+                    $(val).removeAttr("checked");
+                    $(val).removeAttr("disabled");
+                }
+            });
+        }
+        catch (e) {
+            alert(e.message);
+        }
+    }
+
+    function SearchEmployee() {
+        var factors = $("#selAdverseFactor").val();
+        $("#SelectedAdverseFactor").val(factors);
+
+        var departments = $("#selDepartment").val();
+        $("#SelectedDepartment").val(departments);
+
+        var workTypes = $("#selWorkType").val();
+        $("#SelectedWorkType").val(workTypes);
+
+        $("#search_submit_form").submit();
+    }
+
+    function SelectedEmployeesAll(obj) {
+        if ($(obj).attr("checked") == "checked") {
+            $.each($("#tableSelectEmployees .AssignedEmployees"), function (i, val) {
+                $(val).prop("checked", "checked");
+            });
+        }
+        else {
+            $.each($("#tableSelectEmployees .AssignedEmployees"), function (i, val) {
+                if ($(val).attr("disabled") != "disabled") {
+                    $(val).removeAttr("checked");
+                }
+            });
+        }
+    }
+
+    function Reset() {
+        window.location.href = "/CompanyEmployeeManage/SelectEmployeeModel";
+    }
+</script>

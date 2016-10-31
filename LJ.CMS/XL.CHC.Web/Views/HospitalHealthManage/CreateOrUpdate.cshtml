@@ -1,0 +1,172 @@
+﻿@model XL.CHC.Web.Models.HealthResultViewModel
+
+@{
+    ViewBag.Title = "编辑体检信息";
+    ViewBag.CurrentPage = "HealthManage_HospitalResultView";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> 编辑体检信息
+                </div>
+                <div class="actions">
+                    <a href="/HospitalHealthManage/Index" class="btn blue btn-sm">
+                        <i class="fa fa-mail-reply"></i> 返回
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                @using (Html.BeginForm("CreateOrUpdate", "HospitalHealthManage", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" value="@Model.Id" id="Id" name="Id" />
+                    <input type="hidden" value="@Model.CompanyEmployeeId" id="CompanyEmployeeId" name="CompanyEmployeeId" />
+                    if (Model.Id.ToString() == "00000000-0000-0000-0000-000000000000")
+                    {
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">受检单位:</label>
+                                <div class="col-md-3">
+                                    @Html.DropDownListFor(model => Model.CompanyId, Model.AvailableCompanies, new { @class = "form-control" })
+                                </div>
+                                <label class="col-md-2 control-label">身份证号:</label>
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(model => model.IDCard, new { @class = "form-control" })
+                                    <span class="help-block font-red">
+                                        @Html.ValidationMessageFor(x => x.IDCard)
+                                    </span>
+                                </div>
+                                <button type="submit" class="btn blue col-md-1" name="command" value="searchEmployee">查询</button>
+                            </div>
+                        </div>
+                    }
+                    if (Model.CompanyEmployeeId.ToString() != "00000000-0000-0000-0000-000000000000")
+                    {
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">姓名:</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">性别:</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.Sex, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">出生年月:</label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" value="@XL.Utilities.IDCardHelper.GetBirthDay(Model.IDCard).ToString("yyyy-MM")" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">接害工龄(月):</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.AdverseMonthes, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">职业病危害因素:</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.AdverseFactor, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">体检单位:</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.HealthByCompany, new { @class = "form-control" })
+                                    <span class="help-block font-red">
+                                        @Html.ValidationMessageFor(x => x.HealthByCompany)
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">体检日期:</label>
+                                <div class="col-md-4">
+                                    <div class="date-picker input-daterange" data-date-format="yyyy-MM-dd">
+                                        <input id="HealthDate" name="HealthDate" type="text" class="form-control" style="text-align:left" value="@(Model.HealthDate.HasValue?Model.HealthDate.Value.ToString("yyyy-MM-dd"):"")" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">报告日期:</label>
+                                <div class="col-md-4">
+                                    <div class="date-picker input-daterange" data-date-format="yyyy-MM-dd">
+                                        <input id="ReportDate" name="ReportDate" type="text" class="form-control" style="text-align:left" value="@(Model.ReportDate.HasValue?Model.ReportDate.Value.ToString("yyyy-MM-dd"):"")" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">主检医师:</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.HealthPerson, new { @class = "form-control" })
+                                    <span class="help-block font-red">
+                                        @Html.ValidationMessageFor(x => x.HealthPerson)
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">检查主要阳性结果:</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.MainPositiveResult, new { @class = "form-control" })
+                                    <span class="help-block font-red">
+                                        @Html.ValidationMessageFor(x => x.MainPositiveResult)
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">检查结论:</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.Result, new { @class = "form-control" })
+                                    <span class="help-block font-red">
+                                        @Html.ValidationMessageFor(x => x.Result)
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">体检编号:</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.HealthCode, new { @class = "form-control" })
+                                    <span class="help-block font-red">
+                                        @Html.ValidationMessageFor(x => x.HealthCode)
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">影像号:</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.ImageCode, new { @class = "form-control" })
+                                    <span class="help-block font-red">
+                                        @Html.ValidationMessageFor(x => x.ImageCode)
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">报告号:</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.ReportCode, new { @class = "form-control" })
+                                    <span class="help-block font-red">
+                                        @Html.ValidationMessageFor(x => x.ReportCode)
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions fluid">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn blue" name="command" value="createOrUpdate">提交</button>
+                                <a href="@Url.Action("Index", "HospitalHealthManage" )" class="btn default">返回体检结果列表</a>
+                            </div>
+                        </div>
+                    }
+                }
+                <!-- END FORM-->
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,121 @@
+﻿@model XL.CHC.Web.Models.SpecificationImportViewModel
+@{
+    ViewBag.Title = "上传文件";
+    ViewBag.CurrentPage = "SubstanceExposureLimit_UploadFile";
+
+}
+<div class="progress" style="display:none">
+    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+        <span class="sr-only"> Complete</span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div id="form_wizard_5" class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> 上传Excel
+                </div>
+                <div class="actions">
+                </div>
+            </div>
+            <div class="portlet-body form" id="sp_form5">
+                <div class="form-horizontal form-row-seperated">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                @using (Html.BeginForm("Import", "SubstanceExposureLimit", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+                                {
+                                    
+                                    <label class="control-label col-md-2" style="text-align:left">选择需要上传的文件:</label>
+
+                                    <div class="col-md-3">
+                                        <input type="text" name="upfile" id="upfile" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-1">
+                                        <input type="button" value="浏览..." onclick="Upload()" class="btn green">
+                                    </div>
+
+                                    <input type="file" id="ImportExcelFile" name="ImportExcelFile" style="display:none">
+
+                                    <div class="col-md-1">
+                                        <input type="submit" class="btn green" value="上传" />
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<input id="hidGetStatus" value="@Url.Action("GetStatus")" type="hidden" />
+<script type="text/javascript">
+    GetStatus();
+    var _statusInt = 1;
+    $("#ImportExcelFile").change(function ()
+    {
+        $("#upfile").val(this.value);
+    });
+
+    function Upload()
+    {
+        $("#ImportExcelFile").trigger("click");
+        $(".progress-bar").width(0);
+        $(".progress").hide();
+        $(".note").hide();
+    }
+
+    function GetStatus(){
+        var _url = $("#hidGetStatus").val();
+        _url += "@(ViewBag.Id == null ? "?1=1" : "?id=" + ViewBag.Id)";
+        $.get(_url, function (data)
+        {
+            if(data)
+            {
+                if (data != "False" && $.isNumeric(data))
+                {
+                    $(".progress").show();
+                    if (data != "100" && data != "-1")
+                    {
+
+                        var status = parseFloat(data);
+                        
+                        $(".progress-bar").width(status + "%");
+                        _statusInt++;
+                        window.setTimeout("GetStatus()", 2000);
+                    }
+                    else
+                    {
+                        if (data == "-1")
+                        {
+                            var status = parseFloat(data);
+                            $(".progress-bar").width(0);
+                            $(".progress").hide();
+                            $(".note").removeClass("note-success").addClass("note-danger").html("<p>导入数据失败 ! 请检查 Excel 内容是否符合规范。</p>");
+                        }
+                        else
+                        {
+                            var status = parseFloat(data);
+                            $(".progress-bar").width(status + "%");
+                            $(".note").html("<p>导入数据完成!</p>");
+                        }
+
+                    }
+                }
+                else
+                {
+
+                }
+            }
+        });
+    }
+
+</script>

@@ -1,0 +1,81 @@
+﻿@model XL.CHC.Web.Models.CompanyUserCreateViewModel
+@{
+    ViewBag.Title = "创建企业账户";
+    ViewBag.CurrentPage = "HealthManage_CompanyAccount";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue" id="form_wizard_1">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> 修改企业账户
+
+                </div>
+                <div class="actions">
+                    <a href="/CompanyUserManage/Index" class="btn blue btn-sm">
+                        <i class="fa fa-mail-reply"></i> 返回
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                @using (Html.BeginForm("EditCompanyAccount", "CompanyUserManage", FormMethod.Post, new { id = "submit_form", @class = "form-horizontal" }))
+                {
+                    <div class="form-body">
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-lg-2">
+                                账户名称:
+                            </label>
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(x => x.AccountName, new { @class = "form-control" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.AccountName)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-lg-2">
+                                Email:
+                            </label>
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Email)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-lg-2">
+                                权限:
+                            </label>
+                            <div class="col-md-3">
+                                @Html.DropDownListFor(x => x.Role_Id, Model.MembershipRoles, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-lg-2">
+                                初始密码:
+                            </label>
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(x => x.Password, new { @class = "form-control  " })
+                                <span class="help-block font-red">
+                                    @Html.ValidationMessageFor(x => x.Password)
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-2 col-md-9">
+                                <button type="submit" class="btn blue"><i class="fa fa-check"></i>保存</button>
+                                <a href="/CompanyUserManage/Index" class="btn grey"><i class="fa fa-mail-reply"></i>  返回企业用户列表 </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
