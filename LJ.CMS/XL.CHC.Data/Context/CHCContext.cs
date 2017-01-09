@@ -37,6 +37,7 @@ namespace XL.CHC.Data.Context
         public DbSet<MSDS_WorkStation> MSDS_WorkStation { get; set; }
         public DbSet<MSDS_Worker> MSDS_Worker { get; set; }
         public DbSet<MSDS_Substance_ExposureLimit> MSDS_Substance_ExposureLimit { get; set; }
+        public DbSet<MSDS_Customer> MSDS_Customer { get; set; }
         public CHCContext()
         {
             Configuration.LazyLoadingEnabled = true;

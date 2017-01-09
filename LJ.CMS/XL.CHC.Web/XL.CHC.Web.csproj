@@ -253,6 +253,7 @@
     <Compile Include="Controllers\CompanyEmployeeManageController.cs" />
     <Compile Include="Controllers\CompanyManageController.cs" />
     <Compile Include="Controllers\CompanyUserManageController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HospitalHealthManageController.cs" />
     <Compile Include="Controllers\CompanyOrderManageController.cs" />
@@ -284,6 +285,7 @@
     <Compile Include="Models\CompanyManageViewModel.cs" />
     <Compile Include="Models\CompanyUserViewModel.cs" />
     <Compile Include="Models\CompositionViewModel.cs" />
+    <Compile Include="Models\CustomerViewModel.cs" />
     <Compile Include="Models\EmployeeViewModel.cs" />
     <Compile Include="Models\HealthResultManageViewModel.cs" />
     <Compile Include="Models\CompanyEmployeeManageViewModel.cs" />
@@ -1494,6 +1496,7 @@
     <Content Include="Views\Specification\AssignWorkStation.cshtml" />
     <Content Include="Views\SubstanceExposureLimit\Import.cshtml" />
     <Content Include="Views\Specification\SubstanceExposureLimit.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\" />

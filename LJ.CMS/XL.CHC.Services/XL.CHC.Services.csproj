@@ -65,6 +65,7 @@
     <Compile Include="HospitalCalendarService.cs" />
     <Compile Include="ImportExportService.cs" />
     <Compile Include="MSDS_CompositionService.cs" />
+    <Compile Include="MSDS_CustomerService.cs" />
     <Compile Include="MSDS_SpecificationCheckService.cs" />
     <Compile Include="LawService.cs" />
     <Compile Include="MembershipService.cs" />

@@ -55,6 +55,7 @@ namespace XL.CHC.Web
             For(typeof(IMSDS_WorkStationService)).Use(typeof(MSDS_WorkStationService));
             For(typeof(IMSDS_WorkerService)).Use(typeof(MSDS_WorkerService));
             For(typeof(IMSDS_Substance_ExposureLimitService)).Use(typeof(MSDS_Substance_ExposureLimitService));
+            For(typeof(IMSDS_CustomerService)).Use(typeof(MSDS_CustomerService));
 
 
             //repository
@@ -83,6 +84,7 @@ namespace XL.CHC.Web
             For(typeof(IMSDS_WorkStationRepository)).Use(typeof(MSDS_WorkStationRepository));
             For(typeof(IMSDS_WorkerRepository)).Use(typeof(MSDS_WorkerRepository));
             For(typeof(IMSDS_Substance_ExposureLimitRepository)).Use(typeof(MSDS_Substance_ExposureLimitRepository));
+            For(typeof(IMSDS_CustomerRepository)).Use(typeof(MSDS_CustomerRepository));
         }
     }
 }

@@ -92,6 +92,7 @@
     <Compile Include="Mapping\MSDS_WorkStationMapping.cs" />
     <Compile Include="OrderByT.cs" />
     <Compile Include="Repositories\MSDS_CompositionRepository.cs" />
+    <Compile Include="Repositories\MSDS_CustomerRepository.cs" />
     <Compile Include="Repositories\MSDS_P_StatementRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AutoTaskRepository.cs" />

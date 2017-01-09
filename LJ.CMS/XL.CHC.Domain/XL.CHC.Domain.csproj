@@ -95,6 +95,7 @@
     <Compile Include="Interfaces\Repositories\IMembershipRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMenuItemRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMSDS_CompositionRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMSDS_CustomerRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMSDS_HazardousSubstancesRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMSDS_H_StatementRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMSDS_P_StatementRepository.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Interfaces\Services\IMembershipService.cs" />
     <Compile Include="Interfaces\Services\IMenuItemService.cs" />
     <Compile Include="Interfaces\Services\IMSDS_CompositionService.cs" />
+    <Compile Include="Interfaces\Services\IMSDS_CustomerService.cs" />
     <Compile Include="Interfaces\Services\IMSDS_HazardousSubstancesService.cs" />
     <Compile Include="Interfaces\Services\IMSDS_H_StatementService.cs" />
     <Compile Include="Interfaces\Services\IMSDS_P_StatementService.cs" />
@@ -133,6 +135,7 @@
     <Compile Include="Interfaces\UnitOfWork\IUnitOfWorkManager.cs" />
     <Compile Include="DomainModel\MSDS_Specification.cs" />
     <Compile Include="DomainModel\MSDS_P_Statement.cs" />
+    <Compile Include="DomainModel\MSDS_Customer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
