@@ -710,7 +710,10 @@
     <Content Include="Content\metronic\assets\global\plugins\bootstrap-select\i18n\defaults-zh_CN.min.js" />
     <Content Include="Content\metronic\assets\global\plugins\bootstrap-select\i18n\defaults-zh_TW.js" />
     <Content Include="Content\metronic\assets\global\plugins\bootstrap-select\i18n\defaults-zh_TW.min.js" />
+    <Content Include="Content\metronic\assets\global\plugins\bootstrap-switch\css\bootstrap-switch.css" />
     <Content Include="Content\metronic\assets\global\plugins\bootstrap-switch\css\bootstrap-switch.min.css" />
+    <Content Include="Content\metronic\assets\global\plugins\bootstrap-switch\js\bootstrap-switch.js" />
+    <Content Include="Content\metronic\assets\global\plugins\bootstrap-switch\js\bootstrap-switch.min.js" />
     <Content Include="Content\metronic\assets\global\plugins\bootstrap-wizard\jquery.bootstrap.wizard.js" />
     <Content Include="Content\metronic\assets\global\plugins\bootstrap-wizard\jquery.bootstrap.wizard.min.js" />
     <Content Include="Content\metronic\assets\global\plugins\bootstrap-wizard\MIT-LICENSE.txt" />
@@ -1136,6 +1139,7 @@
     <Content Include="Content\metronic\assets\global\plugins\jquery.blockui.min.js" />
     <Content Include="Content\metronic\assets\global\plugins\jquery.cokie.min.js" />
     <Content Include="Content\metronic\assets\global\plugins\jquery.min.js" />
+    <Content Include="Content\metronic\assets\global\plugins\moment.min.js" />
     <Content Include="Content\metronic\assets\global\plugins\select2\select2-bootstrap.css" />
     <Content Include="Content\metronic\assets\global\plugins\select2\select2-spinner.gif" />
     <Content Include="Content\metronic\assets\global\plugins\select2\select2.css" />
@@ -1320,6 +1324,7 @@
     <Content Include="Content\bootstrap-select.css.map" />
     <Content Include="Content\Templates\危险化学品目录模板%28导出%29.xlsx" />
     <None Include="Properties\PublishProfiles\chcpulish.pubxml" />
+    <None Include="Properties\PublishProfiles\ddd.pubxml" />
     <None Include="Properties\PublishProfiles\june.pubxml" />
     <Content Include="Scripts\bootstrap-select.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
